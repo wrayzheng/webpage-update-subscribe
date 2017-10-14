@@ -20,6 +20,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.apache.struts</groupId>
+      <artifactId>struts2-core</artifactId>
+      <version>2.5.13</version>
+    </dependency>
+    <dependency>
       <groupId>com.codebelief.app</groupId>
       <artifactId>module-dao</artifactId>
       <version>${project.version}</version>
