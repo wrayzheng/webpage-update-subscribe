@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- DatabaseConnectionFactory.java 
- */
 package com.codebelief.app.DatabaseConnection;
 
 import java.io.IOException;

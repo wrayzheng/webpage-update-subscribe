@@ -1,21 +1,22 @@
-/*
- * @(#)SeeUTomorrow --- ContentDAO.java 
- */
 package com.codebelief.app.DAO;
 
 import java.sql.*;
 
 import com.codebelief.app.VO.Content;
+
 /**
+ * @ClassName: ContentDAO
+ * @Description: Define Some Concrete Functions For Content Table
  * @author 何涛
- * @version 1st   on 2017年10月14日
+ * @date 2017年10月17日
+ *
  */
 public class ContentDAO implements IContentDAO{
-	private Connection conn=null;
-	private PreparedStatement ps=null;
+	private Connection conn = null;
+	private PreparedStatement ps = null;
 	
 	public ContentDAO(Connection conn){
-		this.conn=conn;
+		this.conn = conn;
 	}
 	
 	@Override
@@ -27,14 +28,14 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public boolean doInsert(Content content) throws Exception {
-		String query="insert into Content values(?,?,?,?,?)";
-		ps=conn.prepareStatement(query);
+		String query = "insert into Content values(?,?,?,?)";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, content.getContentID());
 		ps.setInt(2, content.getUrlID());
-		ps.setString(3,content.getTitle());
-		ps.setString(4, content.getHtml());
-		ps.setString(5, content.getDelta());
-		if(ps.executeUpdate()==0){
+		//ps.setString(3,content.getTitle());
+		ps.setString(3, content.getHtml());
+		ps.setString(4, content.getDelta());
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -51,33 +52,12 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public boolean doDelete(int ContentID) throws Exception {
-		String query="delete from Content where COntentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "delete from Content where COntentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		if(ps.executeUpdate()==0){
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
-		}
-		ps.close();
-		return true;
-	}
-
-	@Override
-	/**
-	 * @Title: doUpdateTitle
-	 * @Description: Update Title of a content
-	 * @param ContentID
-	 * @param Title
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean doUpdateTitle(int ContentID,String Title) throws Exception {
-		String query="update Content set Title=? where ContentID=?";
-		ps=conn.prepareStatement(query);
-		ps.setString(1, Title);
-		ps.setInt(2, ContentID);
-		if(ps.executeUpdate()==0){
-			ps.close();return false;
 		}
 		ps.close();
 		return true;
@@ -94,12 +74,12 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public boolean doUpdateHtmlAndDelta(int ContentID,String Html, String Delta) throws Exception {
-		String query="update Content set Html=?,Delta=? where ContentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "update Content set Html=?,Delta=? where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setString(1, Html);
 		ps.setString(2, Delta);
 		ps.setInt(3, ContentID);
-		if(ps.executeUpdate()==0){
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -116,13 +96,13 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public int doFindUrlID(int ContentID) throws Exception {
-		String query="select UrlID from Content where ContentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select UrlID from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		int UrlID=-1;		//-1 stands for Finding UrlID failing
+		ResultSet rs = ps.executeQuery();
+		int UrlID = -1;		//-1 stands for Finding UrlID failing
 		while(rs.next()){
-			UrlID=rs.getInt(1);
+			UrlID = rs.getInt(1);
 		}
 		rs.close();ps.close();
 		return UrlID;
@@ -137,13 +117,13 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public String doFindTitle(int ContentID) throws Exception {
-		String query="select Title from Content where ContentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select Title from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		String Title=null;
+		ResultSet rs = ps.executeQuery();
+		String Title = null;
 		while(rs.next()){
-			Title=rs.getString(1);
+			Title = rs.getString(1);
 		}
 		rs.close();ps.close();
 		return Title;
@@ -158,13 +138,13 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public String doFindHtml(int ContentID) throws Exception {
-		String query="select Html from Content where ContentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select Html from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		String Html=null;
+		ResultSet rs = ps.executeQuery();
+		String Html = null;
 		while(rs.next()){
-			Html=rs.getString(1);
+			Html = rs.getString(1);
 		}
 		rs.close();ps.close();
 		return Html;
@@ -179,13 +159,13 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public String doFindDelta(int ContentID) throws Exception {
-		String query="select Delta from Content where ContrneID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select Delta from Content where ContrneID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		String Delta=null;
+		ResultSet rs = ps.executeQuery();
+		String Delta = null;
 		while(rs.next()){
-			Delta=rs.getString(1);
+			Delta = rs.getString(1);
 		}
 		rs.close();ps.close();
 		return Delta;
@@ -200,16 +180,15 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public Content doFindAll(int ContentID) throws Exception {
-		String query="select * from Content where ContentID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select * from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		Content newContent=new Content(ContentID);
+		ResultSet rs = ps.executeQuery();
+		Content newContent = new Content(ContentID);
 		while(rs.next()){
 			newContent.setUrlID(rs.getInt(2));
-			newContent.setTitle(rs.getString(3));
-			newContent.setHtml(rs.getString(4));
-			newContent.setDelta(rs.getString(5));
+			newContent.setHtml(rs.getString(3));
+			newContent.setDelta(rs.getString(4));
 		}
 		rs.close();ps.close();
 		return newContent;
@@ -223,22 +202,20 @@ public class ContentDAO implements IContentDAO{
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int ContentID) throws Exception {
-		String query="select count(*) from Content where ContentID=?";
-		ps=conn.prepareStatement(query);
+	public boolean isExist(int ContentID) throws Exception {
+		String query = "select count(*) from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
-		ResultSet rs=ps.executeQuery();
-		boolean isexist=false;
+		ResultSet rs = ps.executeQuery();
+		boolean isexist = false;
 		while(rs.next()){
-			if(rs.getInt(1)!=0)	isexist=true;
+			if(rs.getInt(1)!=0)	isexist = true;
 		}
 		rs.close();ps.close();
 		return isexist;
 	}
 
 	@Override
-	public void Free() throws Exception {
-		
-	}
+	public void free() throws Exception {}
 
 }

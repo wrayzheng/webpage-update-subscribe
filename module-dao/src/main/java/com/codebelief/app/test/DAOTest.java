@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- DAOTest.java 
- */
 package com.codebelief.app.test;
 
 import com.codebelief.app.DAO.*;
@@ -17,23 +14,24 @@ public class DAOTest {
 		User user=new User("何涛","hetao","15705657659@163.com",Time.valueOf("20:00:00"));
 		IUserDAO userDAO=UserDAOFactory.getUserDAOInstance();
 		//userDAO.doInsert(user);
-		//userDAO.doUpdatePushTime("何涛", Time.valueOf("21:00:00"));
+		userDAO.doUpdatePushTime("何涛", Time.valueOf("20:00:00"));
 		//userDAO.doUpdatePasswordAndEmail("何涛", "hetao", "15705657659@163.com");
 		/*User newUser=userDAO.doFindAll("何涛");
 		System.out.println("UserName:"+newUser.getUserName());
 		System.out.println("Password:"+newUser.getPassword());
 		System.out.println("Email:"+newUser.getEmail());
 		System.out.println("PushTime:"+newUser.getPushTime());*/
-		/*String Password=userDAO.doFindPassword("何涛");
+		String Password=userDAO.doFindPassword("何涛");
 		System.out.println("Passowrd:"+Password);
 		String Email=userDAO.doFindEmail("何涛");
 		System.out.println("Email:"+Email);
 		Time PushTime=userDAO.doFindPushTime("何涛");
-		System.out.println("PushTime:"+PushTime);*/
-		//userDAO.Free();
+		System.out.println("PushTime:"+PushTime);
+		userDAO.free();
 		
-		Url url=new Url(10010,"何涛","www.Github.com");
+		Url url=new Url(10010,"何涛","question","www.Github.com");
 		IUrlDAO urlDAO=UrlDAOFactory.getUrlDAOInstance();
+		urlDAO.doDelete(10010);
 		//urlDAO.doInsert(url);
 		/*Url newUrl=urlDAO.doFindAll(10010);
 		System.out.println(newUrl.getUrl());
@@ -47,10 +45,10 @@ public class DAOTest {
 		System.out.println(""+urlDAO.doFindRealTimePush(10010));*/
 		//urlDAO.doUpdate(10010, "www.stackOverflow.com", false, false);
 		//urlDAO.doDelete(10010);
-		//urlDAO.Free();
+		urlDAO.free();
 		
-		Content content = new Content(1001,10010,"question","<html><head></head></html>","<head></head>");
-		IContentDAO contentDAO=ContentDAOFactory.getContentDAOInstance();
+		//Content content = new Content(1001,10010,"<html><head></head></html>","<head></head>");
+		//IContentDAO contentDAO=ContentDAOFactory.getContentDAOInstance();
 		//contentDAO.doInsert(content);
 		/*Content newContent=contentDAO.doFindAll(1001);
 		System.out.println(newContent.getUrlID());

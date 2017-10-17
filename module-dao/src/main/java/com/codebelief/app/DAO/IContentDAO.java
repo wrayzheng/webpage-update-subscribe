@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- IContentDAO.java 
- */
 package com.codebelief.app.DAO;
 
 import com.codebelief.app.VO.Content;
@@ -28,17 +25,6 @@ public interface IContentDAO {
 	 * @throws Exception
 	 */
 	public boolean doDelete(int ContentID) throws Exception;
-	
-	/**
-	 * 
-	 * @Title: doUpdateTitle
-	 * @Description: Update Title of a content
-	 * @param ContentID
-	 * @param Title
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean doUpdateTitle(int ContentID,String Title) throws Exception;
 	
 	/**
 	 * 
@@ -110,7 +96,7 @@ public interface IContentDAO {
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int ContentID) throws Exception;
+	public boolean isExist(int ContentID) throws Exception;
 	
 	/**
 	 * 
@@ -118,5 +104,5 @@ public interface IContentDAO {
 	 * @Description: Close the Connection to Database
 	 * @throws Exception
 	 */
-	public void Free() throws Exception;
+	public void free() throws Exception;
 }

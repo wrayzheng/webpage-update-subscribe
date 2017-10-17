@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- UrlDAOProxy.java 
- */
 package com.codebelief.app.DAO;
 
 import com.codebelief.app.DatabaseConnection.*;
@@ -63,8 +60,8 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID, String url, boolean Enable, boolean RealTimePush) throws Exception {
-		boolean success = dao.doUpdate(UrlID, url, Enable, RealTimePush);
+	public boolean doUpdate(int UrlID, String title, String url, boolean Enable, boolean RealTimePush) throws Exception {
+		boolean success = dao.doUpdate(UrlID, title, url, Enable, RealTimePush);
 		//dbc.free();
 		return success;
 	}
@@ -147,8 +144,8 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int UrlID) throws Exception {
-		boolean isexist=dao.IsExist(UrlID);
+	public boolean isExist(int UrlID) throws Exception {
+		boolean isexist=dao.isExist(UrlID);
 		//dbc.free();
 		return isexist;
 	}
@@ -159,8 +156,13 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @Description: Close the Connection to Database
 	 * @throws Exception
 	 */
-	public void Free() throws Exception {
+	public void free() throws Exception {
 		dbc.free();
+	}
+
+	public String doFindTitle(int UrlID) throws Exception {
+		String title=dao.doFindTitle(UrlID);
+		return title;
 	}
 
 }

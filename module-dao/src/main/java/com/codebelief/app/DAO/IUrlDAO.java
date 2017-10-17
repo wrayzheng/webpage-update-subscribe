@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- IUrlDAO.java 
- */
 package com.codebelief.app.DAO;
 
 import com.codebelief.app.VO.Url;
@@ -40,7 +37,7 @@ public interface IUrlDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID,String url,boolean Enable,boolean RealTimePush) throws Exception;
+	public boolean doUpdate(int UrlID,String title,String url,boolean Enable,boolean RealTimePush) throws Exception;
 	
 	/**
 	 * 
@@ -51,6 +48,15 @@ public interface IUrlDAO {
 	 * @throws Exception
 	 */
 	public String doFindUserName(int UrlID) throws Exception;
+	/**
+	 * 
+	 * @Title: doFindTitle
+	 * @Description: Find the title By UrlID
+	 * @param UrlID
+	 * @return
+	 * @throws Exception
+	 */
+	public String doFindTitle(int UrlID) throws Exception;
 	
 	/**
 	 * 
@@ -100,7 +106,7 @@ public interface IUrlDAO {
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int UrlID) throws Exception;
+	public boolean isExist(int UrlID) throws Exception;
 	
 	/**
 	 * 
@@ -108,5 +114,5 @@ public interface IUrlDAO {
 	 * @Description: Close the Connection to Database
 	 * @throws Exception
 	 */
-	public void Free() throws Exception;
+	public void free() throws Exception;
 }

@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- Url.java 
- */
 package com.codebelief.app.VO;
 
 /**
@@ -13,22 +10,24 @@ package com.codebelief.app.VO;
  */
 public class Url {
 	
-	private int UrlID;
-	private String UserName;	//no more than 16 characters
-	private String Url;
-	private boolean Enable;
-	private boolean RealTimePush;
+	private int urlID;
+	private String userName;	//no more than 16 characters
+	private String title;
+	private String url;
+	private boolean enabled;
+	private boolean realTimePush;
 	
 	public Url(int UrlID){
-		this.UrlID=UrlID;
+		this.urlID = UrlID;
 	}
 	
-	public Url(int UrlID,String UserName,String Url){
-		this.UrlID=UrlID;
-		this.UserName=UserName;
-		this.Url=Url;
-		this.Enable=true;
-		this.RealTimePush=true;
+	public Url(int UrlID,String UserName,String title,String Url){
+		this.urlID = UrlID;
+		this.userName = UserName;
+		this.title = title;
+		this.url = Url;
+		this.enabled = true;
+		this.realTimePush = true;
 	}
 	
 	/**
@@ -36,70 +35,84 @@ public class Url {
 	 * @return UrlID
 	 */
 	public int getUrlID() {
-		return UrlID;
+		return urlID;
 	}
 	/**
 	 * 
 	 * @param urlID
 	 */
 	public void setUrlID(int urlID) {
-		UrlID = urlID;
+		this.urlID = urlID;
 	}
 	/**
 	 * 
 	 * @return UserName
 	 */
 	public String getUserName() {
-		return UserName;
+		return userName;
 	}
 	/**
 	 * 
 	 * @param userName
 	 */
 	public void setUserName(String userName) {
-		UserName = userName;
+		this.userName = userName;
+	}
+	/**
+	 * 
+	 * @return title
+	 */
+	public String getTitle(){
+		return this.title;
+	}
+	/**
+	 * 
+	 * @param title
+	 */
+	public void setTitle(String title){
+		this.title = title;
 	}
 	/**
 	 * 
 	 * @return Url
 	 */
 	public String getUrl() {
-		return Url;
+		return url;
 	}
 	/**
 	 * 
 	 * @param url
 	 */
 	public void setUrl(String url) {
-		Url = url;
+		this.url = url;
 	}
 	/**
 	 * 
 	 * @return Enable
 	 */
 	public boolean isEnable() {
-		return Enable;
+		return enabled;
 	}
 	/**
 	 * 
 	 * @param enable
 	 */
 	public void setEnable(boolean enable) {
-		Enable = enable;
+		this.enabled = enable;
 	}
 	/**
 	 * 
 	 * @return RealTimePush
 	 */
 	public boolean isRealTimePush() {
-		return RealTimePush;
+		return realTimePush;
 	}
 	/**
 	 * 
 	 * @param realTimePush
 	 */
 	public void setRealTimePush(boolean realTimePush) {
-		RealTimePush = realTimePush;
+		this.realTimePush = realTimePush;
 	}
 	
 }

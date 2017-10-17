@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- UserDAOProxy.java 
- */
 package com.codebelief.app.DAO;
 
 import java.sql.*;
@@ -153,8 +150,8 @@ public class UserDAOProxy implements IUserDAO{
 	 * @return boolean: true is Exist and false is not Exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(String UserName) throws Exception {
-		boolean isexist=dao.IsExist(UserName);
+	public boolean isExist(String UserName) throws Exception {
+		boolean isexist=dao.isExist(UserName);
 		//dbc.free();
 		return isexist;
 	}
@@ -165,7 +162,7 @@ public class UserDAOProxy implements IUserDAO{
 	 * @Description: Close the Connnection
 	 * @throws Exception
 	 */
-	public void Free() throws Exception{
+	public void free() throws Exception{
 		dbc.free();
 	}
 

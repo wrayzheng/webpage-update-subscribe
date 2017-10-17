@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- IUserDAO.java 
- */
 package com.codebelief.app.DAO;
 
 import java.sql.Time;
@@ -105,7 +102,7 @@ public interface IUserDAO {
 	 * @return boolean: true is Exist and false is not Exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(String UserName) throws Exception;
+	public boolean isExist(String UserName) throws Exception;
 	
 	/**
 	 * 
@@ -113,5 +110,5 @@ public interface IUserDAO {
 	 * @Description: Close the Connnection
 	 * @throws Exception
 	 */
-	public void Free() throws Exception;
+	public void free() throws Exception;
 }

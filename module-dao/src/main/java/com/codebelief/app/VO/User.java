@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- User.java 
- */
 package com.codebelief.app.VO;
 
 import java.sql.Time;
@@ -13,20 +10,20 @@ import java.sql.Time;
  *
  */
 public class User {
-	private String UserName;	//no more than 16 characters
-	private String Password;	//no more than 64 characters
-	private String Email;		//no more than 64 characters
-	private Time PushTime;		//java.sql.Time
+	private String userName;	//no more than 16 characters
+	private String password;	//no more than 64 characters
+	private String email;		//no more than 64 characters
+	private Time pushTime;		//java.sql.Time
 	
 	public User(String UserName){
-		this.UserName=UserName;
+		this.userName = UserName;
 	}
 	
 	public User(String UserName,String Password,String Email,Time PushTime){
-		this.UserName=UserName;
-		this.Password=Password;
-		this.Email=Email;
-		this.PushTime=PushTime;
+		this.userName = UserName;
+		this.password = Password;
+		this.email = Email;
+		this.pushTime = PushTime;
 	}
 	
 	/**
@@ -34,56 +31,56 @@ public class User {
 	 * @param UserName
 	 */
 	public void setUserName(String UserName){
-		this.UserName=UserName;
+		this.userName = UserName;
 	}
 	/**
 	 * 
 	 * @return UserName
 	 */
 	public String getUserName(){
-		return this.UserName;
+		return this.userName;
 	}
 	/**
 	 * 
 	 * @param Password
 	 */
 	public void setPassword(String Password){
-		this.Password=Password;
+		this.password = Password;
 	}
 	/**
 	 * 
 	 * @return Password
 	 */
 	public String getPassword(){
-		return this.Password;
+		return this.password;
 	}
 	/**
 	 * 
 	 * @param Email
 	 */
 	public void setEmail(String Email){
-		this.Email=Email;
+		this.email = Email;
 	}
 	/**
 	 * 
 	 * @return Email
 	 */
 	public String getEmail(){
-		return Email;
+		return email;
 	}
 	/**
 	 * 
 	 * @param PushTime
 	 */
 	public void setPushTime(Time PushTime){
-		this.PushTime=PushTime;
+		this.pushTime = PushTime;
 	}
 	/**
 	 * 
 	 * @return PushTime
 	 */
 	public Time getPushTime(){
-		return PushTime;
+		return pushTime;
 	}
 	
 }

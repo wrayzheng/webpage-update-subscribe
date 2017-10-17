@@ -1,12 +1,9 @@
-/*
- * @(#)SeeUTomorrow --- UrlDAO.java 
- */
 package com.codebelief.app.DAO;
 
 import java.sql.*;
 
 import com.codebelief.app.VO.Url;
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Statement;
 
 /**
  * 
@@ -17,11 +14,11 @@ import com.mysql.jdbc.Statement;
  *
  */
 public class UrlDAO implements IUrlDAO{
-	private Connection conn=null;
-	private PreparedStatement ps=null;
+	private Connection conn = null;
+	private PreparedStatement ps = null;
 	
 	public UrlDAO(Connection conn){
-		this.conn=conn;
+		this.conn = conn;
 	}
 	
 	@Override
@@ -33,14 +30,15 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public boolean doInsert(Url url) throws Exception {
-		String query="insert into Url values(?,?,?,?,?)";
-		ps=conn.prepareStatement(query);
+		String query = "insert into Url values(?,?,?,?,?,?)";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, url.getUrlID());
 		ps.setString(2, url.getUserName());
-		ps.setString(3, url.getUrl());
-		ps.setBoolean(4, url.isEnable());
-		ps.setBoolean(5, url.isRealTimePush());
-		if(ps.executeUpdate()==0){
+		ps.setString(3, url.getTitle());
+		ps.setString(4, url.getUrl());
+		ps.setBoolean(5, url.isEnable());
+		ps.setBoolean(6, url.isRealTimePush());
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -57,10 +55,10 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public boolean doDelete(int UrlID) throws Exception {
-		String query="delete from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "delete from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		if(ps.executeUpdate()==0){
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -79,14 +77,15 @@ public class UrlDAO implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID, String url, boolean Enable, boolean RealTimePush) throws Exception {
-		String query="update Url set Url=?,Enable=?,RealTimePush=? where UrlID=?";
-		ps=conn.prepareStatement(query);
-		ps.setString(1, url);
-		ps.setBoolean(2, Enable);
-		ps.setBoolean(3, RealTimePush);
-		ps.setInt(4, UrlID);
-		if(ps.executeUpdate()==0){
+	public boolean doUpdate(int UrlID, String title, String url, boolean Enable, boolean RealTimePush) throws Exception {
+		String query = "update Url set Title=?,Url=?,Enable=?,RealTimePush=? where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, title);
+		ps.setString(2, url);
+		ps.setBoolean(3, Enable);
+		ps.setBoolean(4, RealTimePush);
+		ps.setInt(5, UrlID);
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -103,13 +102,13 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public String doFindUserName(int UrlID) throws Exception {
-		String query="select UserName from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select UserName from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		String UserName=null;
+		ResultSet rs = ps.executeQuery();
+		String UserName = null;
 		while(rs.next()){
-			UserName=rs.getString(1);
+			UserName = rs.getString(1);
 		}
 		rs.close();ps.close();
 		return UserName;
@@ -124,16 +123,16 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public String doFindUrl(int UrlID) throws Exception {
-		String query="select Url from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select Url from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		String Url=null;
+		ResultSet rs = ps.executeQuery();
+		String url = null;
 		while(rs.next()){
-			Url=rs.getString(1);
+			url = rs.getString(1);
 		}
 		rs.close();ps.close();
-		return Url;
+		return url;
 	}
 
 	@Override
@@ -145,13 +144,13 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public boolean doFindEnable(int UrlID) throws Exception {
-		String query="select Enable from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select Enable from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		boolean Enable=false;
+		ResultSet rs = ps.executeQuery();
+		boolean Enable = false;
 		while(rs.next()){
-			Enable=rs.getBoolean(1);
+			Enable = rs.getBoolean(1);
 		}
 		rs.close();ps.close();
 		return Enable;
@@ -166,13 +165,13 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public boolean doFindRealTimePush(int UrlID) throws Exception {
-		String query="select RealTimePush from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select RealTimePush from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		boolean RealTimePush=false;
+		ResultSet rs = ps.executeQuery();
+		boolean RealTimePush = false;
 		while(rs.next()){
-			RealTimePush=rs.getBoolean(1);
+			RealTimePush = rs.getBoolean(1);
 		}
 		rs.close();ps.close();
 		return RealTimePush;
@@ -187,11 +186,11 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws Exception
 	 */
 	public Url doFindAll(int UrlID) throws Exception {
-		String query="select * from Url where UrlID=?";
-		ps=conn.prepareStatement(query);
+		String query = "select * from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		Url newUrl=new Url(UrlID);
+		ResultSet rs = ps.executeQuery();
+		Url newUrl = new Url(UrlID);
 		while(rs.next()){
 			newUrl.setUserName(rs.getString(2));
 			newUrl.setUrl(rs.getString(3));
@@ -210,22 +209,42 @@ public class UrlDAO implements IUrlDAO{
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int UrlID) throws Exception {
-		String query="select count(*) from Url where UserName=?";
-		ps=conn.prepareStatement(query);
+	public boolean isExist(int UrlID) throws Exception {
+		String query = "select count(*) from Url where UserName=?";
+		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
-		ResultSet rs=ps.executeQuery();
-		boolean isexist=false;
+		ResultSet rs = ps.executeQuery();
+		boolean isexist = false;
 		while(rs.next()){
-			if(rs.getInt(1)!=0)	isexist=true;
+			if(rs.getInt(1)!=0)	isexist = true;
 		}
 		rs.close();ps.close();
 		return isexist;
 	}
 
 	@Override
-	public void Free() throws Exception {
-		
+	public void free() throws Exception {}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindTitle
+	 * @Description: Find the Title By UrlID
+	 * @param UrlID
+	 * @return String
+	 * @throws Exception
+	 */
+	public String doFindTitle(int UrlID) throws Exception {
+		String query = "select title from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, UrlID);
+		ResultSet rs = ps.executeQuery();
+		String newTitle = new String();
+		while(rs.next()){
+			newTitle = rs.getString(1);
+		}
+		rs.close();ps.close();
+		return newTitle;
 	}
 
 }

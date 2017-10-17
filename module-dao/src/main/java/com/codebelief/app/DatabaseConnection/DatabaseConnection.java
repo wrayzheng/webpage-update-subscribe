@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- DatabaseConnection.java 
- */
 package com.codebelief.app.DatabaseConnection;
 
 import java.sql.Connection;

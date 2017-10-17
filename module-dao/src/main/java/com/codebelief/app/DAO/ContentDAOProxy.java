@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- ContentDAOProxy.java 
- */
 package com.codebelief.app.DAO;
 
 import com.codebelief.app.DatabaseConnection.*;
@@ -48,21 +45,6 @@ public class ContentDAOProxy implements IContentDAO{
 	 */
 	public boolean doDelete(int ContentID) throws Exception {
 		boolean success=dao.doDelete(ContentID);
-		dbc.free();
-		return success;
-	}
-
-	@Override
-	/**
-	 * @Title: doUpdateTitle
-	 * @Description: Update Title of a content
-	 * @param ContentID
-	 * @param Title
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean doUpdateTitle(int ContentID, String Title) throws Exception {
-		boolean success=dao.doUpdateTitle(ContentID, Title);
 		dbc.free();
 		return success;
 	}
@@ -161,8 +143,8 @@ public class ContentDAOProxy implements IContentDAO{
 	 * @return boolean: true is exist and false is not exist
 	 * @throws Exception
 	 */
-	public boolean IsExist(int ContentID) throws Exception {
-		boolean isexist=dao.IsExist(ContentID);
+	public boolean isExist(int ContentID) throws Exception {
+		boolean isexist=dao.isExist(ContentID);
 		dbc.free();
 		return isexist;
 	}
@@ -173,7 +155,7 @@ public class ContentDAOProxy implements IContentDAO{
 	 * @Description: Close the Connection to Database
 	 * @throws Exception
 	 */
-	public void Free() throws Exception {
+	public void free() throws Exception {
 		dbc.free();
 	}
 

@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- MySQLDatabaseConnection.java 
- */
 package com.codebelief.app.DatabaseConnection;
 
 import java.util.*;
@@ -13,28 +10,28 @@ import java.sql.SQLException;
 /**
  * 
  * @ClassName: MySQLDatabaseConnection
- * @Description: TODO(这里用一句话描述这个类的作用)
+ * @Description: Connecting with Database
  * @author 何涛
  * @date 2017年10月13日
  *
  */
 public class MySQLDatabaseConnection implements DatabaseConnection{
 	
-	private String DriverClass=null;//"com.mysql.jdbc.Driver";
-	private String Url=null;//"jdbc:mysql://localhost:3306/bookdb";
-	private String UserName=null;//"root";
-	private String Password=null;//"www.12358.com";
-	private Connection conn=null;
+	private String DriverClass = null;//"com.mysql.jdbc.Driver";
+	private String Url = null;//"jdbc:mysql://localhost:3306/bookdb";
+	private String UserName = null;//"root";
+	private String Password = null;//"www.12358.com";
+	private Connection conn = null;
 	
 	public MySQLDatabaseConnection() throws IOException{
-		Properties prop=new Properties();
-		FileInputStream file=new FileInputStream("F://java/workspace/SeeUTomorrow/src/dbProperties.properties");
+		Properties prop = new Properties();
+		FileInputStream file = new FileInputStream("F://java/workspace/SeeUTomorrow/src/dbProperties.properties");
 		prop.load(file);
 		
-		DriverClass=prop.getProperty("DriverClass");
-		Url=prop.getProperty("Url");
-		UserName=prop.getProperty("UserName");
-		Password=prop.getProperty("Password");
+		DriverClass = prop.getProperty("DriverClass");
+		Url = prop.getProperty("Url");
+		UserName = prop.getProperty("UserName");
+		Password = prop.getProperty("Password");
 		
 		try {
 			Class.forName(DriverClass);
@@ -43,7 +40,7 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 		}
 		
 		try {
-			conn=DriverManager.getConnection(Url,UserName,Password);
+			conn = DriverManager.getConnection(Url,UserName,Password);
 		} catch (SQLException e) {
 			System.out.print("Connecting Action failed!");
 			e.printStackTrace();

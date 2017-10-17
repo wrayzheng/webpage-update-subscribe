@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- Content.java 
- */
 package com.codebelief.app.VO;
 
 /**
@@ -13,22 +10,22 @@ package com.codebelief.app.VO;
  */
 public class Content {
 	
-	private int ContentID;
-	private int UrlID;
-	private String Title;	//the alias of a Url Content
-	private String Html;	//the Html code when the Content has Changed
-	private String Delta;	//the Difference between two interfacing Html codes
+	private int contentID;
+	private int urlID;
+	//private String title;	//the alias of a Url Content
+	private String html;	//the Html code when the Content has Changed
+	private String delta;	//the Difference between two interfacing Html codes
 	
 	public Content(int ContentID){
-		this.ContentID=ContentID;
+		this.contentID = ContentID;
 	}
 	
-	public Content(int ContentID,int UrlID,String Title,String Html,String Delta){
-		this.ContentID=ContentID;
-		this.UrlID=UrlID;
-		this.Title=Title;
-		this.Html=Html;
-		this.Delta=Delta;
+	public Content(int ContentID, int UrlID, String Html, String Delta){
+		this.contentID = ContentID;
+		this.urlID = UrlID;
+		//this.title=Title;
+		this.html = Html;
+		this.delta = Delta;
 	}
 	
 	/**
@@ -36,70 +33,70 @@ public class Content {
 	 * @return ContentID
 	 */
 	public int getContentID() {
-		return ContentID;
+		return contentID;
 	}
 	/**
 	 * 
 	 * @param contentID
 	 */
 	public void setContentID(int contentID) {
-		ContentID = contentID;
+		this.contentID = contentID;
 	}
 	/**
 	 * 
 	 * @return UrlID
 	 */
 	public int getUrlID() {
-		return UrlID;
+		return urlID;
 	}
 	/**
 	 * 
 	 * @param urlID
 	 */
 	public void setUrlID(int urlID) {
-		UrlID = urlID;
+		this.urlID = urlID;
 	}
 	/**
 	 * 
 	 * @return Title
 	 */
-	public String getTitle() {
-		return Title;
-	}
+	/*public String getTitle() {
+		return title;
+	}*/
 	/**
 	 * 
 	 * @param title
 	 */
-	public void setTitle(String title) {
-		Title = title;
-	}
+	/*public void setTitle(String title) {
+		this.title = title;
+	}*/
 	/**
 	 * 
 	 * @return Html
 	 */
 	public String getHtml() {
-		return Html;
+		return html;
 	}
 	/**
 	 * 
 	 * @param html
 	 */
 	public void setHtml(String html) {
-		Html = html;
+		this.html = html;
 	}
 	/**
 	 * 
 	 * @return Delta
 	 */
 	public String getDelta() {
-		return Delta;
+		return delta;
 	}
 	/**
 	 * 
 	 * @param delta
 	 */
 	public void setDelta(String delta) {
-		Delta = delta;
+		this.delta = delta;
 	}
 	
 }

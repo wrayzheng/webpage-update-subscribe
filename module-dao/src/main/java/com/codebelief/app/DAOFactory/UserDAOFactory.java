@@ -1,6 +1,3 @@
-/*
- * @(#)SeeUTomorrow --- UserDAOFactory.java 
- */
 package com.codebelief.app.DAOFactory;
 
 import com.codebelief.app.DAO.IUserDAO;
