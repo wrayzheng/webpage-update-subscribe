@@ -6,17 +6,16 @@
 	<constant name="struts.action.extension" value="do" />
 	<constant name="struts.ui.theme" value="simple" />
 
+	<package name="json" extends="json-default">
+		<!-- 登录 -->
+		<action name="login" class="com.codebelief.app.action.LoginAction">
+			<result type="json" />
+		</action>
+	</package>
+
 	<package name="default" extends="struts-default">
         <!-- 注册新用户 -->
 		<action name="signup" class="com.codebelief.app.action.SignupAction">
-			<result name="success" type="redirectAction">
-                <param name="actionName">overview</param>
-            </result>
-			<result name="error">/error.jsp</result>
-		</action>
-
-        <!-- 登录 -->
-		<action name="login" class="com.codebelief.app.action.LoginAction">
 			<result name="success" type="redirectAction">
                 <param name="actionName">overview</param>
             </result>
