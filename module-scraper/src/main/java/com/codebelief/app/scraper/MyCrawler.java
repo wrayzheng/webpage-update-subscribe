@@ -17,11 +17,13 @@ import edu.uci.ics.crawler4j.url.WebURL;
  */
 
 public class MyCrawler extends WebCrawler {
+	//正则匹配指定的后缀文件
     private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
                                                            + "|png|mp3|mp3|zip|gz))$");
      
      /*
-      * 定义爬虫开始网页，以及接下来爬取网页的规则
+      * 决定哪些url需要抓取，返回true是需要的
+      * 第一个参数封装了当前爬取 的页面信息，第二个参数封装了当前爬取页面的url信息
       * 本爬虫系统，只下载特定页面，无需爬取更深层次页面
       * 始终返回（false）,留作功能拓展使用
       */
@@ -33,7 +35,8 @@ public class MyCrawler extends WebCrawler {
      }
  
      /*
-      * 处理爬取后的页面，提取有效链接（指向文章的链接）
+      * 处理爬取后的页面
+      * 提取有效链接（指向文章的链接）
       */
      @Override
      public void visit(Page page) {
@@ -48,7 +51,7 @@ public class MyCrawler extends WebCrawler {
              System.out.println("Title: "+ title);           
              String baseUri = url;
              Elements validLinks = PageParser.getLinks(html, baseUri);
-             writeFile(html);
+             
              
          }
      }
