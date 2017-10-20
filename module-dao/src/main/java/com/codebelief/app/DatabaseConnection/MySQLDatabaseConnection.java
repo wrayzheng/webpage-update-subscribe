@@ -24,22 +24,6 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	private String url = null;
 	
 	public MySQLDatabaseConnection() throws IOException {
-		Properties prop = new Properties();
-		FileInputStream file = null;
-		try {
-			//String path = Path.Combine();
-			file = new FileInputStream("C://Users/何涛/Desktop/作业/软件工程/项目/webpage-update-subscribe/module-dao/src/main/resources/db.properties");
-		} catch (FileNotFoundException e1) {
-			
-			e1.printStackTrace();
-		}
-		prop.load(file);
-		
-		host = prop.getProperty("host");
-		port = prop.getProperty("port");
-		database = prop.getProperty("database");
-		userName = prop.getProperty("username");
-		password = prop.getProperty("password");
 		url="jdbc:mysql://"+host+":"+port+"/"+database+"?characterEncoding=utf-8";
 		
 		try {
@@ -153,7 +137,7 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	/**
 	 * 
 	 * @Title: readDbProperties
-	 * @Description: Supplement the missing information in the configuration file.
+	 * @Description: Get the configuration information from /.wus/do.properties
 	 * @param path
 	 * @throws IOException
 	 */
@@ -172,32 +156,10 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 			e.printStackTrace();
 		}
 		
-		String newUserName = prop.getProperty("username");//"root";
-		String newPassword = prop.getProperty("password");//"mysql";
-		String newHost = prop.getProperty("host");//"localhost";
-		String newPort = prop.getProperty("port");//"3306";
-		String newDatabase = prop.getProperty("database");//"mysql";
-		if(isValid(newUserName)
-				&& isValid(newPassword) 
-				&& isValid(newHost) 
-				&& isValid(newPort)
-				&& isValid(newDatabase))
-			return;
-		
-		if(! isValid(newUserName))
-			newUserName = "root";
-		if(! isValid(newPassword))
-			newPassword = "mysql";
-		if(! isValid(newHost))
-			newHost = "localhost";
-		if(! isValid(newPort))
-			newPort = "3306";
-		if(! isValid(newDatabase))
-			newDatabase = "mysql";
-		createDefaultDbProperties(path, newUserName, newPassword, newHost, newPort, newDatabase);
-	}
-	
-	private static boolean isValid(String object){
-		return object != null && !"".equals(object);
+		userName = prop.getProperty("username");//"root";
+		password = prop.getProperty("password");//"mysql";
+		host = prop.getProperty("host");//"localhost";
+		port = prop.getProperty("port");//"3306";
+		database = prop.getProperty("database");//"mysql";
 	}
 }

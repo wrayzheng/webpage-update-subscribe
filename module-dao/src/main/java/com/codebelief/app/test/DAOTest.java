@@ -67,6 +67,7 @@ public class DAOTest {
 		//contentDAO.Free();
 		//MySQLDatabaseConnection dbc = DatabaseConnectionFactory.getMySQLDatabaseConnection();
 		MySQLDatabaseConnection.initialDatabaseDeploy();
+		MySQLDatabaseConnection mysql = DatabaseConnectionFactory.getMySQLDatabaseConnection();
 		System.out.println(System.getProperties().getProperty("file.separator"));
 		System.out.println("Success!");
 	}
