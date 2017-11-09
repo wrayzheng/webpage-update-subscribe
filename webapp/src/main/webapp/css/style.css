@@ -1,0 +1,128 @@
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+    background: #67c2d4;
+}
+
+.container {
+    margin: 0;
+}
+
+h1 {
+	font-size: 3em;
+	letter-spacing: 3px;
+}
+
+/* 首页 */
+.cover {
+	color: #faf1e0;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.cover p {
+	font-size: 1.65em;
+	font-weight: 300;
+}
+
+.ts {
+	opacity: 0.8;
+}
+
+.cover h1 {
+	margin: 1em 0;
+}
+
+.box {
+	margin: 2em 0;
+	padding: 1em;
+}
+
+button {
+	background-color: #fef0e3;
+	color: #e75854;
+	border: none;
+	letter-spacing: 1px;
+	font-weight: 700;
+	line-height: 60px;
+	width: 200px;
+	font-size: 1.5em;
+	padding: 10px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+/* 设置弹出层效果 */
+.dialog {
+	display: block;
+	background: #fef0e3;
+	color: #e75854;
+	width: 350px;
+	z-index: 200;
+	padding: 10px 30px;
+	margin: 80px auto;
+}
+
+.dialog * {
+	width: 100%;
+}
+
+.dialog-bg {
+	display: none;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,.8);
+	z-index: 100;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
+.dialog h2 {
+	font-size: 2em;
+	text-align: center;
+	letter-spacing: 3px;
+}
+
+.dialog .input-group {
+	margin: 10px 0;
+}
+
+.dialog .input-group label {
+	display: block;
+	color: #d5bba4;
+	padding: 5px 0;
+}
+
+.dialog .input-group input {
+	border: 2px solid #d5bba4;
+	background: transparent;
+	line-height: 50px;
+	font-weight: 300;
+	font-size: 1.6em;
+	color: #d5bba4;
+	padding: 0 10px;
+}
+
+.dialog .input-group input:focus {
+	border: 2px solid #e75854;
+	color: #e75854;
+}
+
+.dialog .btn {
+	background-color: #e75854;
+	color: #fef0e3;
+	border: none;
+	letter-spacing: 3px;
+	font-size: 1.2em;
+	font-weight: 700;
+	line-height: 60px;
+	width: 100%;
+	margin: 20px 0;
+}
+/* 弹出层效果设置结束 */

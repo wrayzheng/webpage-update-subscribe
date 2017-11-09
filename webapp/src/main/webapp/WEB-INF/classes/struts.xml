@@ -1,81 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE struts PUBLIC
-"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-"http://struts.apache.org/dtds/struts-2.0.dtd">
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
 	<constant name="struts.devMode" value="true" />
+    <constant name="struts.configuration.xml.reload" value="true" />
 	<constant name="struts.action.extension" value="do" />
 	<constant name="struts.ui.theme" value="simple" />
 
-	<package name="json" extends="json-default">
+    <!-- AJAX调用接口 -->
+	<package name="ajax-modify" namespace="/ajax" extends="json-default">
+		<global-results>
+			<result type="json" name="success">
+				<param name="includeProperties">success</param>
+			</result>
+			<result type="json" name="error">
+				<param name="includeProperties">success,errorMsg</param>
+			</result>
+		</global-results>
 		<!-- 登录 -->
-		<action name="login" class="com.codebelief.app.action.LoginAction">
-			<result type="json" />
+		<action name="login" class="com.codebelief.app.action.LoginAction" />
+		<!-- 注册新用户 -->
+		<action name="signup" class="com.codebelief.app.action.SignupAction" />
+        <!-- 修改订阅记录单个字段 -->
+        <action name="enable" class="com.codebelief.app.action.UrlModifyAction" method="enable" />
+        <action name="disable" class="com.codebelief.app.action.UrlModifyAction" method="disable" />
+        <action name="setRealTimePush" class="com.codebelief.app.action.UrlModifyAction" method="setRealTimePush" />
+        <action name="setIntegratedPush" class="com.codebelief.app.action.UrlModifyAction" method="setIntegratedPush" />
+        <action name="updateUrl" class="com.codebelief.app.action.UrlModifyAction" method="updateUrl" />
+        <action name="updateUrlTitle" class="com.codebelief.app.action.UrlModifyAction" method="updateUrlTitle" />
+	</package>
+	
+	<!-- 前台操作 -->
+	<package name="default" namespace="/" extends="struts-default">
+		<default-action-ref name="notfound"></default-action-ref>
+	
+		<global-results>
+			<result name="error">/error.jsp</result>
+		</global-results>
+	
+		<!-- 404错误（找不到对应Action） -->
+		<action name="notfound">
+			<result>/error404.jsp</result>
+		</action>
+	
+		<!-- 注销登录 -->
+		<action name="logout" class="com.codebelief.app.action.LoginAction" method="logout">
+			<result name="success" type="redirect">/</result>
 		</action>
 	</package>
 
-	<package name="default" extends="struts-default">
-        <!-- 注册新用户 -->
-		<action name="signup" class="com.codebelief.app.action.SignupAction">
-			<result name="success" type="redirectAction">
-                <param name="actionName">overview</param>
-            </result>
+    <!-- 后台操作 -->
+	<package name="loginMode" namespace="/user" extends="struts-default">		
+        <interceptors>
+            <interceptor name="auth" class="com.codebelief.app.AccessInterceptor" />
+        </interceptors>
+	
+		<default-interceptor-ref name="auth" />
+		
+		<global-results>
 			<result name="error">/error.jsp</result>
-		</action>
+			<result name="login" type="redirect">/login.jsp</result>
+		</global-results>
 
         <!-- 订阅信息概览 -->
-		<action name="overview" class="com.codebelief.app.action.UrlsOverviewAction">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
+		<action name="overview" class="com.codebelief.app.action.UrlOverviewAction">
+            <result name="success">/user/overview.jsp</result>
 		</action>
 
         <!-- 订阅信息详情 -->
 		<action name="detail" class="com.codebelief.app.action.UrlDetailAction">
-            <result name="success">/detail.jsp</result>
-			<result name="error">/error.jsp</result>
+            <result name="success">/user/detail.jsp</result>
 		</action>
 
         <!-- 添加订阅信息 -->
 		<action name="addUrl" class="com.codebelief.app.action.UrlOperateAction" method="add">
-            <result name="success">/detail.jsp</result>
-			<result name="error">/error.jsp</result>
+            <result name="success">/user/detail.jsp</result>
 		</action>
 
         <!-- 更新订阅信息 -->
 		<action name="updateUrl" class="com.codebelief.app.action.UrlOperateAction" method="update">
-            <result name="success">/detail.jsp</result>
-			<result name="error">/error.jsp</result>
+            <result name="success">/user/detail.jsp</result>
 		</action>
 
         <!-- 删除订阅信息 -->
 		<action name="deleteUrl" class="com.codebelief.app.action.UrlOperateAction" method="delete">
-            <result name="success">/detail.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-
-        <!-- 修改订阅记录单个字段 -->
-		<action name="enable" class="com.codebelief.app.action.UrlModifyAction" method="enable">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-		<action name="disable" class="com.codebelief.app.action.UrlModifyAction" method="disable">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-		<action name="setRealTimePush" class="com.codebelief.app.action.UrlModifyAction" method="setRealTimePush">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-		<action name="setIntegratedPush" class="com.codebelief.app.action.UrlModifyAction" method="setIntegratedPush">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-		<action name="updateUrl" class="com.codebelief.app.action.UrlModifyAction" method="updateUrl">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
-		</action>
-		<action name="updateUrlTitle" class="com.codebelief.app.action.UrlModifyAction" method="updateUrlTitle">
-            <result name="success">/overview.jsp</result>
-			<result name="error">/error.jsp</result>
+            <result name="success">/user/overview.jsp</result>
 		</action>
 	</package>
 

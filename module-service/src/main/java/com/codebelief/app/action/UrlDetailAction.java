@@ -15,7 +15,12 @@ public class UrlDetailAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		return SUCCESS;
+		if(urlID == 0) {
+			return ERROR;
+		}
+		else {
+			return SUCCESS;
+		}
 	}
 
 	public int getUrlID() {

@@ -1,5 +1,10 @@
 package com.codebelief.app.action;
 
+import java.sql.Time;
+
+import com.codebelief.app.DAO.IUserDAO;
+import com.codebelief.app.DAOFactory.UserDAOFactory;
+import com.codebelief.app.VO.User;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -14,9 +19,24 @@ public class SignupAction extends ActionSupport {
 	private String userName;
 	private String email;
 	private String password;
+	private boolean success;
+	private String errorMsg;
 
 	@Override
 	public String execute() throws Exception {
+		User user = new User(userName, password, email, Time.valueOf("20:00:00"));
+		IUserDAO userDAO;
+		
+		try{
+			userDAO = UserDAOFactory.getUserDAOInstance();
+			userDAO.doInsert(user);
+		} catch(Exception e) {
+			success = false;
+			errorMsg = "注册失败！";
+			return ERROR;
+		}
+		
+		success = true;
 		return SUCCESS;
 	}
 
@@ -42,6 +62,22 @@ public class SignupAction extends ActionSupport {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 
 }

@@ -14,6 +14,8 @@ public class UrlModifyAction extends ActionSupport {
 	private int urlID;
 	private String url;
 	private String urlTitle;
+	private boolean success;
+	private String errorMsg;
 	
 	public String enable() {
 		return SUCCESS;
@@ -61,5 +63,21 @@ public class UrlModifyAction extends ActionSupport {
 
 	public void setUrlTitle(String urlTitle) {
 		this.urlTitle = urlTitle;
+	}
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
 	}
 }
