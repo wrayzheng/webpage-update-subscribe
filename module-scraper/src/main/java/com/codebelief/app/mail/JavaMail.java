@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author 何涛
  * @version 1st   on 2017年11月9日
  */
-public class JavaMail {
+public class JavaMail implements IJavaMail{
 	private static String myMailSMTPHost = null;
 	private static String myMailAccount = null;
 	private static String myMailPassword = null;
