@@ -190,8 +190,9 @@ public class UrlDAO implements IUrlDAO{
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
 		ResultSet rs = ps.executeQuery();
-		Url newUrl = new Url(UrlID);
+		Url newUrl = null;//new Url(UrlID);
 		while(rs.next()){
+			newUrl = new Url(UrlID);
 			newUrl.setUserName(rs.getString(2));
 			newUrl.setUrl(rs.getString(3));
 			newUrl.setEnable(rs.getBoolean(4));
@@ -239,7 +240,7 @@ public class UrlDAO implements IUrlDAO{
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
 		ResultSet rs = ps.executeQuery();
-		String newTitle = new String();
+		String newTitle = null;
 		while(rs.next()){
 			newTitle = rs.getString(1);
 		}

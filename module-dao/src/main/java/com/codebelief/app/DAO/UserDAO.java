@@ -157,8 +157,9 @@ public class UserDAO implements IUserDAO{
 		ps=conn.prepareStatement(query);
 		ps.setString(1, UserName);
 		ResultSet rs = ps.executeQuery();
-		LinkedList<String> answer = new LinkedList<String>();	//contain the Password and Email
+		LinkedList<String> answer = null;//new LinkedList<String>();	//contain the Password and Email
 		while(rs.next()){
+			answer = new LinkedList<String>();
 			answer.add(rs.getString(1));
 			answer.add(rs.getString(2));
 		}
@@ -201,8 +202,9 @@ public class UserDAO implements IUserDAO{
 		ps=conn.prepareStatement(query);
 		ps.setString(1, UserName);
 		ResultSet rs = ps.executeQuery();
-		User newUser = new User(UserName);
+		User newUser = null;//new User(UserName);
 		while(rs.next()){
+			newUser = new User(UserName);
 			newUser.setPassword(rs.getString(2));
 			newUser.setEmail(rs.getString(3));
 			newUser.setPushTime(rs.getTime(4));

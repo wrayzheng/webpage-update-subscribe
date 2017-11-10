@@ -91,6 +91,7 @@ public class ContentDAO implements IContentDAO{
 	/**
 	 * @Title: doFindUriID
 	 * @Description: Find the ContentID By a special ContentID
+	 * 				 return -1 if finding UrlID failing
 	 * @param ContentID
 	 * @return int
 	 * @throws Exception
@@ -100,7 +101,7 @@ public class ContentDAO implements IContentDAO{
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
 		ResultSet rs = ps.executeQuery();
-		int UrlID = -1;		//-1 stands for Finding UrlID failing
+		int UrlID = -1;		//-1 stands for finding UrlID failing
 		while(rs.next()){
 			UrlID = rs.getInt(1);
 		}
@@ -184,8 +185,9 @@ public class ContentDAO implements IContentDAO{
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
 		ResultSet rs = ps.executeQuery();
-		Content newContent = new Content(ContentID);
+		Content newContent = null;//new Content(ContentID);
 		while(rs.next()){
+			newContent = new Content(ContentID);
 			newContent.setUrlID(rs.getInt(2));
 			newContent.setHtml(rs.getString(3));
 			newContent.setDelta(rs.getString(4));
