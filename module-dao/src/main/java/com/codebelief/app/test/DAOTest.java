@@ -15,7 +15,7 @@ import java.sql.Time;
 public class DAOTest {
 	public static void main(String[] args) throws Exception{
 		MySQLDatabaseConnection.initialDatabaseDeploy();
-		MySQLDatabaseConnection mysql = DatabaseConnectionFactory.getMySQLDatabaseConnection();
+		//MySQLDatabaseConnection mysql = DatabaseConnectionFactory.getMySQLDatabaseConnection();
 		//User user=new User("ºÎÌÎ","hetao","15705657659@163.com",Time.valueOf("20:00:00"));
 		IUserDAO userDAO=UserDAOFactory.getUserDAOInstance();
 		//userDAO.doInsert(user);
