@@ -1,7 +1,6 @@
 package com.codebelief.app.scheduler;
 
-
-import java.util.Date;
+import com.codebelief.app.scraper.*;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -16,8 +15,14 @@ public class CrawlJob implements Job {
 	//定义 Job 接口方法
 	// JobExecutionContext 类提供了调度上下文的各种信息
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		System.out.println(context.getTrigger().getCalendarName() + "triggered.time is :" + (new Date()));
-		//System.out.println("hello quartz");
+		//System.out.println(context.getTrigger().getCalendarName() + "triggered.time is :" + (new Date()));
+		try {
+			Controller.execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

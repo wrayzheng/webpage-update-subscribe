@@ -53,8 +53,8 @@ public class PageParser {
     			 linkNum--;	 
     			 continue;
     		 }  		 
-    		 System.out.println("Href:" + linkHref);
-    		 System.out.println("Text: " + linkText);
+    		 //System.out.println("Href:" + linkHref);
+    		 //System.out.println("Text: " + linkText);
     	}
         System.out.println("linkNumAfter = " + links.size());
    

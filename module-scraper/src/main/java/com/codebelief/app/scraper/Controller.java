@@ -11,7 +11,8 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
  */
 
 public class Controller {
-    public static void main(String[] args) throws Exception {
+    //public static void main(String[] args) throws Exception {
+	public static void execute() throws Exception {
         String crawlStorageFolder = "/data/crawl/root";
         //设置并行爬虫个数
         int numberOfCrawlers = 2;
@@ -43,8 +44,8 @@ public class Controller {
          *  为每个爬虫添加初始爬取页面，后面以每个页面发现的链接作为爬取对象
          */
         //controller.addSeed("http://today.hit.edu.cn/css2010/style.css?123");
-        //controller.addSeed("http://today.hit.edu.cn/");
-        //controller.addSeed("http://today.hit.edu.cn/phb/1.htm");
+        controller.addSeed("http://today.hit.edu.cn/");
+        controller.addSeed("http://today.hit.edu.cn/phb/1.htm");
         controller.addSeed("http://www.sina.com.cn/");
         controller.addSeed("http://www.tsinghua.edu.cn/publish/newthu/index.html");
  
