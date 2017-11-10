@@ -19,7 +19,7 @@ public class DAOTest {
 		//User user=new User("何涛","hetao","15705657659@163.com",Time.valueOf("20:00:00"));
 		IUserDAO userDAO=UserDAOFactory.getUserDAOInstance();
 		//userDAO.doInsert(user);
-		userDAO.doUpdatePushTime("何涛", Time.valueOf("20:00:00"));
+		//userDAO.doUpdatePushTime("何涛", Time.valueOf("20:00:00"));
 		//userDAO.doUpdatePasswordAndEmail("何涛", "hetao", "15705657659@163.com");
 		/*User newUser=userDAO.doFindAll("何涛");
 		System.out.println("UserName:"+newUser.getUserName());

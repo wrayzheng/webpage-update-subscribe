@@ -18,7 +18,6 @@ public class UserDAO implements IUserDAO{
 	
 	private Connection conn = null;
 	private PreparedStatement ps = null;
-	private Statement stat = null;
 	
 	public UserDAO(Connection conn){
 		this.conn = conn;
@@ -61,14 +60,24 @@ public class UserDAO implements IUserDAO{
 	 */
 	public boolean doUpdatePasswordAndEmail(String UserName,String newPassword, String newEmail) throws Exception {
 		String query = null;
-		if(newEmail == null)	query = "update User set Email='"+newEmail+"' where UserName = "+UserName+"'";
-		else query = "update User set Password='"+newPassword+"',Email='"+newEmail+"' where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		if(stat.executeUpdate(query) == 0){
-			stat.close();
+		if(newEmail == null){
+			query = "update User set Email = ? where UserName = ?'";
+			ps=conn.prepareStatement(query);
+			ps.setString(1, newEmail);
+			ps.setString(2, UserName);
+		}
+		else{
+			query = "update User set Password = ?,Email = ? where UserName = ?";
+			ps=conn.prepareStatement(query);
+			ps.setString(1, newPassword);
+			ps.setString(2, newEmail);
+			ps.setString(3, UserName);
+		}
+		if(ps.executeUpdate() == 0){
+			ps.close();
 			return false;
 		}
-		stat.close();
+		ps.close();
 		return true;
 	}
 
@@ -81,14 +90,15 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public String doFindEmail(String UserName) throws Exception {
-		String query = "select Email from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select Email from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		String Email = null;
 		while(rs.next()){
 			Email = rs.getString("Email");
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return Email;
 	}
 
@@ -101,14 +111,15 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public Time doFindPushTime(String UserName) throws Exception {
-		String query = "select PushTime from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select PushTime from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		java.sql.Time PushTime = null;
 		while(rs.next()){
 			PushTime = rs.getTime(1);
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return PushTime;
 	}
 
@@ -121,14 +132,15 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public String doFindPassword(String UserName) throws Exception {
-		String query = "select Password from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select Password from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		String Password = null;
 		while(rs.next()){
 			Password = rs.getString(1);
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return Password;
 	}
 
@@ -141,15 +153,16 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public LinkedList<String> doFindPasswordAndEmail(String UserName) throws Exception {
-		String query = "select Password,Email from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select Password,Email from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		LinkedList<String> answer = new LinkedList<String>();	//contain the Password and Email
 		while(rs.next()){
 			answer.add(rs.getString(1));
 			answer.add(rs.getString(2));
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return answer;
 	}
 
@@ -167,7 +180,7 @@ public class UserDAO implements IUserDAO{
 		ps = conn.prepareStatement(query);
 		ps.setTime(1, PushTime);
 		ps.setString(2, UserName);
-		if(ps.executeUpdate()==0){
+		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;
 		}
@@ -184,16 +197,17 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public User doFindAll(String UserName) throws Exception {
-		String query = "select * from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select * from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		User newUser = new User(UserName);
 		while(rs.next()){
 			newUser.setPassword(rs.getString(2));
 			newUser.setEmail(rs.getString(3));
 			newUser.setPushTime(rs.getTime(4));
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return newUser;
 	}
 
@@ -206,15 +220,16 @@ public class UserDAO implements IUserDAO{
 	 * @throws Exception
 	 */
 	public boolean isExist(String UserName) throws Exception {
-		String query = "select count(*) from User where UserName='"+UserName+"'";
-		stat = (Statement) conn.createStatement();
-		ResultSet rs = stat.executeQuery(query);
+		String query = "select count(*) from User where UserName = ?";
+		ps=conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
 		boolean isexist = false;
 		while(rs.next()){
 			if(rs.getInt(1)!=0)
 				isexist = true;
 		}
-		rs.close();stat.close();
+		rs.close();ps.close();
 		return isexist;
 	}
 
