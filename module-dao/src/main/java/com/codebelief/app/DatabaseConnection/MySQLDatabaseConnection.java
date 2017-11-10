@@ -81,7 +81,7 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 		File file = new File(path);
 		if(!file.exists()){
 			try {
-				createDefaultDbProperties(path,"root","musql","localhost","3306","musql");
+				createDefaultDbProperties(path,"root","mysql","localhost","3306","mysql");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -119,15 +119,15 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 		
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter write = new BufferedWriter(fw);
-		write.write("username="+username);
+		write.write("username=" + username);
 		write.newLine();
-		write.write("password="+password);
+		write.write("password=" + password);
 		write.newLine();
-		write.write("host="+host);
+		write.write("host=" + host);
 		write.newLine();
-		write.write("database="+database);
+		write.write("database=" + database);
 		write.newLine();
-		write.write("port="+port);
+		write.write("port=" + port);
 		write.flush();
 		
 		write.close();
