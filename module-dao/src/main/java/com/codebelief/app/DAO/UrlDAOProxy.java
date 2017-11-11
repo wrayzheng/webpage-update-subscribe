@@ -1,5 +1,7 @@
 package com.codebelief.app.DAO;
 
+import java.sql.SQLException;
+
 import com.codebelief.app.DatabaseConnection.*;
 import com.codebelief.app.VO.Url;
 /**
@@ -60,9 +62,69 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID, String title, String url, boolean Enable, boolean RealTimePush) throws Exception {
-		boolean success = dao.doUpdate(UrlID, title, url, Enable, RealTimePush);
+	public boolean doUpdate(Url urlInstance) throws Exception {
+		boolean success = dao.doUpdate(urlInstance);
 		//dbc.free();
+		return success;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateTitle
+	 * @Description: update the Title singly
+	 * @param UrlID
+	 * @param title
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doUpdateTitle(int urlID, String title) throws Exception {
+		boolean success = dao.doUpdateTitle(urlID, title);
+		return success;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateUrl
+	 * @Description: update the Url singly
+	 * @param UrlID
+	 * @param url
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateUrl(int urlID, String url) throws SQLException{
+		boolean success = dao.doUpdateUrl(urlID, url);
+		return success;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateEnable
+	 * @Description: update the Enable singly
+	 * @param UrlID
+	 * @param Enable
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEnable(int urlID, boolean Enable) throws SQLException {
+		boolean success = dao.doUpdateEnable(urlID, Enable);
+		return success;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateRealTimePush
+	 * @Description: update the ReanTimePush singly
+	 * @param urlID
+	 * @param RealTimePuah
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateRealTimePush(int urlID, boolean RealTimePuah) throws SQLException {
+		boolean success = dao.doUpdateRealTimePush(urlID, RealTimePuah);
 		return success;
 	}
 

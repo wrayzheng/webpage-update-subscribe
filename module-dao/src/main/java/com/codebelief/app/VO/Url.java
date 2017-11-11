@@ -30,6 +30,15 @@ public class Url {
 		this.realTimePush = true;
 	}
 	
+	public Url(int UrlID, String UserName, String title, String Url, boolean enabled, boolean realTimePush){
+		this.urlID = UrlID;
+		this.userName = UserName;
+		this.title = title;
+		this.url = Url;
+		this.enabled = enabled;
+		this.realTimePush = realTimePush;
+	}
+	
 	/**
 	 * 
 	 * @return UrlID

@@ -1,5 +1,7 @@
 package com.codebelief.app.DAO;
 
+import java.sql.SQLException;
+
 import com.codebelief.app.VO.Content;
 /**
  * @author ºÎÌÎ
@@ -37,6 +39,28 @@ public interface IContentDAO {
 	 * @throws Exception
 	 */
 	public boolean doUpdateHtmlAndDelta(int ContentID,String Html,String Delta) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doUpdateHtml
+	 * @Description: update the Html singly
+	 * @param ContentID
+	 * @param Html
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateHtml(int ContentID, String Html) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doUpdateDelta
+	 * @Description: update the Delta singly
+	 * @param ContentID
+	 * @param Delta
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateDelta(int ContentID, String Delta) throws SQLException;
 	
 	/**
 	 * 

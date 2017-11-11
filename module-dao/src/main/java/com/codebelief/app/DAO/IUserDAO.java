@@ -1,5 +1,6 @@
 package com.codebelief.app.DAO;
 
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.LinkedList;
 
@@ -22,6 +23,16 @@ public interface IUserDAO {
 	/**
 	 * 
 	 * @Title: doUpdate
+	 * @Description: update a complete User insatnce
+	 * @param user
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdate(User user) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doUpdatePasswordAndEmail
 	 * @Description: Update a User's Password and Email, 
 	 * 				 Choose Different Updating ways 
 	 * 				 by judging the whether the Password is NULL.
@@ -32,6 +43,28 @@ public interface IUserDAO {
 	 * @throws Exception
 	 */
 	public boolean doUpdatePasswordAndEmail(String UserName,String newPassword,String newEmail) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doUpdatePassword
+	 * @Description: update the password singly
+	 * @param UserName
+	 * @param newPassword
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdatePassword(String UserName, String newPassword) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doUpdateEmail
+	 * @Description: update the email singly
+	 * @param UserName
+	 * @param newEmail
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEmail(String UserName, String newEmail) throws SQLException;
 	
 	/**
 	 * 

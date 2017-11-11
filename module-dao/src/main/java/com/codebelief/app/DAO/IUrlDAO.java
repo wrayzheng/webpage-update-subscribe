@@ -1,5 +1,7 @@
 package com.codebelief.app.DAO;
 
+import java.sql.SQLException;
+
 import com.codebelief.app.VO.Url;
 /**
  * @author ºÎÌÎ
@@ -29,7 +31,7 @@ public interface IUrlDAO {
 	/**
 	 * 
 	 * @Title: doUpdate
-	 * @Description: Update the Url,Enable,RealTimePush of a piece of Url Info
+	 * @Description: Update the a complete url instance
 	 * @param UrlID
 	 * @param url
 	 * @param Enable
@@ -37,7 +39,51 @@ public interface IUrlDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID,String title,String url,boolean Enable,boolean RealTimePush) throws Exception;
+	public boolean doUpdate(Url urlInstance) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doUpdateTitle
+	 * @Description: update the Title singly
+	 * @param UrlID
+	 * @param title
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doUpdateTitle(int UrlID, String title) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doUpdateUrl
+	 * @Description: update the Url singly
+	 * @param UrlID
+	 * @param url
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateUrl(int UrlID, String url) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doUpdateEnable
+	 * @Description: update the Enable singly
+	 * @param UrlID
+	 * @param Enable
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEnable(int UrlID, boolean Enable) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doUpdateRealTimePush
+	 * @Description: update the ReanTimePush singly
+	 * @param urlID
+	 * @param RealTimePuah
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateRealTimePush(int urlID, boolean RealTimePuah) throws SQLException;
 	
 	/**
 	 * 

@@ -41,7 +41,7 @@ public class UserDAOProxy implements IUserDAO{
 
 	@Override
 	/**
-	 * @Title: doUpdate
+	 * @Title: doUpdatePasswordAndEmail
 	 * @Description: Update a User's Password and Email, 
 	 * 				 Choose Different Updating ways 
 	 * 				 by judging the whether the Password is NULL.
@@ -69,6 +69,54 @@ public class UserDAOProxy implements IUserDAO{
 	public boolean doUpdatePushTime(String UserName, Time PushTime) throws Exception {
 		boolean success=dao.doUpdatePushTime(UserName, PushTime);
 		//dbc.free();
+		return success;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdate
+	 * @Description: Update a User's Password and Email, 
+	 * 				 Choose Different Updating ways 
+	 * 				 by judging the whether the Password is NULL.
+	 * @param UserName
+	 * @param newPassword
+	 * @param newEmail
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean doUpdate(User user) throws SQLException {
+		boolean success = dao.doUpdate(user);
+		return success;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdatePassword
+	 * @Description: update the password singly
+	 * @param UserName
+	 * @param newPassword
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdatePassword(String UserName, String newPassword) throws SQLException {
+		boolean success = dao.doUpdatePassword(UserName, newPassword);
+		return success;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateEmail
+	 * @Description: update the email singly
+	 * @param UserName
+	 * @param newEmail
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEmail(String UserName, String newEmail) throws SQLException {
+		boolean success = dao.doUpdateEmail(UserName, newEmail);
 		return success;
 	}
 
@@ -165,5 +213,4 @@ public class UserDAOProxy implements IUserDAO{
 	public void free() throws Exception{
 		dbc.free();
 	}
-
 }

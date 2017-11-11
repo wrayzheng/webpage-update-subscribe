@@ -89,6 +89,52 @@ public class ContentDAO implements IContentDAO{
 	
 	@Override
 	/**
+	 * 
+	 * @Title: doUpdateHtml
+	 * @Description: update the Html singly
+	 * @param ContentID
+	 * @param Html
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateHtml(int ContentID, String Html) throws SQLException {
+		String query = "update Content set Html=? where ContentID=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, Html);
+		ps.setInt(2, ContentID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateDelta
+	 * @Description: update the Delta singly
+	 * @param ContentID
+	 * @param Delta
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateDelta(int ContentID, String Delta) throws SQLException {
+		String query = "update Content set Delta=? where ContentID=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, Delta);
+		ps.setInt(2, ContentID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+	
+	@Override
+	/**
 	 * @Title: doFindUriID
 	 * @Description: Find the ContentID By a special ContentID
 	 * 				 return -1 if finding UrlID failing

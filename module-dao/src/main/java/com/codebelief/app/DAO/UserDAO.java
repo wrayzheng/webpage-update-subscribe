@@ -48,7 +48,7 @@ public class UserDAO implements IUserDAO{
 
 	@Override
 	/**
-	 * @Title: doUpdate
+	 * @Title: doUpdatePasswordAndEmail
 	 * @Description: Update a User's Password and Email, 
 	 * 				 Choose Different Updating ways 
 	 * 				 by judging the whether the Password is NULL.
@@ -68,7 +68,7 @@ public class UserDAO implements IUserDAO{
 		}
 		else{
 			query = "update User set Password = ?,Email = ? where UserName = ?";
-			ps=conn.prepareStatement(query);
+			ps = conn.prepareStatement(query);
 			ps.setString(1, newPassword);
 			ps.setString(2, newEmail);
 			ps.setString(3, UserName);
@@ -80,7 +80,104 @@ public class UserDAO implements IUserDAO{
 		ps.close();
 		return true;
 	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdate
+	 * @Description: update a complete User insatnce
+	 * @param user
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdate(User user) throws SQLException {
+		String UserName = user.getUserName();
+		String Password = user.getPassword();
+		String Email = user.getEmail();
+		java.sql.Time PushTime = user.getPushTime();
+		
+		String query = "update User set Password=?,Email=?,PushTime=? where UserName=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, Password);
+		ps.setString(2, Email);
+		ps.setTime(3, PushTime);
+		ps.setString(4, UserName);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
 
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdatePassword
+	 * @Description: update the password singly
+	 * @param UserName
+	 * @param newPassword
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdatePassword(String UserName, String newPassword) throws SQLException {
+		String query = "update User set Password=? where UserName=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, newPassword);
+		ps.setString(2, UserName);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateEmail
+	 * @Description: update the email singly
+	 * @param UserName
+	 * @param newEmail
+	 * @return boolean
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEmail(String UserName, String newEmail) throws SQLException {
+		String query = "update User set Email=? where UserName=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, newEmail);
+		ps.setString(2, UserName);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * @Title: doUpdatePushTime
+	 * @Description: Update a User's PushTime
+	 * @param UserName
+	 * @param PushTime
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean doUpdatePushTime(String UserName, Time PushTime) throws Exception {
+		String query = "update User set PushTime=? where UserName=?";
+		ps = conn.prepareStatement(query);
+		ps.setTime(1, PushTime);
+		ps.setString(2, UserName);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+	
 	@Override
 	/**
 	 * @Title: doFindEmail
@@ -91,7 +188,7 @@ public class UserDAO implements IUserDAO{
 	 */
 	public String doFindEmail(String UserName) throws Exception {
 		String query = "select Email from User where UserName = ?";
-		ps=conn.prepareStatement(query);
+		ps = conn.prepareStatement(query);
 		ps.setString(1, UserName);
 		ResultSet rs = ps.executeQuery();
 		String Email = null;
@@ -165,28 +262,6 @@ public class UserDAO implements IUserDAO{
 		}
 		rs.close();ps.close();
 		return answer;
-	}
-
-	@Override
-	/**
-	 * @Title: doUpdatePushTime
-	 * @Description: Update a User's PushTime
-	 * @param UserName
-	 * @param PushTime
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean doUpdatePushTime(String UserName, Time PushTime) throws Exception {
-		String query = "update User set PushTime=? where UserName=?";
-		ps = conn.prepareStatement(query);
-		ps.setTime(1, PushTime);
-		ps.setString(2, UserName);
-		if(ps.executeUpdate() == 0){
-			ps.close();
-			return false;
-		}
-		ps.close();
-		return true;
 	}
 
 	@Override

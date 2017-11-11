@@ -77,7 +77,12 @@ public class UrlDAO implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdate(int UrlID, String title, String url, boolean Enable, boolean RealTimePush) throws Exception {
+	public boolean doUpdate(Url urlInstance) throws Exception {
+		String title = urlInstance.getTitle();
+		String url = urlInstance.getUrl();
+		boolean Enable = urlInstance.isEnable();
+		boolean RealTimePush = urlInstance.isRealTimePush();
+		int UrlID = urlInstance.getUrlID();
 		String query = "update Url set Title=?,Url=?,Enable=?,RealTimePush=? where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, title);
@@ -93,6 +98,98 @@ public class UrlDAO implements IUrlDAO{
 		return false;
 	}
 
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateTitle
+	 * @Description: update the Title singly
+	 * @param UrlID
+	 * @param title
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean doUpdateTitle(int urlID, String title) throws Exception {
+		String query =  "update Url set Title=? where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, title);
+		ps.setInt(2, urlID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateUrl
+	 * @Description: update the Url singly
+	 * @param UrlID
+	 * @param url
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateUrl(int urlID, String url) throws SQLException {
+		String query = "update Url set url=? where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, url);
+		ps.setInt(2, urlID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateEnable
+	 * @Description: update the Enable singly
+	 * @param UrlID
+	 * @param Enable
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateEnable(int urlID, boolean Enable) throws SQLException {
+		String query = "update Url set Enable=? where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setBoolean(1, Enable);
+		ps.setInt(2, urlID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+
+	@Override
+	/**
+	 * 
+	 * @Title: doUpdateRealTimePush
+	 * @Description: update the ReanTimePush singly
+	 * @param urlID
+	 * @param RealTimePuah
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean doUpdateRealTimePush(int urlID, boolean RealTimePush) throws SQLException {
+		String query = "update Url set RealTimePush=? where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setBoolean(1, RealTimePush);
+		ps.setInt(2, urlID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+	
 	@Override
 	/**
 	 * @Title: doFindUrl
