@@ -23,21 +23,11 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	private Connection conn = null;
 	private String url = null;
 	
-	public MySQLDatabaseConnection() throws IOException {
+	public MySQLDatabaseConnection() throws SQLException, ClassNotFoundException {
 		url="jdbc:mysql://"+host+":"+port+"/"+database+"?characterEncoding=utf-8";
 		
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			conn = DriverManager.getConnection(url,userName,password);
-		} catch (SQLException e) {
-			System.out.print("Connecting Action failed!");
-			e.printStackTrace();
-		}
+		Class.forName("com.mysql.jdbc.Driver");
+		conn = DriverManager.getConnection(url,userName,password);
 	}
 	
 	@Override
@@ -83,17 +73,15 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 			try {
 				createDefaultDbProperties(path,"root","mysql","localhost","3306","mysql");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.out.println("创建配置文件出错！");
 				e.printStackTrace();
 			}
 		}
-		else{
-			try {
-				readDbProperties(path);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			readDbProperties(path);
+		} catch (IOException e) {
+			System.out.println("读取配置文件失败！");
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -144,17 +132,8 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	private static void readDbProperties(String path) throws IOException{
 		Properties prop = new Properties();
 		FileInputStream file = null;
-		try {
-			file = new FileInputStream(path);
-		} catch (FileNotFoundException e1) {
-			
-			e1.printStackTrace();
-		}
-		try {
-			prop.load(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		file = new FileInputStream(path);
+		prop.load(file);
 		
 		userName = prop.getProperty("username");//"root";
 		password = prop.getProperty("password");//"mysql";

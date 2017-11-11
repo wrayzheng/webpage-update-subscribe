@@ -38,7 +38,7 @@ public interface IContentDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdateHtmlAndDelta(int ContentID,String Html,String Delta) throws Exception;
+	public boolean doUpdate(Content content) throws Exception;
 	
 	/**
 	 * 
@@ -71,16 +71,6 @@ public interface IContentDAO {
 	 * @throws Exception
 	 */
 	public int doFindUrlID(int ContentID) throws Exception;
-	
-	/**
-	 * 
-	 * @Title: doFindTitle
-	 * @Description: Find Title By ContentID
-	 * @param ContentID
-	 * @return String
-	 * @throws Exception
-	 */
-	public String doFindTitle(int ContentID) throws Exception;
 	
 	/**
 	 * 

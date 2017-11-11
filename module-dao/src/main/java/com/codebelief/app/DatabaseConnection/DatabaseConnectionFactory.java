@@ -1,6 +1,7 @@
 package com.codebelief.app.DatabaseConnection;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * 
@@ -11,7 +12,7 @@ import java.io.IOException;
  *
  */
 public class DatabaseConnectionFactory {
-	public static MySQLDatabaseConnection getMySQLDatabaseConnection() throws IOException{
+	public static MySQLDatabaseConnection getMySQLDatabaseConnection() throws ClassNotFoundException, SQLException{
 		return new MySQLDatabaseConnection();
 	}
 }

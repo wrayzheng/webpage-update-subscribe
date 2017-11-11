@@ -73,7 +73,10 @@ public class ContentDAO implements IContentDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdateHtmlAndDelta(int ContentID,String Html, String Delta) throws Exception {
+	public boolean doUpdate(Content content) throws Exception {
+		String Html = content.getHtml();
+		String Delta = content.getDelta();
+		int ContentID = content.getContentID();
 		String query = "update Content set Html=?,Delta=? where ContentID=?";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, Html);
@@ -153,27 +156,6 @@ public class ContentDAO implements IContentDAO{
 		}
 		rs.close();ps.close();
 		return UrlID;
-	}
-
-	@Override
-	/**
-	 * @Title: doFindTitle
-	 * @Description: Find Title By ContentID
-	 * @param ContentID
-	 * @return String
-	 * @throws Exception
-	 */
-	public String doFindTitle(int ContentID) throws Exception {
-		String query = "select Title from Content where ContentID=?";
-		ps = conn.prepareStatement(query);
-		ps.setInt(1, ContentID);
-		ResultSet rs = ps.executeQuery();
-		String Title = null;
-		while(rs.next()){
-			Title = rs.getString(1);
-		}
-		rs.close();ps.close();
-		return Title;
 	}
 
 	@Override

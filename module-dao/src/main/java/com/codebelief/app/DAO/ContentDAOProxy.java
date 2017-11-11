@@ -61,8 +61,8 @@ public class ContentDAOProxy implements IContentDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doUpdateHtmlAndDelta(int ContentID, String Html, String Delta) throws Exception {
-		boolean success=dao.doUpdateHtmlAndDelta(ContentID, Html, Delta);
+	public boolean doUpdate(Content content) throws Exception {
+		boolean success=dao.doUpdate(content);
 		//dbc.free();
 		return success;
 	}
@@ -109,20 +109,6 @@ public class ContentDAOProxy implements IContentDAO{
 		int UrlID=dao.doFindUrlID(ContentID);
 		//dbc.free();
 		return UrlID;
-	}
-
-	@Override
-	/**
-	 * @Title: doFindTitle
-	 * @Description: Find Title By ContentID
-	 * @param ContentID
-	 * @return String
-	 * @throws Exception
-	 */
-	public String doFindTitle(int ContentID) throws Exception {
-		String Title=dao.doFindTitle(ContentID);
-		//dbc.free();
-		return Title;
 	}
 
 	@Override

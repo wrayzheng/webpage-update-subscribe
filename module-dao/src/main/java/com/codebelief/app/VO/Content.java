@@ -12,9 +12,8 @@ public class Content {
 	
 	private int contentID;
 	private int urlID;
-	//private String title;	//the alias of a Url Content
-	private String html;	//the Html code when the Content has Changed
-	private String delta;	//the Difference between two interfacing Html codes
+	private String html;	//the Html code after the Content has Changed
+	private String delta;	//the difference between two interfacing Html codes
 	
 	public Content(int ContentID){
 		this.contentID = ContentID;
@@ -23,7 +22,6 @@ public class Content {
 	public Content(int ContentID, int UrlID, String Html, String Delta){
 		this.contentID = ContentID;
 		this.urlID = UrlID;
-		//this.title=Title;
 		this.html = Html;
 		this.delta = Delta;
 	}
@@ -56,20 +54,6 @@ public class Content {
 	public void setUrlID(int urlID) {
 		this.urlID = urlID;
 	}
-	/**
-	 * 
-	 * @return Title
-	 */
-	/*public String getTitle() {
-		return title;
-	}*/
-	/**
-	 * 
-	 * @param title
-	 */
-	/*public void setTitle(String title) {
-		this.title = title;
-	}*/
 	/**
 	 * 
 	 * @return Html
