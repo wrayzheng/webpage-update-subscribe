@@ -1,5 +1,4 @@
 package com.codebelief.app.action;
-
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -17,27 +16,42 @@ public class UrlModifyAction extends ActionSupport {
 	private boolean success;
 	private String errorMsg;
 	
+	public String noPermission() {
+		return ERROR;
+	}
+	
 	public String enable() {
+		success = true;
 		return SUCCESS;
 	}
 	
 	public String disable() {
+		success = true;
 		return SUCCESS;
 	}
 	
 	public String setRealTimePush() {
+		success = true;
 		return SUCCESS;
 	}
 	
 	public String setIntegratedPush() {
+		success = true;
 		return SUCCESS;
 	}
 	
 	public String updateUrl() {
+		success = true;
 		return SUCCESS;
 	}
 	
 	public String updateUrlTitle() {
+		success = true;
+		return SUCCESS;
+	}
+	
+	public String deleteUrl() {
+		success = true;
 		return SUCCESS;
 	}
 

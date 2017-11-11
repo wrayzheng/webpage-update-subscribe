@@ -1,11 +1,27 @@
+/* 定义图标所用字体 */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 * {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-body {
-    background: #67c2d4;
 }
 
 .container {
@@ -19,6 +35,7 @@ h1 {
 
 /* 首页 */
 .cover {
+    background: #67c2d4;
 	color: #faf1e0;
 	margin: 0 auto;
 	text-align: center;
@@ -42,7 +59,7 @@ h1 {
 	padding: 1em;
 }
 
-button {
+.cover button {
 	background-color: #fef0e3;
 	color: #e75854;
 	border: none;
@@ -126,3 +143,45 @@ button {
 	margin: 20px 0;
 }
 /* 弹出层效果设置结束 */
+
+/* 管理列表样式 */
+.icon {
+	padding: 3px 5px;
+}
+
+.icon-pencil:before {
+	content: "\270f";
+	cursor: pointer;
+}
+
+.icon-start:before {
+	content: "\e072 已启动";
+	color: #2ecc71;
+	cursor: text;
+}
+
+.icon-pause:before {
+	content: "\e073 已暂停";
+	color: #f1c40f;
+	cursor: text;
+}
+
+.icon-ok:before {
+	content: "\e013";
+	cursor: pointer;
+}
+
+.icon-cancel:before {
+	content: "\e014";
+	cursor: pointer;
+}
+
+.icon-realTimePush:before {
+	content: "实时推送";
+	cursor: text;
+}
+
+.icon-integratedPush:before {
+	content: "整合推送";
+	cursor: text;
+}

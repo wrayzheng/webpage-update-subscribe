@@ -9,6 +9,7 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1">
         <title>网页更新订阅</title>
         <link rel="stylesheet" type="text/css" href="<s:url value='/css/style.css' />" />
+        <style>body {background: #67c2d4;}</style>
 	</head>
 
 	<body>
