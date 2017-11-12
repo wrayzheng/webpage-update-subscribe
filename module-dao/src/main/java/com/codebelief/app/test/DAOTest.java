@@ -7,8 +7,6 @@ import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
 import com.codebelief.app.DAOFactory.*;
 
-import static org.junit.Assert.assertEquals;
-
 import java.sql.Time;
 /**
  * @author ºÎÌÎ
