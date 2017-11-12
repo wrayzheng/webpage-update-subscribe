@@ -1,7 +1,10 @@
 package com.codebelief.app.scraper;
 
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.regex.Pattern;
 import com.codebelief.app.scraper.PageParser;
+
 
 import org.jsoup.select.Elements;
 
@@ -13,7 +16,7 @@ import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
 
 /**
- * @author Surflyan
+ * @author Surflyan <yanjiliang0128@outlook.com>
  */
 
 public class MyCrawler extends WebCrawler {
@@ -36,12 +39,14 @@ public class MyCrawler extends WebCrawler {
  
      /*
       * 处理爬取后的页面
-      * 提取有效链接（指向文章的链接）
+      * 提取有效链接（指向文章的链接），调用writeLinkToDB写回数据库content表
+      * 
       */
      @Override
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
-         System.out.println("URL: " + url);
+         System.out.println("URL: " + url); 
+         
  
          if (page.getParseData() instanceof HtmlParseData) {
              HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
@@ -52,7 +57,8 @@ public class MyCrawler extends WebCrawler {
              String baseUri = url;
              Elements validLinks = PageParser.getLinks(html, baseUri);
              
-             
+             writeLinkToDB(url,validLinks);   //写回数据库
+            
          }
      }
     
@@ -69,4 +75,33 @@ public class MyCrawler extends WebCrawler {
     		 e.printStackTrace();
     	}
      }
+     
+     /*
+      * 将爬取的页面解析之后获得的有效链接写入数据库
+      * 通过比较此次爬取页面的主url 和 添加爬取种子时urlMap 里的url 对比，找到urlID，从而写入内容表里（内容表主键为urlID）
+      * 由于使用了Crawler4j 项目，在爬取时无法另外添加数据项（urlID），使之与爬取url 绑定， 这里只能通过重新比对找到urlID。
+      */
+     //TO-DO WriteLinkToDB(暂未实现,提前调用)
+     private void writeLinkToDB(String url, Elements validLinks) {
+    	 
+    	 LinkedList<String> HrefList;    //存放链接
+    	 LinkedList<String> TextList;    //存放链接标题
+    	 Map<Integer, String> urlMap = Controller.urlMap;  //从controller 获取urlMap ，确保和添加crawler seed 时数据一致。
+    	 
+    	 for (int linkNum = 0; linkNum < validLinks.size(); linkNum++) { 	 
+    		 String linkHref = validLinks.get(linkNum).attr("href");
+    		 String linkText = validLinks.get(linkNum).text();
+    		 HrefList.add(linkHref);
+    		 TextList.add(linkText);
+    		
+    	 }  		 
+         
+    	 // 遍历urlMap 中的 url，通过和爬取后的页面的主 url 比较，来找到对应urlID，从而写入对应的content 表里。
+         for (Map.Entry<Integer, String> entry : urlMap.entrySet()) {
+        	 if (entry.getValue().equals(url)) {
+        		 WriteLinkToDB(entry.getKey(),HrefList,TextList);
+        	 }
+         }
+       }
+     
 }
