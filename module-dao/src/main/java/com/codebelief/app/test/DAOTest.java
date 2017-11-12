@@ -2,14 +2,8 @@ package com.codebelief.app.test;
 
 import com.codebelief.app.DAO.*;
 import com.codebelief.app.DAOFactory.*;
-import com.codebelief.app.DatabaseConnection.DatabaseConnectionFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
-import com.codebelief.app.DAOFactory.*;
-
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Time;
 /**
  * @author 何涛
  * @version 1st   on 2017年10月14日

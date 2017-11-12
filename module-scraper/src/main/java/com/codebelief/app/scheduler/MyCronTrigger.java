@@ -6,7 +6,6 @@ import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
-import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -36,7 +35,7 @@ public class MyCronTrigger {
 			    .newTrigger()
 			    .withIdentity("cronTrigger","group")
 			    .withSchedule(
-					    CronScheduleBuilder.cronSchedule("0/59 * * * * ?"))
+					    CronScheduleBuilder.cronSchedule("0 0 0/1 * * ?"))
 			    .build();
         sched.start();
         
