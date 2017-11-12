@@ -1,6 +1,7 @@
 package com.codebelief.app.DAO;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import com.codebelief.app.DatabaseConnection.*;
 import com.codebelief.app.VO.Content;
@@ -150,6 +151,20 @@ public class ContentDAOProxy implements IContentDAO{
 	public Content doFindAll(int ContentID) throws Exception {
 		Content content=dao.doFindAll(ContentID);
 		//dbc.free();
+		return content;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllByUrlID
+	 * @Description: 通过UrlID在Content表中查找对应的Content完整字条。
+	 * @param UrlID
+	 * @return Content
+	 * @throws Exception
+	 */
+	public Content doFindAllByUrlID(int UrlID) throws Exception {
+		Content content = dao.doFindAllByUrlID(UrlID);
 		return content;
 	}
 

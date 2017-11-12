@@ -1,6 +1,7 @@
 package com.codebelief.app.DAO;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import com.codebelief.app.VO.Content;
 /**
@@ -16,7 +17,7 @@ public interface IContentDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Content content) throws Exception;
+	public int doInsert(int UrlID, String Html, String Delta) throws Exception;
 	
 	/**
 	 * 
@@ -101,6 +102,16 @@ public interface IContentDAO {
 	 * @throws Exception
 	 */
 	public Content doFindAll(int ContentID) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doFindAllByUrlID
+	 * @Description: 通过UrlID在Content表中查找对应的Content完整字条。
+	 * @param UrlID
+	 * @return Content
+	 * @throws Exception
+	 */
+	public Content doFindAllByUrlID(int UrlID) throws Exception;
 	
 	/**
 	 * 

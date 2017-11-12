@@ -17,17 +17,10 @@ public class Url {
 	private boolean enabled;
 	private boolean realTimePush;
 	
+	public Url(){}
+	
 	public Url(int UrlID){
 		this.urlID = UrlID;
-	}
-	
-	public Url(int UrlID,String UserName,String title,String Url){
-		this.urlID = UrlID;
-		this.userName = UserName;
-		this.title = title;
-		this.url = Url;
-		this.enabled = true;
-		this.realTimePush = true;
 	}
 	
 	public Url(int UrlID, String UserName, String title, String Url, boolean enabled, boolean realTimePush){
@@ -99,14 +92,14 @@ public class Url {
 	 * 
 	 * @return Enable
 	 */
-	public boolean isEnable() {
+	public boolean isEnabled() {
 		return enabled;
 	}
 	/**
 	 * 
 	 * @param enable
 	 */
-	public void setEnable(boolean enable) {
+	public void setEnabled(boolean enable) {
 		this.enabled = enable;
 	}
 	/**

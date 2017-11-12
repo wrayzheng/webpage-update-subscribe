@@ -1,6 +1,8 @@
 package com.codebelief.app.DAO;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.Map;
 
 import com.codebelief.app.DatabaseConnection.*;
 import com.codebelief.app.VO.Url;
@@ -31,8 +33,12 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Url url) throws Exception {
-		boolean success=dao.doInsert(url);
+	public int doInsert(String UserName, 
+			String title,
+			String url,
+			boolean enable,
+			boolean realPushTime) throws Exception {
+		int success=dao.doInsert(UserName, title, url, enable, realPushTime);
 		//dbc.free();
 		return success;
 	}
@@ -108,8 +114,8 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean doUpdateEnable(int urlID, boolean Enable) throws SQLException {
-		boolean success = dao.doUpdateEnable(urlID, Enable);
+	public boolean doUpdateEnabled(int urlID, boolean Enable) throws SQLException {
+		boolean success = dao.doUpdateEnabled(urlID, Enable);
 		return success;
 	}
 
@@ -164,8 +170,8 @@ public class UrlDAOProxy implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doFindEnable(int UrlID) throws Exception {
-		boolean enable=dao.doFindEnable(UrlID);
+	public boolean doFindEnabled(int UrlID) throws Exception {
+		boolean enable=dao.doFindEnabled(UrlID);
 		//dbc.free();
 		return enable;
 	}
@@ -183,19 +189,32 @@ public class UrlDAOProxy implements IUrlDAO{
 		//dbc.free();
 		return RealTimePush;
 	}
-
+	
 	@Override
 	/**
-	 * @Title: doFindAll
-	 * @Description: Find the UserName,Url,RealTimePush By UrlID
-	 * @param UrlID
-	 * @return Url
-	 * @throws Exception
+	 * 
+	 * @Title: getAllUrl
+	 * @Description: 查找Url表中所有字条的UrlID和对应Url。
+	 * @return Map<Integer,String>
+	 * @throws SQLException
 	 */
-	public Url doFindAll(int UrlID) throws Exception {
-		Url newUrl=dao.doFindAll(UrlID);
-		//dbc.free();
-		return newUrl;
+	public Map<Integer, String> getAllUrl() throws SQLException {
+		Map<Integer,String> urlMap = dao.getAllUrl();
+		return urlMap;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAll
+	 * @Description: 通过UserName从Url表里查找对应的Url完整字条。
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
+	 */
+	public LinkedList<Url> doFindAll(String UserName) throws SQLException {
+		LinkedList<Url> lst = dao.doFindAll(UserName);
+		return lst;
 	}
 
 	@Override
