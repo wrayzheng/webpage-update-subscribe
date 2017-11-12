@@ -13,7 +13,7 @@
 	</head>
 
 	<body>
-        <div class="container cover">
+        <div class="cover">
 			<h1>网页更新订阅</h1>
 			<div class="ts">
 		        <p>想要关注某个网页的变化？</p>
@@ -71,22 +71,27 @@
 		<script src="js/sha256.js"></script>
     	<script>
     	$(document).ready(function(){
+    		//登录按钮
     		$("#login-btn").click(function(){
     			$("#login").fadeIn(300);
     		});
     		
+    		//注册按钮
     		$("#signup-btn").click(function(){
     			$("#signup").fadeIn(300);
     		});
     		
+    		//隐藏表单
     		$(".dialog-bg").click(function(){
     			$(this).fadeOut(300);
     		});
     		
+    		//阻止表单上鼠标点击事件的冒泡
     		$(".dialog").click(function(e){
     			e.stopPropagation();
     		});
-    		
+
+    		//登录表单
     		$("#login-form").submit(function(){
     			password = $("#login-form input[name=password]");
     			originPw = password.val();
@@ -105,6 +110,7 @@
     			return false;
     		});
     		
+    		//注册表单
     		$("#signup-form").submit(function(){
     			if($("#signup-form input[name=password]").val() != $("#signup-form input[name=password-check]").val()) {
     				alert("两次密码输入不一致！");

@@ -1,6 +1,12 @@
 package com.codebelief.app.action;
-import com.opensymphony.xwork2.ActionSupport;
 
+import com.opensymphony.xwork2.ActionSupport;
+import com.codebelief.app.DAOFactory.*;
+import com.codebelief.app.VO.*;
+
+import java.sql.SQLException;
+
+import com.codebelief.app.DAO.*;
 /**
  * @author: Wray Zheng
  * @date: 2017-10-17
@@ -13,46 +19,128 @@ public class UrlModifyAction extends ActionSupport {
 	private int urlID;
 	private String url;
 	private String urlTitle;
-	private boolean success;
+	private boolean success = false;
 	private String errorMsg;
-	
-	public String noPermission() {
+
+    public String noPermission()  {
+        return ERROR;
+    }
+
+	public String enable() {
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateEnable(urlID, true)){
+				errorMsg = "请检查UrlID！";
+			} else {
+                success = true;
+                return SUCCESS;
+            }
+		} catch (Exception e) {
+			errorMsg = "数据库访问出错！";
+		}
 		return ERROR;
 	}
-	
-	public String enable() {
-		success = true;
-		return SUCCESS;
-	}
-	
+
 	public String disable() {
-		success = true;
-		return SUCCESS;
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateEnable(urlID, false)){
+				errorMsg = "请检查UrlID！";
+			} else  {
+				success = true;
+                return SUCCESS;
+            }
+			urlDAO.free();
+		} catch (Exception e) {
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
-	
+
 	public String setRealTimePush() {
-		success = true;
-		return SUCCESS;
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateRealTimePush(urlID, true)){
+				errorMsg = "请检查UrlID！";
+			} else  {
+                success = true;
+                return SUCCESS;
+            }
+			urlDAO.free();
+		} catch (Exception e) {
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
-	
+
 	public String setIntegratedPush() {
-		success = true;
-		return SUCCESS;
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateRealTimePush(urlID, false)){
+				errorMsg = "请检查UrlID！";
+			} else {
+				success = true;
+                return SUCCESS;
+            }
+			urlDAO.free();
+		} catch (Exception e) {
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
-	
+
 	public String updateUrl() {
-		success = true;
-		return SUCCESS;
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateUrl(urlID, url)){
+				errorMsg = "更新URL失败！";
+			} else {
+                success = true;
+                return SUCCESS;
+            }
+			urlDAO.free();
+		} catch (Exception e) {
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
-	
+
 	public String updateUrlTitle() {
-		success = true;
-		return SUCCESS;
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doUpdateTitle(urlID, urlTitle)){
+				errorMsg = "更新标题失败！";
+			} else  {
+                success = true;
+                return SUCCESS;
+            }
+			urlDAO.free();
+		} catch (Exception e) {
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
-	
+
 	public String deleteUrl() {
-		success = true;
-		return SUCCESS;
+		try{
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(!urlDAO.doDelete(urlID)){
+				success = false;
+				errorMsg = "请检查urlID！";
+			} else {
+                success = true;
+                return SUCCESS;
+            }
+		}catch(Exception e){
+			success = false;
+			errorMsg = "数据库访问出错！";
+		}
+		return ERROR;
 	}
 
 	public int getUrlID() {
