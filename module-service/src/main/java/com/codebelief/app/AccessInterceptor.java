@@ -18,42 +18,52 @@ public class AccessInterceptor extends AbstractInterceptor {
 	private HttpServletRequest request;
 	private String userName;
 	private int urlID = -1;
-	private String errorMsg;
+	private ActionInvocation invocation;
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
+		this.invocation = invocation;
 		request = (HttpServletRequest)invocation.getInvocationContext().get(StrutsStatics.HTTP_REQUEST);
 		userName = (String)invocation.getInvocationContext().getSession().get("userName");
 		
-		try {
-			urlID = Integer.valueOf(request.getParameter("urlID"));
-		} catch (Exception e) {
-			errorMsg = "无效的urlID！";
+		if(null == userName) {
+			setErrorMsg("用户尚未登录！");
+			return "noPermission";
 		}
 		
+		String tempUrlID = request.getParameter("urlID");
+		//添加订阅记录的情况
+		if(null == tempUrlID) return invocation.invoke();
+		
+		try {
+			urlID = Integer.valueOf(tempUrlID);
+		} catch (Exception e) {
+			setErrorMsg("无效的urlID！");
+			return "noPermission";
+		}
+		
+		//调试日志
 		System.out.println(this.getClass().getSimpleName()
 				+ ": userName=" + userName + " urlID=" + urlID
 				+ " action=" + invocation.getInvocationContext().getName());
 		
-		//如果urlID无效，则直接返回
-		if(urlID == -1);
-		else if(null == userName) {
-			errorMsg = "用户尚未登录！";
-		} else {
-			try {
-				IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-				if(userName.toLowerCase().equals(urlDAO.doFindUserName(urlID).toLowerCase())) {
-					return invocation.invoke();
-				} else {
-					errorMsg = "没有操作权限！";
-				}
-			} catch(Exception e) {
-				errorMsg = "访问数据库出错!";
+		//判断UrlID是否属于当前用户
+		try {
+			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+			if(userName.toLowerCase().equals(urlDAO.doFindUserName(urlID).toLowerCase())) {
+				return invocation.invoke();
+			} else {
+				setErrorMsg("没有操作权限！");
 			}
+		} catch(Exception e) {
+			setErrorMsg("访问数据库出错!");
 		}
-		
-		invocation.getInvocationContext().put("errorMsg", errorMsg);
+
 		return "noPermission";
+	}
+	
+	private void setErrorMsg(String errorMsg) {
+		invocation.getInvocationContext().put("errorMsg", errorMsg);
 	}
 
 }

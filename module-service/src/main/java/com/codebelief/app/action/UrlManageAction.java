@@ -2,10 +2,6 @@ package com.codebelief.app.action;
 
 import java.util.LinkedList;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.ServletActionContext;
-
 import com.codebelief.app.DAO.IUrlDAO;
 import com.codebelief.app.DAOFactory.UrlDAOFactory;
 import com.codebelief.app.VO.Url;

@@ -39,6 +39,7 @@ public class UrlOperateAction extends ActionSupport {
     		}
     	} catch (Exception e) {
     		errorMsg = "访问数据库出错！";
+    		e.printStackTrace();
     	}
     	return ERROR;
     }
