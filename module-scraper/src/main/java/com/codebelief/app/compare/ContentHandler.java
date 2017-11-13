@@ -20,14 +20,13 @@ public class ContentHandler {
 		System.out.println("content:");
 		Content content = null;
 		try {
-			content = CompareContent(UrlID, updateRecords);
+			CompareContent(UrlID, updateRecords);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		UpdateRecode(content);
 	}
 	
-	public static void UpdateRecode(Content content){
+	public static void UpdateRecord(Content content){
 		try {
 			contentDAO.doUpdate(content);
 			
@@ -38,7 +37,16 @@ public class ContentHandler {
 		
 	}
 	
-	public static Content CompareContent(int UrlID, LinkedList<SingleUpdateRecord> newSingleUpdateRecords) throws Exception{
+	public static void InsertRecord(Content content){
+		try {
+			contentDAO.doInsert(content.getUrlID(),content.getHtml(),content.getDelta());
+			contentDAO.free();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void CompareContent(int UrlID, LinkedList<SingleUpdateRecord> newSingleUpdateRecords) throws Exception{
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
@@ -47,7 +55,8 @@ public class ContentHandler {
 		System.out.println("oldUrlLinksAndTitles:"+oldUrlLinksAndTitles);
 		String newDelta = "";
 		String newHtml = "";
-		if(oldUrlLinksAndTitles != null){
+		if(content != null){
+			String oldUrlLinksAndTitles = content.getHtml();
 			String[] oldUrlLinkAndTitles = oldUrlLinksAndTitles.split("\n\n");
 			for(int i = 0; i < newSingleUpdateRecords.size(); i++){
 				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles){
@@ -58,15 +67,20 @@ public class ContentHandler {
 				}
 				newHtml += newSingleUpdateRecords.get(i) + "\n\n";
 			}
+			content.setHtml(newHtml);
+			content.setDelta(newDelta);
+			UpdateRecord(content);
 		}
 		else{
 			for(int i = 0; i < newSingleUpdateRecords.size(); i++)
 				newDelta += newSingleUpdateRecords.get(i) + "\n\n";
 			newHtml = newDelta;
+			content = new Content();
+			content.setUrlID(UrlID);
+			content.setHtml(newHtml);
+			content.setDelta(newDelta);
+			InsertRecord(content);
 		}
-		content.setHtml(newHtml);
-		content.setDelta(newDelta);
-		return content;
 	}
 	
 	

@@ -7,8 +7,8 @@ import com.codebelief.app.VO.Content;
 /**
  * @ClassName: ContentDAO
  * @Description: Define Some Concrete Functions For Content Table
- * @author 何涛
- * @date 2017年10月17日
+ * @author 锟斤拷锟斤拷
+ * @date 2017锟斤拷10锟斤拷17锟斤拷
  *
  */
 public class ContentDAO implements IContentDAO{
@@ -229,7 +229,7 @@ public class ContentDAO implements IContentDAO{
 	/**
 	 * 
 	 * @Title: doFindAllByUrlID
-	 * @Description: 通过UrlID在Content表中查找对应的Content完整字条。
+	 * @Description: 通锟斤拷UrlID锟斤拷Content锟斤拷锟叫诧拷锟揭讹拷应锟斤拷Content锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	 * @param UrlID
 	 * @return Content
 	 * @throws Exception
