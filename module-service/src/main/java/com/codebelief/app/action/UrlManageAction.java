@@ -20,24 +20,29 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UrlManageAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
-	private HttpServletRequest request = (HttpServletRequest) ServletActionContext.getRequest();
+	private String userName = (String) ActionContext.getContext().getSession().get("userName");
 	private LinkedList<Url> urlList;
 	private String errorMsg;
 	
 	@Override
 	public String execute() throws Exception {
-		String userName = (String) ActionContext.getContext().getSession().get("userName");
 		IUrlDAO urlDAO;
 		try {
 			urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			setUrlList(urlDAO.doFindAll(userName));
-			System.out.println(userName);
-			System.out.println(urlList);
+			urlList = urlDAO.doFindAll(userName);
 			return SUCCESS;
 		} catch (Exception e) {
 			setErrorMsg("访问数据库出错！");
 		}
 		return ERROR;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public LinkedList<Url> getUrlList() {

@@ -19,7 +19,7 @@ public class SignupAction extends ActionSupport {
 	private String userName;
 	private String email;
 	private String password;
-	private boolean success;
+	private boolean success = false;
 	private String errorMsg;
 
 	@Override
@@ -29,10 +29,13 @@ public class SignupAction extends ActionSupport {
 		
 		try{
 			userDAO = UserDAOFactory.getUserDAOInstance();
+			if(userDAO.isExist(userName)) {
+				errorMsg = "用户已存在！";
+				return ERROR;
+			}
 			userDAO.doInsert(user);
 		} catch(Exception e) {
-			success = false;
-			errorMsg = "注册失败！";
+			errorMsg = "注册失败，请检查信息正确性！";
 			return ERROR;
 		}
 		

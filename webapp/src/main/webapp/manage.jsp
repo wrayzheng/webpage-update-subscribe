@@ -10,7 +10,7 @@
     </head>
 
     <body class="container">
-    	<h1>订阅管理中心<span id="addUrl" class="icon icon-add"></span></h1>
+    	<h1><span id="logout" class="icon icon-logout" title="注销"></span>订阅管理中心<span id="addUrl" class="icon icon-add" title="添加订阅记录"></span></h1>
     	<div class="manage-panel">
 	    	<div class="button-panel">
 	    		<button id="enable">启动</button>
@@ -18,6 +18,7 @@
 	    		<button id="setRealTimePush">实时推送</button>
 	    		<button id="setIntegratedPush">整合推送</button>
 	    		<button id="deleteUrl">删除订阅</button>
+	    		<span class="user">当前用户：<s:property value="userName" /></span>
 	    	</div>
 	    	<table class="table-panel">
 	    		<tr>
@@ -27,7 +28,7 @@
 	    			<th class="h_status">状态</th>
 	    			<th class="h_pushMethod">推送方式</th>
 	    		</tr>
-	    		<s:iterator value="#urlList" var="record">
+	    		<s:iterator value="urlList" var="record">
 	    		<tr>
 	    			<td><input type="checkbox" class="selectSingle" value="<s:property value='#record.urlID' />" /></td>
 	    			<td>
@@ -85,6 +86,11 @@
         	//添加按钮
         	$("#addUrl").click(function(){
         		$("#add").fadeIn(300);
+        	});
+        	
+        	//注销按钮
+        	$("#logout").click(function(){
+        		window.location.href="<s:url namespace='/' action='logout' />";
         	});
         	
         	//隐藏表单
@@ -192,18 +198,23 @@
         	//编辑完毕
         	function onIconOkClick(){
         		var editor = $(this).parent();
-        		var viewer = editor.hide().prev();
+        		var viewer = editor.prev();
         		var text = editor.children().first().val();
         		var field = editor.find("input").attr("name");
         		var target;
         		if(field == "url") target = "<s:url namespace='/ajax' action='updateUrl' />";
         		else if(field == "title") target = "<s:url namespace='/ajax' action='updateUrlTitle' />";
-        		viewer.children().first().text(text);
-        		viewer.fadeIn(500);
         		var urlID = $(this).closest("tr").find(".selectSingle").prop("value");
-        		$.post(target, {"urlID": urlID, "urlTitle": text},
+        		$.post(target, "urlID="+urlID+"&"+field+"="+text,
     					function(data, status){
-    						if(!data["success"]) alert(data["errorMsg"]);
+    						if(data["success"]) {
+    			        		viewer.children().first().text(text);
+    						} else {
+    							console.log(data);
+    							alert(data["errorMsg"]);
+    						}
+							editor.hide();
+							viewer.fadeIn(500);
     			});
         	}
         	$(".icon-ok").click(onIconOkClick);
@@ -248,7 +259,6 @@
     		
     		//完成添加
     		$("#add-form").submit(function(){
-    			console.log($(this).serialize());
     			var title = $(this).find("input[name='title']").val();
     			var url = $(this).find("input[name='url']").val();
     			var realTimePush = $(this).find("input[name='realTimePush']:checked").val();

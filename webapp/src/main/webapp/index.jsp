@@ -73,7 +73,13 @@
     	$(document).ready(function(){
     		//登录按钮
     		$("#login-btn").click(function(){
-    			$("#login").fadeIn(300);
+    			//查询登录状态
+    			$.post("<s:url namespace='/ajax' action='isLogined' />",
+    					function(data, status) {
+    						if(data["success"])
+    							window.location.href="<s:url action='manage' namespace='/user' />";
+    						else $("#login").fadeIn(300);
+    			});
     		});
     		
     		//注册按钮
@@ -123,7 +129,11 @@
     			$.post("<s:url namespace='/ajax' action='signup' />",
 					$("#signup-form").serialize(),
 					function(data, status){
-						if(data["success"]) alert("注册成功！");
+						if(data["success"]) {
+							alert("注册成功！");
+							$("#signup").hide();
+							$("#login").fadeIn(300);
+						}
 						else {
 							password.val(originPw);
 							alert(data["errorMsg"]);

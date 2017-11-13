@@ -32,6 +32,16 @@ public class LoginAction extends ActionSupport {
 		else return ERROR;
 	}
 	
+	public String isLogined() {
+		if(null != session.get("userName")) {
+			success = true;
+			return SUCCESS;
+		} else {
+			errorMsg = "用户尚未登陆！";
+			return ERROR;
+		}
+	}
+	
 	public String logout() {
 		session.clear();
 		return SUCCESS;

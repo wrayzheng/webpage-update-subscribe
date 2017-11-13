@@ -38,11 +38,11 @@ public class AccessInterceptor extends AbstractInterceptor {
 		//如果urlID无效，则直接返回
 		if(urlID == -1);
 		else if(null == userName) {
-			errorMsg = "没有操作权限！";
+			errorMsg = "用户尚未登录！";
 		} else {
 			try {
 				IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-				if(userName.equals(urlDAO.doFindUserName(urlID))) {
+				if(userName.toLowerCase().equals(urlDAO.doFindUserName(urlID).toLowerCase())) {
 					return invocation.invoke();
 				} else {
 					errorMsg = "没有操作权限！";

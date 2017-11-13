@@ -17,6 +17,9 @@
             	<interceptor-ref name="defaultStack" />
             </interceptor-stack>
         </interceptors>
+        
+        <!-- 操作权限验证 -->
+        <default-interceptor-ref name="authStack" />
 		
 		<global-results>
 			<result type="json" name="success">
@@ -39,24 +42,28 @@
 		<action name="signup" class="com.codebelief.app.action.SignupAction">
 			<interceptor-ref name="defaultStack" />
 		</action>
+		<!-- 查询登录状态 -->
+		<action name="isLogined" class="com.codebelief.app.action.LoginAction" method="isLogined">
+			<interceptor-ref name="defaultStack" />
+		</action>
 		
         <!-- 修改订阅记录单个字段 -->
-        <action name="addUrl" class="com.codebelief.app.action.UrlModifyAction" method="addUrl" />
-        <action name="enable" class="com.codebelief.app.action.UrlModifyAction" method="enable" />
-        <action name="disable" class="com.codebelief.app.action.UrlModifyAction" method="disable" />
-        <action name="setRealTimePush" class="com.codebelief.app.action.UrlModifyAction" method="setRealTimePush" />
-        <action name="setIntegratedPush" class="com.codebelief.app.action.UrlModifyAction" method="setIntegratedPush" />
-        <action name="updateUrl" class="com.codebelief.app.action.UrlModifyAction" method="updateUrl" />
-        <action name="updateUrlTitle" class="com.codebelief.app.action.UrlModifyAction" method="updateUrlTitle" />
-        <action name="deleteUrl" class="com.codebelief.app.action.UrlModifyAction" method="deleteUrl" />
+        <action name="addUrl" class="com.codebelief.app.action.UrlOperateAction" method="addUrl" />
+        <action name="enable" class="com.codebelief.app.action.UrlOperateAction" method="enable" />
+        <action name="disable" class="com.codebelief.app.action.UrlOperateAction" method="disable" />
+        <action name="setRealTimePush" class="com.codebelief.app.action.UrlOperateAction" method="setRealTimePush" />
+        <action name="setIntegratedPush" class="com.codebelief.app.action.UrlOperateAction" method="setIntegratedPush" />
+        <action name="updateUrl" class="com.codebelief.app.action.UrlOperateAction" method="updateUrl" />
+        <action name="updateUrlTitle" class="com.codebelief.app.action.UrlOperateAction" method="updateUrlTitle" />
+        <action name="deleteUrl" class="com.codebelief.app.action.UrlOperateAction" method="deleteUrl" />
         <!-- 没有权限的情况 -->
-        <action name="noPermission" class="com.codebelief.app.action.UrlModifyAction" method="noPermission">
+        <action name="noPermission" class="com.codebelief.app.action.UrlOperateAction" method="noPermission">
         	<interceptor-ref name="defaultStack" />
         </action>
 	</package>
 	
 	<!-- 前台操作 -->
-	<package name="default" namespace="/" extends="struts-default">
+	<package name="default" extends="struts-default">
 		<default-action-ref name="notfound"></default-action-ref>
 	
 		<global-results>
@@ -80,21 +87,17 @@
             <interceptor name="loginCheck" class="com.codebelief.app.LoginInterceptor" />
         </interceptors>
 	
+		<!-- 登录验证 -->
 		<default-interceptor-ref name="loginCheck" />
 		
 		<global-results>
 			<result name="error">/error.jsp</result>
-			<result name="login" type="redirect">/login.jsp</result>
+			<result name="login" type="redirect">/</result>
 		</global-results>
 
         <!-- 订阅管理中心 -->
 		<action name="manage" class="com.codebelief.app.action.UrlManageAction">
             <result name="success">/manage.jsp</result>
-		</action>
-
-        <!-- 订阅信息详情 -->
-		<action name="detail" class="com.codebelief.app.action.UrlDetailAction">
-            <result name="success">/user/detail.jsp</result>
 		</action>
 
 	</package>
