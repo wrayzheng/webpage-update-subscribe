@@ -27,20 +27,21 @@ public class ContentDAO implements IContentDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Content content) throws Exception {
-		String query = "insert into Content values(?,?,?,?)";
-		ps = conn.prepareStatement(query);
-		ps.setInt(1, content.getContentID());
-		ps.setInt(2, content.getUrlID());
-		//ps.setString(3,content.getTitle());
-		ps.setString(3, content.getHtml());
-		ps.setString(4, content.getDelta());
+	public int doInsert(int UrlID, String Html, String Delta) throws Exception {
+		String query = "insert into Content (UrlID,Html,Delta) values(?,?,?)";
+		ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setInt(1, UrlID);
+		ps.setString(2, Html);
+		ps.setString(3, Delta);
 		if(ps.executeUpdate() == 0){
 			ps.close();
-			return false;
+			return -1;
 		}
-		ps.close();
-		return true;
+		ResultSet rs = ps.getGeneratedKeys();
+		rs.next();
+		int ContentID = rs.getInt(1);
+		rs.close();ps.close();
+		return ContentID;
 	}
 
 	@Override
@@ -224,6 +225,31 @@ public class ContentDAO implements IContentDAO{
 		return newContent;
 	}
 
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllByUrlID
+	 * @Description: 通过UrlID在Content表中查找对应的Content完整字条。
+	 * @param UrlID
+	 * @return Content
+	 * @throws Exception
+	 */
+	public Content doFindAllByUrlID(int UrlID) throws Exception {
+		String query = "select * from Content where ContentID=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, UrlID);
+		ResultSet rs = ps.executeQuery();
+		Content newContent = null;
+		while(rs.next()){
+			newContent = new Content(rs.getInt(1));
+			newContent.setUrlID(UrlID);
+			newContent.setHtml(rs.getString(3));
+			newContent.setDelta(rs.getString(4));
+		}
+		rs.close();ps.close();
+		return newContent;
+	}
+	
 	@Override
 	/**
 	 * @Title: IsExist

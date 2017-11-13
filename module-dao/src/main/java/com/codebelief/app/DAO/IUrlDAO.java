@@ -1,6 +1,8 @@
 package com.codebelief.app.DAO;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.Map;
 
 import com.codebelief.app.VO.Url;
 /**
@@ -16,7 +18,12 @@ public interface IUrlDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Url url) throws Exception;
+	public int doInsert(
+			String UserName, 
+			String title,
+			String url,
+			boolean enable,
+			boolean realPushTime) throws Exception;
 	
 	/**
 	 * 
@@ -72,7 +79,7 @@ public interface IUrlDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean doUpdateEnable(int UrlID, boolean Enable) throws SQLException;
+	public boolean doUpdateEnabled(int UrlID, boolean Enable) throws SQLException;
 	
 	/**
 	 * 
@@ -122,7 +129,7 @@ public interface IUrlDAO {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doFindEnable(int UrlID) throws Exception;
+	public boolean doFindEnabled(int UrlID) throws Exception;
 	
 	/**
 	 * 
@@ -136,13 +143,22 @@ public interface IUrlDAO {
 	
 	/**
 	 * 
-	 * @Title: doFindAll
-	 * @Description: Find the UserName,Url,RealTimePush By UrlID
-	 * @param UrlID
-	 * @return Url
-	 * @throws Exception
+	 * @Title: FindAllByUserName
+	 * @Description: 通过UserName从Url表里查找对应的Url完整字条。
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
 	 */
-	public Url doFindAll(int UrlID) throws Exception;
+	public LinkedList<Url> doFindAll(String UserName) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: getAllUrl
+	 * @Description: 查找Url表中所有字条的UrlID和对应Url。
+	 * @return Map<Integer,String>
+	 * @throws SQLException
+	 */
+	public Map<Integer,String> getAllUrl() throws SQLException;
 	
 	/**
 	 * 

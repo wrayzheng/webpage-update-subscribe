@@ -1,6 +1,7 @@
 package com.codebelief.app.DAO;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import com.codebelief.app.DatabaseConnection.*;
 import com.codebelief.app.VO.Content;
@@ -10,8 +11,8 @@ import com.codebelief.app.VO.Content;
  * @Description: obtaining and closing the database, 
  * 				 and implementing ContentDAO interface 
  * 				 using functions in ContentDAO type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class ContentDAOProxy implements IContentDAO{
@@ -31,8 +32,8 @@ public class ContentDAOProxy implements IContentDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Content content) throws Exception {
-		boolean success=dao.doInsert(content);
+	public int doInsert(int UrlID, String Html, String Delta) throws Exception {
+		int success=dao.doInsert(UrlID, Html, Delta);
 		//dbc.free();
 		return success;
 	}
@@ -150,6 +151,20 @@ public class ContentDAOProxy implements IContentDAO{
 	public Content doFindAll(int ContentID) throws Exception {
 		Content content=dao.doFindAll(ContentID);
 		//dbc.free();
+		return content;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllByUrlID
+	 * @Description: Í¨ï¿½ï¿½UrlIDï¿½ï¿½Contentï¿½ï¿½ï¿½Ð²ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Contentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param UrlID
+	 * @return Content
+	 * @throws Exception
+	 */
+	public Content doFindAllByUrlID(int UrlID) throws Exception {
+		Content content = dao.doFindAllByUrlID(UrlID);
 		return content;
 	}
 

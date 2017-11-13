@@ -1,16 +1,20 @@
 package com.codebelief.app.DAO;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import com.codebelief.app.VO.Url;
 //import com.mysql.jdbc.Statement;
+import com.mysql.jdbc.Statement;
 
 /**
  * 
  * @ClassName: UrlDAO
  * @Description: Define Some Concrete Operations For Url Table
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class UrlDAO implements IUrlDAO{
@@ -29,21 +33,27 @@ public class UrlDAO implements IUrlDAO{
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doInsert(Url url) throws Exception {
-		String query = "insert into Url values(?,?,?,?,?,?)";
-		ps = conn.prepareStatement(query);
-		ps.setInt(1, url.getUrlID());
-		ps.setString(2, url.getUserName());
-		ps.setString(3, url.getTitle());
-		ps.setString(4, url.getUrl());
-		ps.setBoolean(5, url.isEnable());
-		ps.setBoolean(6, url.isRealTimePush());
+	public int doInsert(String UserName, 
+			String title,
+			String url,
+			boolean enabled,
+			boolean realTimePush) throws Exception {
+		String query = "insert into Url (UserName, title, url, enabled, realTimePush) values(?,?,?,?,?)";
+		ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setString(1, UserName);
+		ps.setString(2, title);
+		ps.setString(3, url);
+		ps.setBoolean(4, enabled);
+		ps.setBoolean(5, realTimePush);
 		if(ps.executeUpdate() == 0){
 			ps.close();
-			return false;
+			return -1;
 		}
-		ps.close();
-		return true;
+		ResultSet rs = ps.getGeneratedKeys();
+		rs.next();
+		int urlID = rs.getInt(1);
+		rs.close(); ps.close();
+		return urlID;
 	}
 
 	@Override
@@ -69,10 +79,10 @@ public class UrlDAO implements IUrlDAO{
 	@Override
 	/**
 	 * @Title: doUpdate
-	 * @Description: Update the Url,Enable,RealTimePush of a piece of Url Info
+	 * @Description: Update the Url,Enabled,RealTimePush of a piece of Url Info
 	 * @param UrlID
 	 * @param url
-	 * @param Enable
+	 * @param Enabled
 	 * @param RealTimePush
 	 * @return boolean
 	 * @throws Exception
@@ -80,14 +90,14 @@ public class UrlDAO implements IUrlDAO{
 	public boolean doUpdate(Url urlInstance) throws Exception {
 		String title = urlInstance.getTitle();
 		String url = urlInstance.getUrl();
-		boolean Enable = urlInstance.isEnable();
+		boolean Enabled = urlInstance.isEnabled();
 		boolean RealTimePush = urlInstance.isRealTimePush();
 		int UrlID = urlInstance.getUrlID();
-		String query = "update Url set Title=?,Url=?,Enable=?,RealTimePush=? where UrlID=?";
+		String query = "update Url set Title=?,Url=?,Enabled=?,RealTimePush=? where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, title);
 		ps.setString(2, url);
-		ps.setBoolean(3, Enable);
+		ps.setBoolean(3, Enabled);
 		ps.setBoolean(4, RealTimePush);
 		ps.setInt(5, UrlID);
 		if(ps.executeUpdate() == 0){
@@ -147,17 +157,17 @@ public class UrlDAO implements IUrlDAO{
 	@Override
 	/**
 	 * 
-	 * @Title: doUpdateEnable
-	 * @Description: update the Enable singly
+	 * @Title: doUpdateEnabled
+	 * @Description: update the Enabled singly
 	 * @param UrlID
-	 * @param Enable
+	 * @param Enabled
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean doUpdateEnable(int urlID, boolean Enable) throws SQLException {
-		String query = "update Url set Enable=? where UrlID=?";
+	public boolean doUpdateEnabled(int urlID, boolean Enabled) throws SQLException {
+		String query = "update Url set Enabled=? where UrlID=?";
 		ps = conn.prepareStatement(query);
-		ps.setBoolean(1, Enable);
+		ps.setBoolean(1, Enabled);
 		ps.setInt(2, urlID);
 		if(ps.executeUpdate() == 0){
 			ps.close();
@@ -234,23 +244,23 @@ public class UrlDAO implements IUrlDAO{
 
 	@Override
 	/**
-	 * @Title: doFindEnable
-	 * @Description: Find the Enable By UrlID
+	 * @Title: doFindEnabled
+	 * @Description: Find the Enabled By UrlID
 	 * @param UrlID
 	 * @return boolean
 	 * @throws Exception
 	 */
-	public boolean doFindEnable(int UrlID) throws Exception {
-		String query = "select Enable from Url where UrlID=?";
+	public boolean doFindEnabled(int UrlID) throws Exception {
+		String query = "select Enabled from Url where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
 		ResultSet rs = ps.executeQuery();
-		boolean Enable = false;
+		boolean Enabled = false;
 		while(rs.next()){
-			Enable = rs.getBoolean(1);
+			Enabled = rs.getBoolean(1);
 		}
 		rs.close();ps.close();
-		return Enable;
+		return Enabled;
 	}
 
 	@Override
@@ -276,27 +286,53 @@ public class UrlDAO implements IUrlDAO{
 
 	@Override
 	/**
-	 * @Title: doFindAll
-	 * @Description: Find the UserName,Url,RealTimePush By UrlID
-	 * @param UrlID
-	 * @return Url
-	 * @throws Exception
+	 * 
+	 * @Title: FindAllByUserName
+	 * @Description: Í¨ï¿½ï¿½UserNameï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
 	 */
-	public Url doFindAll(int UrlID) throws Exception {
-		String query = "select * from Url where UrlID=?";
+	public LinkedList<Url> doFindAll(String UserName) throws SQLException {
+		String query = "select * from Url where UserName=?";
 		ps = conn.prepareStatement(query);
-		ps.setInt(1, UrlID);
+		ps.setString(1, UserName);
 		ResultSet rs = ps.executeQuery();
-		Url newUrl = null;//new Url(UrlID);
+		LinkedList<Url> lst =new LinkedList<Url>();
 		while(rs.next()){
-			newUrl = new Url(UrlID);
-			newUrl.setUserName(rs.getString(2));
-			newUrl.setUrl(rs.getString(3));
-			newUrl.setEnable(rs.getBoolean(4));
-			newUrl.setRealTimePush(rs.getBoolean(5));
+			Url newUrl = new Url();
+			newUrl.setUrlID(rs.getInt(1));
+			newUrl.setUserName(UserName);
+			newUrl.setTitle(rs.getString(3));
+			newUrl.setUrl(rs.getString(4));
+			newUrl.setEnabled(rs.getBoolean(5));
+			newUrl.setRealTimePush(rs.getBoolean(6));
+			lst.add(newUrl);
 		}
 		rs.close();ps.close();
-		return newUrl;
+		return lst;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: getAllUrl
+	 * @Description: ï¿½ï¿½ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UrlIDï¿½Í¶ï¿½Ó¦Urlï¿½ï¿½
+	 * @return Map<Integer,String>
+	 * @throws SQLException
+	 */
+	public Map<Integer,String> getAllUrl() throws SQLException {
+		String query = "select UrlID,Url from Url where Enabled=true";
+		Statement stat = (Statement) conn.createStatement();
+		ResultSet rs = stat.executeQuery(query);
+		Map<Integer,String> urlMap= new HashMap<Integer,String>();
+		while(rs.next()){
+			int UrlID = rs.getInt(1);
+			String Url = rs.getString(2);
+			urlMap.put(UrlID, Url);
+		}
+		rs.close();stat.close();
+		return urlMap;
 	}
 
 	@Override
@@ -344,5 +380,5 @@ public class UrlDAO implements IUrlDAO{
 		rs.close();ps.close();
 		return newTitle;
 	}
-
+	
 }
