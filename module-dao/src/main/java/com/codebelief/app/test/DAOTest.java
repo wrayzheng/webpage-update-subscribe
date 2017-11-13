@@ -28,8 +28,10 @@ public class DAOTest {
 		//Content content = new Content(0, 1,"cc","cc");
 		//contentDAO.doUpdate(content);
 		IUrlDAO UrlDAO = UrlDAOFactory.getUrlDAOInstance();
-		LinkedList<Url> url = UrlDAO.doFindAll("abc");
-		System.out.println(url);
+		//LinkedList<Url> url = UrlDAO.doFindAll("abc");
+		//System.out.println(url);
+		Url url = new Url(3,"hetao","baidu","http://www.baidu.com",true,true);
+		UrlDAO.doUpdateUrl(2,"baidu.com");
 		//UrlDAO.doInsert("abc", "baidu", "www.baidu.com", true, true);
 		UrlDAO.free();
 		

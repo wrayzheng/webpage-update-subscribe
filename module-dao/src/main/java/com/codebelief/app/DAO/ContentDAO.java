@@ -7,8 +7,8 @@ import com.codebelief.app.VO.Content;
 /**
  * @ClassName: ContentDAO
  * @Description: Define Some Concrete Functions For Content Table
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ17ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½17ï¿½ï¿½
  *
  */
 public class ContentDAO implements IContentDAO{
@@ -229,13 +229,13 @@ public class ContentDAO implements IContentDAO{
 	/**
 	 * 
 	 * @Title: doFindAllByUrlID
-	 * @Description: Í¨¹ýUrlIDÔÚContent±íÖÐ²éÕÒ¶ÔÓ¦µÄContentÍêÕû×ÖÌõ¡£
+	 * @Description: Í¨ï¿½ï¿½UrlIDï¿½ï¿½Contentï¿½ï¿½ï¿½Ð²ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Contentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param UrlID
 	 * @return Content
 	 * @throws Exception
 	 */
 	public Content doFindAllByUrlID(int UrlID) throws Exception {
-		String query = "select * from Content where ContentID=?";
+		String query = "select * from Content where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
 		ResultSet rs = ps.executeQuery();

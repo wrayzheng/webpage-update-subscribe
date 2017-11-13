@@ -4,8 +4,8 @@ package com.codebelief.app.VO;
  * 
  * @ClassName: Content
  * @Description: Define Content Type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ13ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½13ï¿½ï¿½
  *
  */
 public class Content {
@@ -14,6 +14,8 @@ public class Content {
 	private int urlID;
 	private String html;	//the Html code after the Content has Changed
 	private String delta;	//the difference between two interfacing Html codes
+	
+	public Content(){}
 	
 	public Content(int ContentID){
 		this.contentID = ContentID;
