@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.action.extension" value="do" />
+	<constant name="struts.ui.theme" value="simple" />
+
+    <!-- AJAX调用接口 -->
+	<package name="ajax-modify" namespace="/ajax" extends="json-default">
+        <interceptors>
+            <interceptor name="auth" class="com.codebelief.app.AccessInterceptor" />
+            <interceptor-stack name="authStack">
+            	<interceptor-ref name="auth" />
+            	<interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        
+        <!-- 操作权限验证 -->
+        <default-interceptor-ref name="authStack" />
+		
+		<global-results>
+			<result type="json" name="success">
+				<param name="includeProperties">urlID,success</param>
+			</result>
+			<result type="json" name="error">
+				<param name="includeProperties">urlID,success,errorMsg</param>
+			</result>
+			<result type="redirectAction" name="noPermission">
+				<param name="actionName">noPermission</param>
+				<param name="errorMsg">${errorMsg}</param>
+			</result>
+		</global-results>
+		
+		<!-- 登录 -->
+		<action name="login" class="com.codebelief.app.action.LoginAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<!-- 注册新用户 -->
+		<action name="signup" class="com.codebelief.app.action.SignupAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<!-- 查询登录状态 -->
+		<action name="isLogined" class="com.codebelief.app.action.LoginAction" method="isLogined">
+			<interceptor-ref name="defaultStack" />
+		</action>
+		
+        <!-- 修改订阅记录单个字段 -->
+        <action name="addUrl" class="com.codebelief.app.action.UrlOperateAction" method="addUrl" />
+        <action name="enable" class="com.codebelief.app.action.UrlOperateAction" method="enable" />
+        <action name="disable" class="com.codebelief.app.action.UrlOperateAction" method="disable" />
+        <action name="setRealTimePush" class="com.codebelief.app.action.UrlOperateAction" method="setRealTimePush" />
+        <action name="setIntegratedPush" class="com.codebelief.app.action.UrlOperateAction" method="setIntegratedPush" />
+        <action name="updateUrl" class="com.codebelief.app.action.UrlOperateAction" method="updateUrl" />
+        <action name="updateUrlTitle" class="com.codebelief.app.action.UrlOperateAction" method="updateUrlTitle" />
+        <action name="deleteUrl" class="com.codebelief.app.action.UrlOperateAction" method="deleteUrl" />
+        <!-- 没有权限的情况 -->
+        <action name="noPermission" class="com.codebelief.app.action.UrlOperateAction" method="noPermission">
+        	<interceptor-ref name="defaultStack" />
+        </action>
+	</package>
+	
+	<!-- 前台操作 -->
+	<package name="default" extends="struts-default">
+		<default-action-ref name="notfound"></default-action-ref>
+	
+		<global-results>
+			<result name="error">/error.jsp</result>
+		</global-results>
+	
+		<!-- 404错误（找不到对应Action） -->
+		<action name="notfound">
+			<result>/error404.jsp</result>
+		</action>
+	
+		<!-- 注销登录 -->
+		<action name="logout" class="com.codebelief.app.action.LoginAction" method="logout">
+			<result name="success" type="redirect">/</result>
+		</action>
+	</package>
+
+    <!-- 后台操作 -->
+	<package name="loginMode" namespace="/user" extends="struts-default">
+        <interceptors>
+            <interceptor name="loginCheck" class="com.codebelief.app.LoginInterceptor" />
+        </interceptors>
+	
+		<!-- 登录验证 -->
+		<default-interceptor-ref name="loginCheck" />
+		
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="login" type="redirect">/</result>
+		</global-results>
+
+        <!-- 订阅管理中心 -->
+		<action name="manage" class="com.codebelief.app.action.UrlManageAction">
+            <result name="success">/manage.jsp</result>
+		</action>
+
+	</package>
+
+</struts>

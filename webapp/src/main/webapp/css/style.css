@@ -1,0 +1,348 @@
+/* 定义图标所用字体 */
+@font-face {
+  font-family: 'Glyphicons Halflings';
+
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+.icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+    margin: 0 auto;
+    background-color: #67c2d4;
+    color: #fff;
+}
+
+h1 {
+	font-size: 3em;
+	letter-spacing: 3px;
+	margin: 1em 0;
+	text-align: center;
+}
+
+/* 首页 */
+.cover {
+    background: #67c2d4;
+	color: #fff;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.cover p {
+	font-size: 1.65em;
+	font-weight: 300;
+}
+
+.ts {
+	opacity: 0.8;
+}
+
+.box {
+	margin: 2em 0;
+	padding: 1em;
+}
+
+.cover button {
+	background-color: #fff;
+	color: #e75854;
+	border: none;
+	letter-spacing: 1px;
+	font-weight: 700;
+	line-height: 60px;
+	width: 200px;
+	font-size: 1.5em;
+	padding: 10px;
+	margin: 10px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+/* 首页设置结束 */
+
+.container {
+	width: 800px;
+}
+
+/* 设置首页弹出层效果 */
+.dialog {
+	display: block;
+	background: #fff;
+	color: #e75854;
+	width: 350px;
+	z-index: 200;
+	padding: 10px 30px;
+	margin: 80px auto;
+}
+
+.dialog * {
+	width: 100%;
+}
+
+.dialog-bg {
+	display: none;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,.8);
+	z-index: 100;
+	top: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
+.dialog h2 {
+	font-size: 2em;
+	text-align: center;
+	letter-spacing: 3px;
+}
+
+.dialog .input-group {
+	margin: 10px 0;
+}
+
+.dialog .input-group label {
+	display: block;
+	color: #ceaa8b;
+	padding: 5px 0;
+}
+
+.dialog .input-group input, .dialog .input-group select {
+	border: 2px solid #ceaa8b;
+	background: transparent;
+	line-height: 50px;
+	font-weight: 300;
+	font-size: 1.6em;
+	color: #ceaa8b;
+	padding: 0 10px;
+}
+
+.dialog .input-group input:focus {
+	border: 2px solid #e75854;
+	color: #e75854;
+}
+
+.dialog .btn {
+	background-color: #e75854;
+	color: #fff;
+	border: none;
+	letter-spacing: 3px;
+	font-size: 1.2em;
+	font-weight: 700;
+	line-height: 60px;
+	width: 100%;
+	margin: 20px 0;
+	cursor: pointer;
+}
+/* 首页弹出层效果设置结束 */
+
+/* 表格样式 */
+.manage-panel {
+	color: #344644;
+	background-color: #FFFFFF;
+	text-align: left;
+	margin: 20px auto;
+	box-shadow: 1px 1px 4px 1px #a1a1a1 inset;
+	width: 800px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.button-panel {
+	padding: 10px 0;
+}
+
+.button-panel button {
+	border: none;
+	cursor: pointer;
+	background-color: #369adc;
+	color: #fff;
+	line-height: 2.5;
+	margin: 0 5px;
+	border-radius: 5px;
+	font-weight: 500;
+}
+
+.button-panel button:hover {
+	opacity: 0.8;
+}
+
+.user {
+	float: right;
+	padding-right: 15px;
+}
+
+table td {
+	border-top: 1px solid #ddd;
+}
+
+#enable {
+	background-color: #2ecc71;
+}
+
+#disable {
+	background-color: #fba11e;
+}
+
+#setRealTimePush {
+	background-color: #c240fb;
+}
+
+#setIntegratedTimePush {
+	background-color: #369adc;
+}
+
+#deleteUrl {
+	background-color: #e75854;
+}
+
+.h_select {
+	min-width: 30px;
+}
+
+.h_title {
+	width: 30%;
+}
+
+.h_url {
+	width: 40%;
+}
+
+.h_status {
+	width: 15%;
+}
+
+.h_pushMethod {
+	width: 15%;
+}
+
+th, td {
+	padding: 5px 10px;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+.editor > input {
+	width: 70%; /* 该属性需要进一步设置 */
+}
+/* 表格样式设置结束 */
+
+/* 设置表格图标样式 */
+.icon {
+	margin: 3px 5px;
+}
+
+.icon-pencil:before {
+	content: "\270f";
+	cursor: pointer;
+}
+
+.icon-pencil:hover {
+	color: #2ecc71;
+}
+
+.icon-start:before {
+	content: "\e073 已启动";
+	color: #2ecc71;
+	cursor: text;
+}
+
+.icon-pause:before {
+	content: "\e072 已暂停";
+	color: #fba11e;
+	cursor: text;
+}
+
+.icon-ok:before {
+	content: "\e013";
+	cursor: pointer;
+}
+
+.icon-ok:hover {
+	color: #2ecc71;
+}
+
+.icon-cancel:before {
+	content: "\e014";
+	cursor: pointer;
+}
+
+.icon-cancel:hover {
+	color: #e75854;
+}
+
+.icon-realTimePush:before {
+	content: "实时推送";
+	cursor: text;
+	color: #c240fb;
+}
+
+.icon-integratedPush:before {
+	content: "整合推送";
+	cursor: text;
+	color: #369adc;
+}
+/* 表格图标样式设置结束 */
+
+.icon-add:before {
+	content: "\e081";
+	cursor: pointer;
+	position: absolute;
+	top: -0.7em;
+	left: 4em;
+}
+
+.icon-logout:before {
+	content: "\e128";
+	cursor: pointer;
+	position: absolute;
+	top: -0.7em;
+	right: 4em;
+}
+
+.dialog-compact .input-group input:not([type="radio"]), .dialog-compact .input-group select {
+	border: 1px solid gray;
+	line-height: 30px;
+	height: 30px;
+	font-size: 1em;
+	color: gray;
+}
+
+.dialog-compact .input-group input:focus {
+	border: 1px solid #e75854;
+	color: #e75854;
+}
+
+input[type="radio"] {
+	width: unset;
+}
+
+.dialog-compact .input-group label {
+	display: block;
+	color: gray;
+	padding: 5px 0;
+}
+
+.dialog-compact .radio-group label {
+	display: inline;
+	padding: 0 25px;
+}
+
+.dialog-compact .radio-group {
+	margin-top: 25px; 
+}
