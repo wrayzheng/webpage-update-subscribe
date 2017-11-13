@@ -1,5 +1,6 @@
 package com.codebelief.app.scraper;
 
+import java.util.LinkedList;
 import java.util.Map;
 
 import com.codebelief.app.rwDatabase.GetURL;
@@ -19,7 +20,7 @@ public class Controller {
 	
 	//存储从数据库url 表获取的待爬取url map，addSeed使用
     // 同时在MyCrawler 通过调用 get 方法获取，保证读取和写入时数据库中的数据是一致的，避免在爬取时，有新增加url 
-    public static Map<Integer,String> urlMap = GetURL.getAllUrl();; 
+    public static Map<String, LinkedList<Integer>> urlMap = GetURL.getAllUrl();; 
                                  
 	public static void execute() throws Exception {
         String crawlStorageFolder = "/data/crawl/root";
@@ -60,7 +61,7 @@ public class Controller {
 //        controller.addSeed("http://www.tsinghua.edu.cn/publish/newthu/index.html");
         
         //note: map.values and map.keySet 顺序是否一致（检查）
-        for (String url : urlMap.values()) {
+        for (String url : urlMap.keySet()) {
         	controller.addSeed(url);
         }
  

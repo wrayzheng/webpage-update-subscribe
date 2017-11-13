@@ -57,7 +57,7 @@ public class MyCrawler extends WebCrawler {
              String baseUri = url;
              Elements validLinks = PageParser.getLinks(html, baseUri);
              
-             writeLinkToDB(url,validLinks);   //写回数据库
+             writeContentToDB(url,validLinks);   //写回数据库
             
          }
      }
@@ -82,26 +82,24 @@ public class MyCrawler extends WebCrawler {
       * 由于使用了Crawler4j 项目，在爬取时无法另外添加数据项（urlID），使之与爬取url 绑定， 这里只能通过重新比对找到urlID。
       */
      //TO-DO WriteLinkToDB(暂未实现,提前调用)
-     private void writeLinkToDB(String url, Elements validLinks) {
+     private void writeContentToDB(String url, Elements validLinks) {
     	 
     	 LinkedList<String> HrefList;    //存放链接
     	 LinkedList<String> TextList;    //存放链接标题
-    	 Map<Integer, String> urlMap = Controller.urlMap;  //从controller 获取urlMap ，确保和添加crawler seed 时数据一致。
-    	 
+    	 LinkedList<SingleUpdateRecord> updateRecords = new LinkedList<SingleUpdateRecord>();
+
     	 for (int linkNum = 0; linkNum < validLinks.size(); linkNum++) { 	 
     		 String linkHref = validLinks.get(linkNum).attr("href");
     		 String linkText = validLinks.get(linkNum).text();
-    		 HrefList.add(linkHref);
-    		 TextList.add(linkText);
-    		
+    		 updateRecords.add(new SingleUpdateRecord(linkText, linkHref));
     	 }  		 
          
     	 // 遍历urlMap 中的 url，通过和爬取后的页面的主 url 比较，来找到对应urlID，从而写入对应的content 表里。
-         for (Map.Entry<Integer, String> entry : urlMap.entrySet()) {
-        	 if (entry.getValue().equals(url)) {
-        		 WriteLinkToDB(entry.getKey(),HrefList,TextList);
-        	 }
-         }
-       }
+  	 //从controller 获取urlMap ，确保和添加crawler seed 时数据一致。
+  	 LinkedList<Integer> urlIDList = Controller.urlMap.get(url);
+        for(int urlID: urlIDList) {
+        	updateProcess(urlID, updateRecords);
+        }
+     }
      
 }

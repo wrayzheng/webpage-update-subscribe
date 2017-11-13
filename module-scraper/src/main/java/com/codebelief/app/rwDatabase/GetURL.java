@@ -1,5 +1,7 @@
 package com.codebelief.app.rwDatabase;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import com.codebelief.app.DAO.IContentDAO;
@@ -12,16 +14,30 @@ import com.codebelief.app.VO.Content;
 public class GetURL {
 	
 
-	public void etURL() throws Exception {
+	public void getURL() throws Exception {
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 
 	}
 	
-	public static Map<Integer,String> getAllUrl() {		
+	public static Map<String, LinkedList<Integer>> getAllUrl() {		
 		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-		Map<Integer,String> urlMap = urlDAO.getAllUrl();
+		Map<Integer,String> tempUrlMap = urlDAO.getAllUrl();
 		
-		return urlMap;
+		Map<String, LinkedList<Integer>> urlMap = new HashMap<String, LinkedList<Integer>>();
+		
+		for(Map.Entry<Integer,String> entry : tempUrlMap.entrySet()) {
+			String url = entry.getValue();
+			if(urlMap.containsKey(url)) {
+				LinkedList<Integer> tempList = urlMap.get(url);
+				tempList.add(entry.getKey());
+			}
+			else {
+				LinkedList<Integer> intList = new LinkedList<Integer>();
+				intList.add(entry.getKey());
+				urlMap.put(url, intList);
+			}
+		}
+		return urlMap; 
 	}
 	
 }
