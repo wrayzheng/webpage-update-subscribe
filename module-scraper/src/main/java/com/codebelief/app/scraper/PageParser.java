@@ -36,11 +36,9 @@ public class PageParser {
      * 过滤链接，提取有效文章链接
 	 * 过滤掉链接文本描述少于5个字节的链接
 	 */
-    private static Elements linkFilter(Document doc) {
-    	
+    private static Elements linkFilter(Document doc) {  	
     	// 提取链接a[href]
-    	Elements links = doc.select("a[href]");
-    	
+    	Elements links = doc.select("a[href]");  	
     	// 过滤Text 字符小于5的链接，一般为分类链接，非目标链接
     	int linkNum = 0;
 
@@ -54,10 +52,7 @@ public class PageParser {
     			 links.remove(linkNum);
     			 linkNum--;	 
     			 continue;
-    		 }
-    		 
-    		 System.out.println("Href:" + linkHref);
-    		 System.out.println("Text: " + linkText);
+    		 }  		 
     	}
         System.out.println("linkNumAfter = " + links.size());
    

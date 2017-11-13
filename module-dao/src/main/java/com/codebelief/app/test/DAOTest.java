@@ -2,7 +2,6 @@ package com.codebelief.app.test;
 
 import com.codebelief.app.DAO.*;
 import com.codebelief.app.DAOFactory.*;
-import com.codebelief.app.DatabaseConnection.DatabaseConnectionFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
 import com.codebelief.app.DAOFactory.*;

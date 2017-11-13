@@ -27,6 +27,7 @@ public class ContentHandler {
 	public static void UpdateRecord(Content content){
 		try {
 			contentDAO.doUpdate(content);
+			
 			contentDAO.free();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,6 +48,7 @@ public class ContentHandler {
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
+		
 		String newDelta = "";
 		String newHtml = "";
 		if(content != null){
