@@ -9,8 +9,8 @@ import java.sql.SQLException;
  * 
  * @ClassName: MySQLDatabaseConnection
  * @Description: Connecting with Database
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ13ÈÕ
+ * @author ä½•æ¶›
+ * @date 2017å¹´10æœˆ13æ—¥
  *
  */
 public class MySQLDatabaseConnection implements DatabaseConnection{
@@ -73,14 +73,14 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 			try {
 				createDefaultDbProperties(path,"root","mysql","localhost","3306","mysql");
 			} catch (IOException e) {
-				System.out.println("´´½¨ÅäÖÃÎÄ¼ş³ö´í£¡");
+				System.out.println("åˆ›å»ºé…ç½®æ–‡ä»¶å‡ºé”™ï¼");
 				e.printStackTrace();
 			}
 		}
 		try {
 			readDbProperties(path);
 		} catch (IOException e) {
-			System.out.println("¶ÁÈ¡ÅäÖÃÎÄ¼şÊ§°Ü£¡");
+			System.out.println("è¯»å–é…ç½®æ–‡ä»¶å¤±è´¥ï¼");
 			e.printStackTrace();
 		}
 	}

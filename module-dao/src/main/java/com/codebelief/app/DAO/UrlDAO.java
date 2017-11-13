@@ -13,8 +13,8 @@ import com.mysql.jdbc.Statement;
  * 
  * @ClassName: UrlDAO
  * @Description: Define Some Concrete Operations For Url Table
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class UrlDAO implements IUrlDAO{
@@ -288,7 +288,7 @@ public class UrlDAO implements IUrlDAO{
 	/**
 	 * 
 	 * @Title: FindAllByUserName
-	 * @Description: Í¨¹ýUserName´ÓUrl±íÀï²éÕÒ¶ÔÓ¦µÄUrlÍêÕû×ÖÌõ¡£
+	 * @Description: Í¨ï¿½ï¿½UserNameï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param UserName
 	 * @return LinkedList<Url>
 	 * @throws SQLException
@@ -307,6 +307,7 @@ public class UrlDAO implements IUrlDAO{
 			newUrl.setUrl(rs.getString(4));
 			newUrl.setEnabled(rs.getBoolean(5));
 			newUrl.setRealTimePush(rs.getBoolean(6));
+			lst.add(newUrl);
 		}
 		rs.close();ps.close();
 		return lst;
@@ -316,7 +317,7 @@ public class UrlDAO implements IUrlDAO{
 	/**
 	 * 
 	 * @Title: getAllUrl
-	 * @Description: ²éÕÒUrl±íÖÐËùÓÐ×ÖÌõµÄUrlIDºÍ¶ÔÓ¦Url¡£
+	 * @Description: ï¿½ï¿½ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UrlIDï¿½Í¶ï¿½Ó¦Urlï¿½ï¿½
 	 * @return Map<Integer,String>
 	 * @throws SQLException
 	 */

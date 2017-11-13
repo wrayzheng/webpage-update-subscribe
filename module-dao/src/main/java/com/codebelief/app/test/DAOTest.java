@@ -8,9 +8,10 @@ import com.codebelief.app.VO.*;
 import com.codebelief.app.DAOFactory.*;
 
 import java.sql.Time;
+import java.util.LinkedList;
 /**
- * @author ºÎÌÎ
- * @version 1st   on 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @version 1st   on 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  */
 public class DAOTest {
 	public static void main(String[] args) throws Exception{
@@ -23,9 +24,14 @@ public class DAOTest {
 		newModify.updateUrlTitle();
 		newModify.disable();
 		newModify.setIntegratedPush();*/
-		IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
-		Content content = new Content(0, 1,"cc","cc");
-		contentDAO.doUpdate(content);
+		//IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
+		//Content content = new Content(0, 1,"cc","cc");
+		//contentDAO.doUpdate(content);
+		IUrlDAO UrlDAO = UrlDAOFactory.getUrlDAOInstance();
+		LinkedList<Url> url = UrlDAO.doFindAll("abc");
+		System.out.println(url);
+		//UrlDAO.doInsert("abc", "baidu", "www.baidu.com", true, true);
+		UrlDAO.free();
 		
 		System.out.println("Success!");
 	}
