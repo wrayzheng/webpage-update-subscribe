@@ -16,12 +16,10 @@ import com.codebelief.app.VO.*;
 public class ContentHandler {
 	private static IContentDAO contentDAO = null;
 	
-	public static void updateProcess(int UrlID,
-			LinkedList<String> urlLinks, 
-			LinkedList<String> titles){
+	public static void updateProcess(int UrlID, LinkedList<SingleUpdateRecord> updateRecords){
 		Content content = null;
 		try {
-			content = CompareContent(UrlID, urlLinks, titles);
+			content = CompareContent(UrlID, updateRecords);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -38,12 +36,7 @@ public class ContentHandler {
 		
 	}
 	
-	public static Content CompareContent(int UrlID,
-			LinkedList<String> urlLinks, 
-			LinkedList<String> titles) throws Exception{
-		LinkedList<SingleUpdateRecord> newSingleUpdateRecords = new LinkedList<SingleUpdateRecord>();
-		for(int i = 0; i < urlLinks.size(); i++)
-			newSingleUpdateRecords.add(new SingleUpdateRecord(urlLinks.get(i), titles.get(i)));
+	public static Content CompareContent(int UrlID, LinkedList<SingleUpdateRecord> newSingleUpdateRecords) throws Exception{
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
@@ -52,8 +45,8 @@ public class ContentHandler {
 		String newHtml = "";
 		if(oldUrlLinksAndTitles != null){
 			String[] oldUrlLinkAndTitles = oldUrlLinksAndTitles.split("\n\n");
-			for(int i = 0; i < urlLinks.size(); i++){
-				for(String oldSingleUpdateRecord:oldUrlLinkAndTitles){
+			for(int i = 0; i < newSingleUpdateRecords.size(); i++){
+				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles){
 					if(!newSingleUpdateRecords.get(i).equals(oldSingleUpdateRecord)){
 						newDelta += newSingleUpdateRecords.get(i) + "\n\n";
 						break;
@@ -63,7 +56,7 @@ public class ContentHandler {
 			}
 		}
 		else{
-			for(int i = 0; i < urlLinks.size(); i++)
+			for(int i = 0; i < newSingleUpdateRecords.size(); i++)
 				newDelta += newSingleUpdateRecords.get(i) + "\n\n";
 			newHtml = newDelta;
 		}
