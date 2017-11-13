@@ -81,7 +81,5 @@ public class Controller {
 	 * 从数据库url表获取待爬取的url map
 	 * 定义为static，
 	 */
-	public Map<Integer,String> getUrlMap() {
-		  return urlMap;
-	}
+	
 }
