@@ -9,8 +9,8 @@ import java.sql.SQLException;
  * 
  * @ClassName: MySQLDatabaseConnection
  * @Description: Connecting with Database
- * @author 何涛
- * @date 2017年10月13日
+ * @author 浣曟稕
+ * @date 2017骞�10鏈�13鏃�
  *
  */
 public class MySQLDatabaseConnection implements DatabaseConnection{
@@ -73,14 +73,14 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 			try {
 				createDefaultDbProperties(path,"root","mysql","localhost","3306","mysql");
 			} catch (IOException e) {
-				System.out.println("创建配置文件出错！");
+				System.out.println("鍒涘缓閰嶇疆鏂囦欢鍑洪敊锛�");
 				e.printStackTrace();
 			}
 		}
 		try {
 			readDbProperties(path);
 		} catch (IOException e) {
-			System.out.println("读取配置文件失败！");
+			System.out.println("璇诲彇閰嶇疆鏂囦欢澶辫触锛�");
 			e.printStackTrace();
 		}
 	}
@@ -140,5 +140,6 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 		host = prop.getProperty("host");//"localhost";
 		port = prop.getProperty("port");//"3306";
 		database = prop.getProperty("database");//"mysql";
+		
 	}
 }

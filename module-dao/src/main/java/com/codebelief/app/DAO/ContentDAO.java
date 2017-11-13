@@ -235,7 +235,7 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public Content doFindAllByUrlID(int UrlID) throws Exception {
-		String query = "select * from Content where ContentID=?";
+		String query = "select * from Content where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, UrlID);
 		ResultSet rs = ps.executeQuery();

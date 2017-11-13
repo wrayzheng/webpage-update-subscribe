@@ -17,6 +17,7 @@ public class ContentHandler {
 	private static IContentDAO contentDAO = null;
 	
 	public static void updateProcess(int UrlID, LinkedList<SingleUpdateRecord> updateRecords){
+		System.out.println("content:");
 		Content content = null;
 		try {
 			content = CompareContent(UrlID, updateRecords);
@@ -29,6 +30,7 @@ public class ContentHandler {
 	public static void UpdateRecode(Content content){
 		try {
 			contentDAO.doUpdate(content);
+			
 			contentDAO.free();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,7 +42,9 @@ public class ContentHandler {
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
+		System.out.println("content:"+content);
 		String oldUrlLinksAndTitles = content.getHtml();
+		System.out.println("oldUrlLinksAndTitles:"+oldUrlLinksAndTitles);
 		String newDelta = "";
 		String newHtml = "";
 		if(oldUrlLinksAndTitles != null){

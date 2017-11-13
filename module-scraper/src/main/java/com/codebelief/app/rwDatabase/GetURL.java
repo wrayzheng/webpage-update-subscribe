@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import com.codebelief.app.DAO.IContentDAO;
+
 import com.codebelief.app.DAO.IUrlDAO;
-import com.codebelief.app.DAOFactory.ContentDAOFactory;
 import com.codebelief.app.DAOFactory.UrlDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.VO.Content;
+
 
 public class GetURL {
 	
@@ -19,7 +18,7 @@ public class GetURL {
 
 	}
 	
-	public static Map<String, LinkedList<Integer>> getAllUrl() {		
+	public static Map<String, LinkedList<Integer>> getAllUrl() throws Exception {		
 		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 		Map<Integer,String> tempUrlMap = urlDAO.getAllUrl();
 		

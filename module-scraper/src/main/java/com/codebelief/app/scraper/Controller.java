@@ -3,6 +3,7 @@ package com.codebelief.app.scraper;
 import java.util.LinkedList;
 import java.util.Map;
 
+import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.rwDatabase.GetURL;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -16,13 +17,26 @@ import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
  */
 
 public class Controller {
-    //public static void main(String[] args) throws Exception {
+
 	
 	//存储从数据库url 表获取的待爬取url map，addSeed使用
     // 同时在MyCrawler 通过调用 get 方法获取，保证读取和写入时数据库中的数据是一致的，避免在爬取时，有新增加url 
-    public static Map<String, LinkedList<Integer>> urlMap = GetURL.getAllUrl();; 
-                                 
-	public static void execute() throws Exception {
+    
+	public static Map<String, LinkedList<Integer>> urlMap;
+	
+	static {
+		try {
+			
+			MySQLDatabaseConnection.initialDatabaseDeploy();
+			urlMap = GetURL.getAllUrl();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+    public static void main(String[] args) throws Exception {    
+    
+	//public static void execute() throws Exception {
         String crawlStorageFolder = "/data/crawl/root";
         //设置并行爬虫个数
         int numberOfCrawlers = 2;
