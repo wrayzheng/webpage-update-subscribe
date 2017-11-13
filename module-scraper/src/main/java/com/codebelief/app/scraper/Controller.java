@@ -34,9 +34,9 @@ public class Controller {
 		}
 	}
 	
-    public static void main(String[] args) throws Exception {    
+    //public static void main(String[] args) throws Exception {    
     
-	//public static void execute() throws Exception {
+	public static void execute() throws Exception {
         String crawlStorageFolder = "/data/crawl/root";
         //设置并行爬虫个数
         int numberOfCrawlers = 2;
@@ -91,9 +91,5 @@ public class Controller {
         controller.waitUntilFinish();
         
     }
-	/*
-	 * 从数据库url表获取待爬取的url map
-	 * 定义为static，
-	 */
 	
 }
