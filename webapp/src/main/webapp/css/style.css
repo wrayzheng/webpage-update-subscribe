@@ -248,13 +248,13 @@ th, td {
 }
 
 .icon-start:before {
-	content: "\e072 已启动";
+	content: "\e073 已启动";
 	color: #2ecc71;
 	cursor: text;
 }
 
 .icon-pause:before {
-	content: "\e073 已暂停";
+	content: "\e072 已暂停";
 	color: #fba11e;
 	cursor: text;
 }

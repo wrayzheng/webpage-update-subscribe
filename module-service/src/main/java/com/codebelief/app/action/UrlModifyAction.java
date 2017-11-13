@@ -1,10 +1,9 @@
 package com.codebelief.app.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.codebelief.app.DAOFactory.*;
-import com.codebelief.app.VO.*;
-
-import java.sql.SQLException;
+import com.codebelief.app.VO.Url;
 
 import com.codebelief.app.DAO.*;
 /**
@@ -18,18 +17,36 @@ public class UrlModifyAction extends ActionSupport {
 
 	private int urlID;
 	private String url;
-	private String urlTitle;
+	private String title;
+	private boolean realTimePush;
 	private boolean success = false;
 	private String errorMsg;
 
-    public String noPermission()  {
+    public String noPermission() {
         return ERROR;
+    }
+    
+    public String addUrl() {
+    	String userName = (String)ActionContext.getContext().getSession().get("userName");
+    	try {
+    		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
+    		urlID = urlDAO.doInsert(userName, title, url, true, realTimePush);
+    		if(-1 == urlID) {
+    			errorMsg = "添加记录失败！";
+    		} else {
+    			success = true;
+    			return SUCCESS;
+    		}
+    	} catch (Exception e) {
+    		errorMsg = "访问数据库出错！";
+    	}
+    	return ERROR;
     }
 
 	public String enable() {
 		try {
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateEnable(urlID, true)){
+			if(!urlDAO.doUpdateEnabled(urlID, true)){
 				errorMsg = "请检查UrlID！";
 			} else {
                 success = true;
@@ -44,7 +61,7 @@ public class UrlModifyAction extends ActionSupport {
 	public String disable() {
 		try {
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateEnable(urlID, false)){
+			if(!urlDAO.doUpdateEnabled(urlID, false)){
 				errorMsg = "请检查UrlID！";
 			} else  {
 				success = true;
@@ -112,7 +129,7 @@ public class UrlModifyAction extends ActionSupport {
 	public String updateUrlTitle() {
 		try {
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateTitle(urlID, urlTitle)){
+			if(!urlDAO.doUpdateTitle(urlID, title)){
 				errorMsg = "更新标题失败！";
 			} else  {
                 success = true;
@@ -159,12 +176,20 @@ public class UrlModifyAction extends ActionSupport {
 		this.url = url;
 	}
 
-	public String getUrlTitle() {
-		return urlTitle;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setUrlTitle(String urlTitle) {
-		this.urlTitle = urlTitle;
+	public void setTitle(String urlTitle) {
+		this.title = urlTitle;
+	}
+
+	public boolean isRealTimePush() {
+		return realTimePush;
+	}
+
+	public void setRealTimePush(boolean realTimePush) {
+		this.realTimePush = realTimePush;
 	}
 
 	public boolean isSuccess() {

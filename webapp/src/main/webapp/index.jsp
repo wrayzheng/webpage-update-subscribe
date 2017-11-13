@@ -101,7 +101,7 @@
 					$("#login-form").serialize(),
 					function(data, status){
 						if(data["success"])
-							window.location.href="<s:url namespace='/user' action='overview' />";
+							window.location.href="<s:url namespace='/user' action='manage' />";
 						else {
 							password.val(originPw);
 							alert(data["errorMsg"]);

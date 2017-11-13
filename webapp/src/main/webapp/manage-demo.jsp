@@ -27,21 +27,32 @@
 	    			<th class="h_status">状态</th>
 	    			<th class="h_pushMethod">推送方式</th>
 	    		</tr>
-	    		<s:iterator value="#urlList" var="record">
 	    		<tr>
-	    			<td><input type="checkbox" class="selectSingle" value="<s:property value='#record.urlID' />" /></td>
+	    			<td><input type="checkbox" class="selectSingle" value="5" /></td>
 	    			<td>
-	    				<span class="viewer"><span><s:property value='#record.title' /></span><span class="icon icon-pencil"></span></span>
+	    				<span class="viewer"><span>今日哈工大</span><span class="icon icon-pencil"></span></span>
 	    				<span class="editor" style="display:none;"><input type="text" name="title" /><span class="icon icon-ok"></span><span class="icon icon-cancel"></span></span>
 	    			</td>
 	    			<td>
-	    				<span class="viewer"><span><s:property value='#record.url' /></span><span class="icon icon-pencil"></span></span>
+	    				<span class="viewer"><span>http://today.hit.edu.cn</span><span class="icon icon-pencil"></span></span>
 	    				<span class="editor" style="display:none;"><input type="text" name="url" /><span class="icon icon-ok"></span><span class="icon icon-cancel"></span></span>
 	    			</td>
-	    			<td><span class="status icon icon-<s:if test='#record.enabled'>start</s:if><s:else>pause</s:else>"></span></td>
-	    			<td><span class="pushMethod icon icon-<s:if test='#record.realTimePush'>realTimePush</s:if><s:else>integratedPush</s:else>"></span></td>
+	    			<td><span class="status icon icon-start"></span></td>
+	    			<td><span class="pushMethod icon icon-realTimePush"></span></td>
 	    		</tr>
-	    		</s:iterator>
+	    		<tr>
+	    			<td><input type="checkbox" class="selectSingle" value="2" /></td>
+	    			<td>
+	    				<span class="viewer"><span>阮一峰的博客</span><span class="icon icon-pencil"></span></span>
+	    				<span class="editor" style="display:none;"><input type="text" name="title" /><span class="icon icon-ok"></span><span class="icon icon-cancel"></span></span>
+	    			</td>
+	    			<td>
+	    				<span class="viewer"><span>http://ruanyifeng.com</span><span class="icon icon-pencil"></span></span>
+	    				<span class="editor" style="display:none;"><input type="text" name="url" /><span class="icon icon-ok"></span><span class="icon icon-cancel"></span></span>
+	    			</td>
+	    			<td><span class="status icon icon-pause"></span></td>
+	    			<td><span class="pushMethod icon icon-integratedPush"></span></td>
+	    		</tr>
 	    	</table>
     	</div>
     	
@@ -256,8 +267,7 @@
 				$.post("<s:url namespace='/ajax' action='addUrl' />",
     					$(this).serialize(),
 						function(data, status){
-    					if(data["success"])
-    						addRecord(data["urlID"], title, url, realTimePush);
+    					if(data["success"]) console.log(data);
     					else alert(data["errorMsg"]);
     			});
     			return false;

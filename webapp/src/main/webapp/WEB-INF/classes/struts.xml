@@ -17,25 +17,31 @@
             	<interceptor-ref name="defaultStack" />
             </interceptor-stack>
         </interceptors>
-	
 		
 		<global-results>
 			<result type="json" name="success">
-				<param name="includeProperties">success</param>
+				<param name="includeProperties">urlID,success</param>
 			</result>
 			<result type="json" name="error">
-				<param name="includeProperties">success,errorMsg</param>
+				<param name="includeProperties">urlID,success,errorMsg</param>
 			</result>
 			<result type="redirectAction" name="noPermission">
 				<param name="actionName">noPermission</param>
 				<param name="errorMsg">${errorMsg}</param>
 			</result>
 		</global-results>
+		
 		<!-- 登录 -->
-		<action name="login" class="com.codebelief.app.action.LoginAction" />
+		<action name="login" class="com.codebelief.app.action.LoginAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
 		<!-- 注册新用户 -->
-		<action name="signup" class="com.codebelief.app.action.SignupAction" />
+		<action name="signup" class="com.codebelief.app.action.SignupAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
+		
         <!-- 修改订阅记录单个字段 -->
+        <action name="addUrl" class="com.codebelief.app.action.UrlModifyAction" method="addUrl" />
         <action name="enable" class="com.codebelief.app.action.UrlModifyAction" method="enable" />
         <action name="disable" class="com.codebelief.app.action.UrlModifyAction" method="disable" />
         <action name="setRealTimePush" class="com.codebelief.app.action.UrlModifyAction" method="setRealTimePush" />
@@ -81,9 +87,9 @@
 			<result name="login" type="redirect">/login.jsp</result>
 		</global-results>
 
-        <!-- 订阅信息概览 -->
-		<action name="overview" class="com.codebelief.app.action.UrlOverviewAction">
-            <result name="success">/user/overview.jsp</result>
+        <!-- 订阅管理中心 -->
+		<action name="manage" class="com.codebelief.app.action.UrlManageAction">
+            <result name="success">/manage.jsp</result>
 		</action>
 
         <!-- 订阅信息详情 -->
@@ -91,20 +97,6 @@
             <result name="success">/user/detail.jsp</result>
 		</action>
 
-        <!-- 添加订阅信息 -->
-		<action name="addUrl" class="com.codebelief.app.action.UrlOperateAction" method="add">
-            <result name="success">/user/detail.jsp</result>
-		</action>
-
-        <!-- 更新订阅信息 -->
-		<action name="updateUrl" class="com.codebelief.app.action.UrlOperateAction" method="update">
-            <result name="success">/user/detail.jsp</result>
-		</action>
-
-        <!-- 删除订阅信息 -->
-		<action name="deleteUrl" class="com.codebelief.app.action.UrlOperateAction" method="delete">
-            <result name="success">/user/overview.jsp</result>
-		</action>
 	</package>
 
 </struts>
