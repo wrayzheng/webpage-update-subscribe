@@ -38,7 +38,7 @@ public class UrlDAO implements IUrlDAO{
 			String url,
 			boolean enabled,
 			boolean realTimePush) throws Exception {
-		String query = "insert into Url (UserName, title, url, enabled, realTimePush) values(?,?,?,?,?)";
+		String query = "insert into Url (UserName, Title, Url, Enabled, RealTimePush) values(?,?,?,?,?)";
 		ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, UserName);
 		ps.setString(2, title);
@@ -142,7 +142,7 @@ public class UrlDAO implements IUrlDAO{
 	 * @throws SQLException
 	 */
 	public boolean doUpdateUrl(int urlID, String url) throws SQLException {
-		String query = "update Url set url=? where UrlID=?";
+		String query = "update Url set Url=? where UrlID=?";
 		ps = conn.prepareStatement(query);
 		ps.setString(1, url);
 		ps.setInt(2, urlID);

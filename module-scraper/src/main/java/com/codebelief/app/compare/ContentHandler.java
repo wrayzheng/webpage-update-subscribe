@@ -55,16 +55,19 @@ public class ContentHandler {
 			String oldUrlLinksAndTitles = content.getHtml();
 			String[] oldUrlLinkAndTitles = oldUrlLinksAndTitles.split("\n\n");
 			for(int i = 0; i < newSingleUpdateRecords.size(); i++){
-				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles){
-					if(!newSingleUpdateRecords.get(i).equals(oldSingleUpdateRecord)){
-						newDelta += newSingleUpdateRecords.get(i) + "\n\n";
+				boolean flag = false;
+				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles)
+					if(newSingleUpdateRecords.get(i).equals(oldSingleUpdateRecord)){
+						flag = true;
 						break;
 					}
+				if(!flag){
+					newDelta += newSingleUpdateRecords.get(i) + "\n\n";
 				}
 				newHtml += newSingleUpdateRecords.get(i) + "\n\n";
 			}
 			content.setHtml(newHtml);
-			content.setDelta(newDelta);
+			content.setDelta(newDelta + content.getDelta());
 			UpdateRecord(content);
 		}
 		else{
@@ -74,7 +77,7 @@ public class ContentHandler {
 			content = new Content();
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
-			content.setDelta(newDelta);
+			content.setDelta(newDelta + content.getDelta());
 			InsertRecord(content);
 		}
 	}
