@@ -5,8 +5,8 @@ import java.sql.Time;
  * 
  * @ClassName: User
  * @Description: Define User Type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ13ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½13ï¿½ï¿½
  *
  */
 public class User {
@@ -14,6 +14,8 @@ public class User {
 	private String password;	//no more than 64 characters
 	private String email;		//no more than 64 characters
 	private Time pushTime;		//java.sql.Time
+	
+	public User(){}
 	
 	public User(String UserName){
 		this.userName = UserName;

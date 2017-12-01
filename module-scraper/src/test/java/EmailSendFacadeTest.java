@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.codebelief.app.mail.*;
+import com.codebelief.app.pushupdate.PushMail;
 
 public class EmailSendFacadeTest {
 	public static void main(String[] args) throws InterruptedException {

@@ -6,8 +6,8 @@ import java.util.LinkedList;
 
 import com.codebelief.app.VO.User;
 /**
- * @author ºÎÌÎ
- * @version 1st   on 2017Äê10ÔÂ13ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @version 1st   on 2017ï¿½ï¿½10ï¿½ï¿½13ï¿½ï¿½
  */
 public interface IUserDAO {
 	/**
@@ -116,6 +116,8 @@ public interface IUserDAO {
 	 * @throws Exception
 	 */
 	public User doFindAll(String UserName) throws Exception;
+	
+	public LinkedList<User> doFindAllByPushTime(java.sql.Time pushTime) throws Exception;
 	
 	/**
 	 * 

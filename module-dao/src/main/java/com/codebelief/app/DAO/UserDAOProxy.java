@@ -12,8 +12,8 @@ import com.codebelief.app.VO.User;
  * @Description: obtaining and closing the database, 
  * 				 and implementing UserDAO interface 
  * 				 using functions in UserDAO type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class UserDAOProxy implements IUserDAO{
@@ -176,6 +176,12 @@ public class UserDAOProxy implements IUserDAO{
 		return user;
 	}
 
+	@Override
+	public LinkedList<User> doFindAllByPushTime(Time pushTime) throws Exception {
+		LinkedList<User> UserList = dao.doFindAllByPushTime(pushTime);
+		return UserList;
+	}
+	
 	@Override
 	/**
 	 * @Title: doFindPushTime

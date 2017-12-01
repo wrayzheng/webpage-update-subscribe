@@ -312,6 +312,35 @@ public class UrlDAO implements IUrlDAO{
 		rs.close();ps.close();
 		return lst;
 	}
+	@Override
+	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException {
+		String query = "select UrlID,UserName from Url where Enabled=true and RealTimePush=true";
+		Statement stat = (Statement) conn.createStatement();
+		ResultSet rs = stat.executeQuery(query);
+		Map<Integer,String> urlMap= new HashMap<Integer,String>();
+		while(rs.next()){
+			int UrlID = rs.getInt(1);
+			String UserName = rs.getString(2);
+			urlMap.put(UrlID, UserName);
+		}
+		rs.close();stat.close();
+		return urlMap;
+	}
+	
+	@Override
+	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException {
+		String query = "select UrlID,UserName from Url where Enabled=true and RealTimePush=false";
+		Statement stat = (Statement) conn.createStatement();
+		ResultSet rs = stat.executeQuery(query);
+		Map<Integer,String> urlMap= new HashMap<Integer,String>();
+		while(rs.next()){
+			int UrlID = rs.getInt(1);
+			String UserName = rs.getString(2);
+			urlMap.put(UrlID, UserName);
+		}
+		rs.close();stat.close();
+		return urlMap;
+	}
 	
 	@Override
 	/**

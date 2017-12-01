@@ -10,8 +10,8 @@ import com.mysql.jdbc.Statement;
  * 
  * @ClassName: UserDAO
  * @Description: Define Some Concrete Functions For User Table
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class UserDAO implements IUserDAO{
@@ -287,6 +287,25 @@ public class UserDAO implements IUserDAO{
 		rs.close();ps.close();
 		return newUser;
 	}
+	
+	@Override
+	public LinkedList<User> doFindAllByPushTime(Time pushTime) throws Exception {
+		String query = "select * from User where PushTime = ?";
+		ps=conn.prepareStatement(query);
+		ps.setTime(1, pushTime);
+		ResultSet rs = ps.executeQuery();
+		LinkedList<User> UserList = new LinkedList<User>();
+		while(rs.next()){
+			User newUser = new User(rs.getString(1));
+			newUser.setPassword(rs.getString(2));
+			newUser.setEmail(rs.getString(3));
+			newUser.setPushTime(rs.getTime(4));
+			UserList.add(newUser);
+		}
+		rs.close();ps.close();
+		return UserList;
+	}
+
 
 	@Override
 	/**

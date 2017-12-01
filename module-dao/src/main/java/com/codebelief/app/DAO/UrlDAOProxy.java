@@ -12,8 +12,8 @@ import com.codebelief.app.VO.Url;
  * @Description: obtaining and closing the database, 
  * 				 and implementing UrlDAO interface 
  * 				 using functions in UrlDAO type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  *
  */
 public class UrlDAOProxy implements IUrlDAO{
@@ -186,7 +186,6 @@ public class UrlDAOProxy implements IUrlDAO{
 	 */
 	public boolean doFindRealTimePush(int UrlID) throws Exception {
 		boolean RealTimePush=dao.doFindRealTimePush(UrlID);
-		//dbc.free();
 		return RealTimePush;
 	}
 	
@@ -194,7 +193,7 @@ public class UrlDAOProxy implements IUrlDAO{
 	/**
 	 * 
 	 * @Title: getAllUrl
-	 * @Description: ²éÕÒUrl±íÖÐËùÓÐ×ÖÌõµÄUrlIDºÍ¶ÔÓ¦Url¡£
+	 * @Description: ï¿½ï¿½ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UrlIDï¿½Í¶ï¿½Ó¦Urlï¿½ï¿½
 	 * @return Map<Integer,String>
 	 * @throws SQLException
 	 */
@@ -207,7 +206,7 @@ public class UrlDAOProxy implements IUrlDAO{
 	/**
 	 * 
 	 * @Title: doFindAll
-	 * @Description: Í¨¹ýUserName´ÓUrl±íÀï²éÕÒ¶ÔÓ¦µÄUrlÍêÕû×ÖÌõ¡£
+	 * @Description: Í¨ï¿½ï¿½UserNameï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param UserName
 	 * @return LinkedList<Url>
 	 * @throws SQLException
@@ -215,6 +214,18 @@ public class UrlDAOProxy implements IUrlDAO{
 	public LinkedList<Url> doFindAll(String UserName) throws SQLException {
 		LinkedList<Url> lst = dao.doFindAll(UserName);
 		return lst;
+	}
+	
+	@Override
+	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException {
+		Map<Integer, String> urlMap = dao.doFindAllEnabledAndRealTimePush();
+		return urlMap;
+	}
+	
+	@Override
+	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException{
+		Map<Integer, String> urlMap = dao.doFindAllEnabledAndNotRealTimePush();
+		return urlMap;
 	}
 
 	@Override

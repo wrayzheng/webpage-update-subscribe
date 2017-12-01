@@ -18,6 +18,11 @@ public class SingleUpdateRecord {
 		this.title = title;
 	}
 	
+	public SingleUpdateRecord(String Delta){
+		String[] urlAndTitle = Delta.split("\n");
+		this.title = urlAndTitle[0];
+		this.url = urlAndTitle[1];
+	}
 	
 	public String getUrl(){
 		return url;

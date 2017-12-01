@@ -6,8 +6,8 @@ import java.util.Map;
 
 import com.codebelief.app.VO.Url;
 /**
- * @author 何涛
- * @version 1st   on 2017年10月13日
+ * @author 锟斤拷锟斤拷
+ * @version 1st   on 2017锟斤拷10锟斤拷13锟斤拷
  */
 public interface IUrlDAO {
 	/**
@@ -144,17 +144,21 @@ public interface IUrlDAO {
 	/**
 	 * 
 	 * @Title: FindAllByUserName
-	 * @Description: 通过UserName从Url表里查找对应的Url完整字条。
+	 * @Description: 通锟斤拷UserName锟斤拷Url锟斤拷锟斤拷锟斤拷叶锟接︼拷锟経rl锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	 * @param UserName
 	 * @return LinkedList<Url>
 	 * @throws SQLException
 	 */
 	public LinkedList<Url> doFindAll(String UserName) throws SQLException;
 	
+	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException;
+	
+	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException;
+	
 	/**
 	 * 
 	 * @Title: getAllUrl
-	 * @Description: 查找Url表中所有字条的UrlID和对应Url。
+	 * @Description: 锟斤拷锟斤拷Url锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷UrlID锟酵讹拷应Url锟斤拷
 	 * @return Map<Integer,String>
 	 * @throws SQLException
 	 */
