@@ -24,6 +24,9 @@ public class EmailSendFacade {
 		emailInfo.setContent(content);
 		emailInfo.setTitle(title);
 		
+		//调试输出邮件主体内容
+		//System.out.println(content);
+		
 		emailServer.send(emailInfo);
 	}
 }
