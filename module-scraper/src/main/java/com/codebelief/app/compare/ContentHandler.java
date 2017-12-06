@@ -3,16 +3,17 @@
  */
 package com.codebelief.app.compare;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 import com.codebelief.app.DAO.IContentDAO;
 import com.codebelief.app.DAOFactory.ContentDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
-/**
- * @author ï¿½ï¿½ï¿½ï¿½
- * @version 1st   on 2017ï¿½ï¿½11ï¿½ï¿½12ï¿½ï¿½
- */
+
+
 public class ContentHandler {
 	private static IContentDAO contentDAO = null;
 	
@@ -49,19 +50,26 @@ public class ContentHandler {
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
 		
+
 		String newDelta = "";
 		String newHtml = "";
 		if(content != null){
 			String oldUrlLinksAndTitles = content.getHtml();
 			String[] oldUrlLinkAndTitles = oldUrlLinksAndTitles.split("\n\n");
+			
+			
 			for(int i = 0; i < newSingleUpdateRecords.size(); i++){
-				boolean flag = false;
-				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles)
-					if(newSingleUpdateRecords.get(i).equals(oldSingleUpdateRecord)){
-						flag = true;
+				int flag = 0;
+				for(String oldUrl: oldUrlLinkAndTitles) {
+			
+					String newUrl = newSingleUpdateRecords.get(i).toString();
+					if(newUrl.equals(oldUrl))
+					{  
+						flag = 1;
 						break;
 					}
-				if(!flag){
+				}
+				if(flag == 0) {
 					newDelta += newSingleUpdateRecords.get(i) + "\n\n";
 				}
 				newHtml += newSingleUpdateRecords.get(i) + "\n\n";
@@ -70,6 +78,7 @@ public class ContentHandler {
 			content.setDelta(newDelta + content.getDelta());
 			UpdateRecord(content);
 		}
+		// ³õÊ¼¼ÇÂ¼
 		else{
 			for(int i = 0; i < newSingleUpdateRecords.size(); i++)
 				newDelta += newSingleUpdateRecords.get(i) + "\n\n";
@@ -77,7 +86,8 @@ public class ContentHandler {
 			content = new Content();
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
-			content.setDelta(newDelta + content.getDelta());
+			// ÉèÖÃ³õÊ¼Delta£¬ÐÞ¸ÄµÚÒ»´ÎÌí¼Ó¿É¸Ä±äÏµÍ³ÔÚ³õÊ¼¶©ÔÄÍøÕ¾ÊÇ·ñÍÆËÍ
+			content.setDelta(" ");
 			InsertRecord(content);
 		}
 	}
