@@ -93,8 +93,8 @@ public class MyCrawler extends WebCrawler {
     	 for (int linkNum = 0; linkNum < validLinks.size(); linkNum++) { 	 
     		 String linkHref = validLinks.get(linkNum).attr("href");
     		 String linkText = validLinks.get(linkNum).text();
-    		 //System.out.println(linkText);
-    		// System.out.println(linkHref);
+//    		 System.out.println(linkText);
+//    		 System.out.println(linkHref);
     		 updateRecords.add(new SingleUpdateRecord(linkText, linkHref));
     	 }  		 
          
@@ -102,16 +102,10 @@ public class MyCrawler extends WebCrawler {
   	 //从controller 获取urlMap, 确保和添加crawler seed 时数据一致。
   	 LinkedList<Integer> urlIDList = Controller.urlMap.get(url);
   	 
-  	 //由于有些网站在域名之后添加了'/'，从页面下载页面获取到的url 可能为添加了'/'的域名，需要做出处理
-  	 String lastChar = url.substring(url.length()-1);  
-  	 if(urlIDList == null && lastChar.equals("/")) {
-  		 String urlWithoutSlash = url.substring(0,url.length()-1);
-  		 urlIDList = Controller.urlMap.get(urlWithoutSlash);
-  	 }
   	 
      for(int urlID: urlIDList) {
-        	//System.out.println("urlID"+ urlID);
-        	ContentHandler.updateProcess(urlID, updateRecords);
+        System.out.println("urlID"+ urlID);
+        ContentHandler.updateProcess(urlID, updateRecords);
         }
      }
      

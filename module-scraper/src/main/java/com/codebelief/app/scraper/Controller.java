@@ -11,6 +11,7 @@ import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 
 /**
  * @author Surflyan
@@ -68,13 +69,10 @@ public class Controller {
          *  为每个爬虫添加初始爬取页面，后面以每个页面发现的链接作为爬取对象
          *  将数据库中要爬取的url添加到爬取列表中
          */
-        //controller.addSeed("http://today.hit.edu.cn/css2010/style.css?123");
-//        controller.addSeed("http://today.hit.edu.cn/");
-//        controller.addSeed("http://today.hit.edu.cn/phb/1.htm");
-//        controller.addSeed("http://www.sina.com.cn/");
-//        controller.addSeed("http://www.tsinghua.edu.cn/publish/newthu/index.html");
+
         
         //note: map.values and map.keySet 顺序是否一致（检查）
+        
         for (String url : urlMap.keySet()) {
         	controller.addSeed(url);
         }

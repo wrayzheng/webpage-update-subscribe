@@ -9,13 +9,14 @@ import com.codebelief.app.DAO.IUrlDAO;
 import com.codebelief.app.DAOFactory.UrlDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 
+import edu.uci.ics.crawler4j.url.URLCanonicalizer;
+
 
 public class GetURL {
 	
 
 	public void getURL() throws Exception {
 		MySQLDatabaseConnection.initialDatabaseDeploy();
-
 	}
 	
 	public static Map<String, LinkedList<Integer>> getAllUrl() throws Exception {		
@@ -26,14 +27,16 @@ public class GetURL {
 		
 		for(Map.Entry<Integer,String> entry : tempUrlMap.entrySet()) {
 			String url = entry.getValue();
-			if(urlMap.containsKey(url)) {
-				LinkedList<Integer> tempList = urlMap.get(url);
+			//url regularization
+			String canonicalUrl = URLCanonicalizer.getCanonicalURL(url);
+			if(urlMap.containsKey(canonicalUrl)) {
+				LinkedList<Integer> tempList = urlMap.get(canonicalUrl);
 				tempList.add(entry.getKey());
 			}
 			else {
 				LinkedList<Integer> intList = new LinkedList<Integer>();
 				intList.add(entry.getKey());
-				urlMap.put(url, intList);
+				urlMap.put(canonicalUrl, intList);
 			}
 		}
 		return urlMap; 
