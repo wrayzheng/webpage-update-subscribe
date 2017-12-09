@@ -130,9 +130,8 @@
 					$("#signup-form").serialize(),
 					function(data, status){
 						if(data["success"]) {
-							alert("注册成功！");
+							alert("注册完成，请登录邮箱激活账号！");
 							$("#signup").hide();
-							$("#login").fadeIn(300);
 						}
 						else {
 							password.val(originPw);

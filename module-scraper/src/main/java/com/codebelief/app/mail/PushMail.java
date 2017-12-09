@@ -49,6 +49,6 @@ public class PushMail {
 		String email = userDAO.doFindEmail(UserName);
 		System.out.println(email);
 		System.out.println("url count:" + parameters.size());
-		SendMail.sendMail(email, parameters);
+		//SendMail.sendMail(email, parameters);
 	}
 }

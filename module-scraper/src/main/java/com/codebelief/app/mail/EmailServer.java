@@ -47,7 +47,8 @@ public class EmailServer {
 					}
 				});
 		username = properties.getProperty("mail.smtp.username");
-		this.session.setDebug(true);
+		//设置调试模式（输出调试信息）
+		this.session.setDebug(false);
 	}
 
 	/**

@@ -5,6 +5,7 @@ import java.sql.Time;
 import com.codebelief.app.DAO.IUserDAO;
 import com.codebelief.app.DAOFactory.UserDAOFactory;
 import com.codebelief.app.VO.User;
+import com.codebelief.app.SignupInfoHandler;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -24,7 +25,6 @@ public class SignupAction extends ActionSupport {
 
 	@Override
 	public String execute() throws Exception {
-		User user = new User(userName, password, email, Time.valueOf("20:00:00"));
 		IUserDAO userDAO;
 		
 		try{
@@ -33,9 +33,15 @@ public class SignupAction extends ActionSupport {
 				errorMsg = "用户已存在！";
 				return ERROR;
 			}
-			userDAO.doInsert(user);
 		} catch(Exception e) {
-			errorMsg = "注册失败，请检查信息正确性！";
+			errorMsg = "访问数据库出错！";
+			return ERROR;
+		}
+		
+		try {
+			SignupInfoHandler.sendConfirmEmail(userName, email, password);
+		} catch(Exception e) {
+			errorMsg = "发送验证邮件失败！";
 			return ERROR;
 		}
 		

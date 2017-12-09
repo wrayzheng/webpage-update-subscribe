@@ -19,7 +19,8 @@ import com.codebelief.app.compare.SingleUpdateRecord;
  * @version 1st   on 2017年11月13日
  */
 public class SendMail {
-	public static void sendMail(String recipient, Map<String, Object> parameters) throws InterruptedException{
+	public static void sendMail(String template, String title, String recipient,
+			Map<Object, Object> parameter) throws InterruptedException {
 		//启动邮件服务器
 		EmailServer emailServer = new EmailServer();
 		emailServer.init();
@@ -28,33 +29,42 @@ public class SendMail {
 		EmailTemplateService emailTemplateService = new FreemarkerEmailTemplateService();
 		emailTemplateService.init();//模板引擎初始化
 		
-		//组装邮件发送门面类
-		EmailSendFacade emailSendFacade = new EmailSendFacade();
-		emailSendFacade.setEmailServer(emailServer);//注册邮件服务器
-		emailSendFacade.setEmailTemplateService(emailTemplateService);//注册模板
-		
-		//测试数据
+		//设置数据
 		EmailInfo emailInfo = new EmailInfo();
+		emailInfo.setTitle(title);
 		emailInfo.setFrom(EmailServer.username);
 		emailInfo.setTo(recipient);
-		emailInfo.addParameter("urlMap", parameters);
+		
+		//获取模版文件
+		String content = emailTemplateService.getText(template, parameter);
+		emailInfo.setContent(content);
 		//发送
-		emailSendFacade.send(emailInfo);
+		emailServer.send(emailInfo);
 		Thread.sleep(1000);
 	}
 	
-	public static void main(String[] args) {
+	public static void test(String[] args) {
 		try {
 			PushMail.PushUpdateMail("Wray");
 			System.out.println("mail sent.");
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void testSignupMail(String[] args) {
+		Map<Object, Object> parameter = new HashMap<>();
+		parameter.put("url", "http://app.codebelief.com/webpage-update-subscribe/");
+		try {
+			sendMail("signup", "欢迎注册网页更新订阅系统", "mczon@qq.com", parameter);
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void test(String[] args) {
-		Map<String, Object> urlMap = new HashMap<>();
+	public static void testUpdateMail(String[] args) {
+		Map<Object, Object> urlMap = new HashMap<>();
 		LinkedList<SingleUpdateRecord> updateList = new LinkedList<>();
 		for(int i = 0; i < 5; i++)
 			updateList.add(new SingleUpdateRecord("http://baidu.com/" + i, "更新" + i));
@@ -65,11 +75,13 @@ public class SendMail {
 			updateList.add(new SingleUpdateRecord("http://xxx.com/" + i, "新标题" + i));
 		urlMap.put("1", new DeltaObject("凤凰新闻", "http://ifeng.com", updateList));
 		
+		Map<Object, Object> parameter = new HashMap<>();
+		parameter.put("urlMap", urlMap);
+		
 		try {
-			sendMail("850738350@qq.com", urlMap);
+			sendMail("update", "网页更新订阅新内容推送", "850738350@qq.com", parameter);
 			System.out.println("Email sent.");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

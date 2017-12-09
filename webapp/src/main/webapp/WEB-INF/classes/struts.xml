@@ -65,7 +65,7 @@
 	<!-- 前台操作 -->
 	<package name="default" extends="struts-default">
 		<default-action-ref name="notfound"></default-action-ref>
-	
+		
 		<global-results>
 			<result name="error">/error.jsp</result>
 		</global-results>
@@ -78,6 +78,11 @@
 		<!-- 注销登录 -->
 		<action name="logout" class="com.codebelief.app.action.LoginAction" method="logout">
 			<result name="success" type="redirect">/</result>
+		</action>
+		
+		<!-- 邮箱验证 -->
+		<action name="emailConfirm" class="com.codebelief.app.action.EmailConfirmation">
+			<result name="success">/email_confirm.jsp</result>
 		</action>
 	</package>
 
