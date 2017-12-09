@@ -13,7 +13,7 @@ public class SingleUpdateRecord {
 	
 	public SingleUpdateRecord(){}
 	
-	public SingleUpdateRecord(String url, String title){
+	public SingleUpdateRecord(String title, String url){
 		this.url = url;
 		this.title = title;
 	}

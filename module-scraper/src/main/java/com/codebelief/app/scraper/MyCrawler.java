@@ -1,7 +1,6 @@
 package com.codebelief.app.scraper;
 
 import java.util.LinkedList;
-import java.util.regex.Pattern;
 
 import com.codebelief.app.compare.ContentHandler;
 import com.codebelief.app.compare.SingleUpdateRecord;
@@ -22,21 +21,14 @@ import edu.uci.ics.crawler4j.url.WebURL;
  */
 
 public class MyCrawler extends WebCrawler {
-	//正则匹配指定的后缀文件
-    private final static Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg"
-                                                           + "|png|mp3|mp3|zip|gz))$");
-     
      /*
-      * 决定哪些url需要抓取，返回true是需要的
-      * 第一个参数封装了当前爬取 的页面信息，第二个参数封装了当前爬取页面的url信息
+      * 决定页面中哪些url需要抓取，返回true是需要的
+      * 第一个参数封装了当前爬取的页面信息，第二个参数封装了当前爬取页面的url信息
       * 本爬虫系统，只下载特定页面，无需爬取更深层次页面
       * 始终返回（false）,留作功能拓展使用
       */
      @Override
      public boolean shouldVisit(Page referringPage, WebURL url) {
-         String href = url.getURL().toLowerCase();
-//         return !FILTERS.matcher(href).matches()
-//                && href.startsWith("http://www.ics.uci.edu/");
          return false;
      }
  
@@ -49,7 +41,6 @@ public class MyCrawler extends WebCrawler {
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
          System.out.println("URL: " + url); 
-         
  
          if (page.getParseData() instanceof HtmlParseData) {
              HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
@@ -61,7 +52,7 @@ public class MyCrawler extends WebCrawler {
              Elements validLinks = PageParser.getLinks(html, baseUri);
              
              writeContentToDB(url,validLinks);   //写回数据库
-            
+         	 System.out.println("Saved updates to database.");
          }
      }
     
@@ -84,35 +75,29 @@ public class MyCrawler extends WebCrawler {
       * 通过使用此次爬取页面的主url（键）来在controller 的urlMap找到对应的urlID（值）
       * 由于使用了Crawler4j 项目，在爬取时无法另外添加数据项（urlID），使之与爬取url 绑定， 这里只能重新获取urlID
       */
-  
      private void writeContentToDB(String url, Elements validLinks) {
-    	 
     	 //存放链接标题和链接<singleUpdateRecord> 自定义数据类型
     	 LinkedList<SingleUpdateRecord> updateRecords = new LinkedList<SingleUpdateRecord>();
 
     	 for (int linkNum = 0; linkNum < validLinks.size(); linkNum++) { 	 
     		 String linkHref = validLinks.get(linkNum).attr("href");
     		 String linkText = validLinks.get(linkNum).text();
-    		 //System.out.println(linkText);
-    		// System.out.println(linkHref);
     		 updateRecords.add(new SingleUpdateRecord(linkText, linkHref));
     	 }  		 
-         
     	
-  	 //从controller 获取urlMap, 确保和添加crawler seed 时数据一致。
-  	 LinkedList<Integer> urlIDList = Controller.urlMap.get(url);
-  	 
-  	 //由于有些网站在域名之后添加了'/'，从页面下载页面获取到的url 可能为添加了'/'的域名，需要做出处理
-  	 String lastChar = url.substring(url.length()-1);  
-  	 if(urlIDList == null && lastChar.equals("/")) {
-  		 String urlWithoutSlash = url.substring(0,url.length()-1);
-  		 urlIDList = Controller.urlMap.get(urlWithoutSlash);
-  	 }
-  	 
-     for(int urlID: urlIDList) {
-        	//System.out.println("urlID"+ urlID);
-        	ContentHandler.updateProcess(urlID, updateRecords);
-        }
+	  	 //从controller 获取urlMap, 确保和添加crawler seed 时数据一致。
+	  	 LinkedList<Integer> urlIDList = Controller.urlMap.get(url);
+	  	 
+	  	 //由于有些网站在域名之后添加了'/'，从页面下载页面获取到的url 可能为添加了'/'的域名，需要做出处理
+	  	 String lastChar = url.substring(url.length()-1);  
+	  	 if(urlIDList == null && lastChar.equals("/")) {
+	  		 String urlWithoutSlash = url.substring(0,url.length()-1);
+	  		 urlIDList = Controller.urlMap.get(urlWithoutSlash);
+	  	 }
+	  	 
+	     for(int urlID: urlIDList) {
+	        	ContentHandler.updateProcess(urlID, updateRecords);
+	     }
      }
      
 }

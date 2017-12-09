@@ -16,8 +16,7 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public class MyCronTrigger {
 	
-	public static void main(String[] args) throws Exception {
-		
+	public static void main(String[] args) throws Exception {				
 		//Scheduler: 代表一个quartz的独立容器，Trigger 和 JobDetail可以在注册到Scheduler中
 		//通过SchedulerFactory 可以创建一个Scheduler实例
 	    SchedulerFactory sf = new StdSchedulerFactory();
@@ -25,21 +24,32 @@ public class MyCronTrigger {
 	    
 	    
 	    //创建Job实例
-		JobDetail job = JobBuilder
+		JobDetail crawlJob = JobBuilder
 				.newJob(CrawlJob.class)
-				.withIdentity("crawJob", "group1").build();
+				.withIdentity("crawlJob", "group1").build();
+		JobDetail timingPush= JobBuilder
+				.newJob(CrawlJob.class)
+				.withIdentity("timingPush", "group1").build();
 	
 	    //定义Job执行的触发规则
 		//这里采用CronTrigger子类，通过Cron定义出复杂的时间规则
-	    CronTrigger trigger = TriggerBuilder
+	    CronTrigger trigger1 = TriggerBuilder
 			    .newTrigger()
 			    .withIdentity("cronTrigger","group")
 			    .withSchedule(
-					    CronScheduleBuilder.cronSchedule("0/50 * * * * ?"))
+					    CronScheduleBuilder.cronSchedule("0 0 */1 * * ?")) // 每隔 1 小时执行一次
 			    .build();
-        sched.start();
+	    CronTrigger trigger2 = TriggerBuilder
+			    .newTrigger()
+			    .withIdentity("cronTrigger2","group")
+			    .withSchedule(
+					    CronScheduleBuilder.cronSchedule("0 0 20 * * ?")) // 每天 20:00 执行一次
+			    .build();
         
         //将Trigger绑定到一个JobDetail中，Trigger触发，JobDetail执行
-	    sched.scheduleJob(job,trigger);
+	    sched.scheduleJob(crawlJob, trigger1);
+	    sched.scheduleJob(timingPush, trigger2);
+	    
+        sched.start();
 	}
 }

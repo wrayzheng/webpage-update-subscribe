@@ -10,8 +10,8 @@ import com.codebelief.app.DAOFactory.ContentDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
 /**
- * @author ï¿½ï¿½ï¿½ï¿½
- * @version 1st   on 2017ï¿½ï¿½11ï¿½ï¿½12ï¿½ï¿½
+ * @author ºÎÌÎ
+ * @version 1st   on 2017Äê11ÔÂ12ÈÕ
  */
 public class ContentHandler {
 	private static IContentDAO contentDAO = null;
@@ -19,9 +19,27 @@ public class ContentHandler {
 	public static void updateProcess(int UrlID, LinkedList<SingleUpdateRecord> updateRecords){
 		try {
 			CompareContent(UrlID, updateRecords);
+			//testRemoveSomeRecords(UrlID, 5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void testRemoveSomeRecords(int UrlID, int numToRemove) throws Exception {
+		contentDAO = ContentDAOFactory.getContentDAOInstance();
+		Content content = contentDAO.doFindAllByUrlID(UrlID);
+		String html = content.getHtml();
+		
+		String[] recordList = html.split("\n\n");
+		String newHtml = "";
+
+		for(int i = 0; i < recordList.length - numToRemove; i++) {
+			newHtml += recordList[i] + "\n\n";
+		}
+		
+		content.setHtml(newHtml);
+		content.setDelta("");
+		UpdateRecord(content);
 	}
 	
 	public static void UpdateRecord(Content content){
@@ -44,8 +62,7 @@ public class ContentHandler {
 		}
 	}
 	
-	public static void CompareContent(int UrlID, LinkedList<SingleUpdateRecord> newSingleUpdateRecords) throws Exception{
-		MySQLDatabaseConnection.initialDatabaseDeploy();
+	public static void CompareContent(int UrlID, LinkedList<SingleUpdateRecord> updateRecords) throws Exception{
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
 		
@@ -54,30 +71,30 @@ public class ContentHandler {
 		if(content != null){
 			String oldUrlLinksAndTitles = content.getHtml();
 			String[] oldUrlLinkAndTitles = oldUrlLinksAndTitles.split("\n\n");
-			for(int i = 0; i < newSingleUpdateRecords.size(); i++){
+			for(int i = 0; i < updateRecords.size(); i++){
 				boolean flag = false;
 				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles)
-					if(newSingleUpdateRecords.get(i).equals(oldSingleUpdateRecord)){
+					if(updateRecords.get(i).toString().equals(oldSingleUpdateRecord)){
 						flag = true;
 						break;
 					}
 				if(!flag){
-					newDelta += newSingleUpdateRecords.get(i) + "\n\n";
+					newDelta += updateRecords.get(i) + "\n\n";
 				}
-				newHtml += newSingleUpdateRecords.get(i) + "\n\n";
+				newHtml += updateRecords.get(i) + "\n\n";
 			}
 			content.setHtml(newHtml);
 			content.setDelta(newDelta + content.getDelta());
 			UpdateRecord(content);
 		}
 		else{
-			for(int i = 0; i < newSingleUpdateRecords.size(); i++)
-				newDelta += newSingleUpdateRecords.get(i) + "\n\n";
+			for(int i = 0; i < updateRecords.size(); i++)
+				newDelta += updateRecords.get(i) + "\n\n";
 			newHtml = newDelta;
 			content = new Content();
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
-			content.setDelta(newDelta + content.getDelta());
+			content.setDelta(newDelta);
 			InsertRecord(content);
 		}
 	}

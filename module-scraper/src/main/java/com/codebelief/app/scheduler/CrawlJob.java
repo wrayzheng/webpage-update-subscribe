@@ -2,6 +2,9 @@ package com.codebelief.app.scheduler;
 
 import com.codebelief.app.scraper.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -17,7 +20,8 @@ public class CrawlJob implements Job {
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		//System.out.println(context.getTrigger().getCalendarName() + "triggered.time is :" + (new Date()));
 		try {
-			Controller.execute();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	        System.out.println(sdf.format(new Date()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
