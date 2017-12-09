@@ -26,6 +26,13 @@ import com.codebelief.app.mail.SendMail;
  * @version 1st   on 2017年11月13日
  */
 public class PushUpdateMessageTime {
+	/**
+	 * 
+	 * @Title: PushUpdateTime
+	 * @Description: Push update email on given time
+	 * @param pushTime
+	 * @throws Exception
+	 */
 	public static void PushUpdateTime(Time pushTime) throws Exception{
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		IUserDAO UserDAO = UserDAOFactory.getUserDAOInstance();
@@ -37,22 +44,22 @@ public class PushUpdateMessageTime {
 			LinkedList<Url> urlList = urlDAO.doFindAll(user.getUserName());
 			urlDAO.free();
 			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
-			for(int i = 0; i<urlList.size(); i++){//Url url:urlList){
+			for(int i = 0; i<urlList.size(); i++){
 				Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
 				LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
 				if(content != null &&!"".equals(content.getDelta())){
 					String[] Deltas = content.getDelta().split("\n\n");
 					for(String Delta:Deltas)
 						updateList.add(new SingleUpdateRecord(Delta));
-					parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(),updateList));
+					parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(), updateList));
 				}
 				content.setDelta("");
-				content.setHtml("");
 				contentDAO.doUpdate(content);
 			}
-			IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
-			String email = userDAO.doFindEmail(user.getUserName());
-			SendMail.sendMail(email, parameters);
+			if(parameters.size() != 0){
+				String email = user.getEmail();
+				SendMail.sendMail(email, parameters);
+			}
 			contentDAO.free();
 		}
 	}

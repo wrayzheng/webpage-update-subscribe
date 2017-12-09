@@ -33,7 +33,7 @@ public class PushMail {
 		LinkedList<Url> urlList = urlDAO.doFindAll(UserName);
 		urlDAO.free();
 		IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
-		for(int i = 0; i<urlList.size(); i++){//Url url:urlList){
+		for(int i = 0; i < urlList.size(); i++){
 			Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
 			LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
 			if(content != null &&!"".equals(content.getDelta())){
@@ -46,6 +46,7 @@ public class PushMail {
 		contentDAO.free();
 		IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
 		String email = userDAO.doFindEmail(UserName);
+		userDAO.free();
 		SendMail.sendMail(email, parameters);
 	}
 }

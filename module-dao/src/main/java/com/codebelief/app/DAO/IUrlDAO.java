@@ -151,8 +151,32 @@ public interface IUrlDAO {
 	 */
 	public LinkedList<Url> doFindAll(String UserName) throws SQLException;
 	
+	/**
+	 * 
+	 * @Title: doFind
+	 * @Description: ͨGet a whole url record by UrlID
+	 * @param UrlID
+	 * @return Url
+	 * @throws SQLException
+	 */
+	public Url doFind(int UrlID) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndRealTimePush
+	 * @Description: 发现所有激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException;
 	
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndNotRealTimePush
+	 * @Description: 发现所有不处于激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException;
 	
 	/**

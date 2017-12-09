@@ -289,6 +289,14 @@ public class UserDAO implements IUserDAO{
 	}
 	
 	@Override
+	/**
+	 * 
+	 * @Title: doFindAllByPushTime
+	 * @Description: Find the user's detailed Message By pushTime
+	 * @param Time
+	 * @return LinkedList<User>
+	 * @throws Exception
+	 */
 	public LinkedList<User> doFindAllByPushTime(Time pushTime) throws Exception {
 		String query = "select * from User where PushTime = ?";
 		ps=conn.prepareStatement(query);

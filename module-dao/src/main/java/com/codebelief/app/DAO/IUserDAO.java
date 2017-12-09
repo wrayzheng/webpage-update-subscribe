@@ -117,6 +117,14 @@ public interface IUserDAO {
 	 */
 	public User doFindAll(String UserName) throws Exception;
 	
+	/**
+	 * 
+	 * @Title: doFindAllByPushTime
+	 * @Description: Find the user's detailed Message By pushTime
+	 * @param Time
+	 * @return LinkedList<User>
+	 * @throws Exception
+	 */
 	public LinkedList<User> doFindAllByPushTime(java.sql.Time pushTime) throws Exception;
 	
 	/**

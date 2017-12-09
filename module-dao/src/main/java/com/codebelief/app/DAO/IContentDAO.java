@@ -5,8 +5,8 @@ import java.util.LinkedList;
 
 import com.codebelief.app.VO.Content;
 /**
- * @author ºÎÌÎ
- * @version 1st   on 2017Äê10ÔÂ14ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @version 1st   on 2017ï¿½ï¿½10ï¿½ï¿½14ï¿½ï¿½
  */
 public interface IContentDAO {
 	/**
@@ -106,12 +106,21 @@ public interface IContentDAO {
 	/**
 	 * 
 	 * @Title: doFindAllByUrlID
-	 * @Description: Í¨¹ýUrlIDÔÚContent±íÖÐ²éÕÒ¶ÔÓ¦µÄContentÍêÕû×ÖÌõ¡£
+	 * @Description: Í¨ï¿½ï¿½UrlIDï¿½ï¿½Contentï¿½ï¿½ï¿½Ð²ï¿½ï¿½Ò¶ï¿½Ó¦ï¿½ï¿½Contentï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @param UrlID
 	 * @return Content
 	 * @throws Exception
 	 */
 	public Content doFindAllByUrlID(int UrlID) throws Exception;
+	
+	/**
+	 * 
+	 * @Title: doFindAllChanged
+	 * @Description: Í¨æŸ¥æ‰¾æ‰€æœ‰æ›´æ–°äº†Deltaçš„Contentï¼Œè¿”å›žContentçš„LinkedList
+	 * @return LinkedList<Content>
+	 * @throws Exception
+	 */
+	public LinkedList<Content> doFindAllChanged() throws Exception;
 	
 	/**
 	 * 

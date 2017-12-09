@@ -1,8 +1,10 @@
 package com.codebelief.app.DAO;
 
 import java.sql.*;
+import java.util.LinkedList;
 
 import com.codebelief.app.VO.Content;
+import com.mysql.jdbc.Statement;
 
 /**
  * @ClassName: ContentDAO
@@ -248,6 +250,31 @@ public class ContentDAO implements IContentDAO{
 		}
 		rs.close();ps.close();
 		return newContent;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllChanged
+	 * @Description: ͨ查找所有更新了Delta的Content，返回Content的LinkedList
+	 * @return LinkedList<Content>
+	 * @throws Exception
+	 */
+	public LinkedList<Content> doFindAllChanged() throws Exception{
+		String query = "select * from Content where Delta!=\"\"";
+		Statement stat = (Statement) conn.createStatement();
+		ResultSet rs = stat.executeQuery(query);
+		LinkedList<Content> result = new LinkedList<Content>();
+		while(rs.next()){
+			Content newContent = new Content();
+			newContent.setContentID(rs.getInt(1));
+			newContent.setUrlID(rs.getInt(2));
+			newContent.setHtml(rs.getString(3));
+			newContent.setDelta(rs.getString(4));
+			result.add(newContent);
+		}
+		rs.close();stat.close();		
+		return result;
 	}
 	
 	@Override

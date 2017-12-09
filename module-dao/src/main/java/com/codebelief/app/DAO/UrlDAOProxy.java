@@ -217,12 +217,40 @@ public class UrlDAOProxy implements IUrlDAO{
 	}
 	
 	@Override
+	/**
+	 * 
+	 * @Title: doFind
+	 * @Description: ͨGet a whole url record by UrlID
+	 * @param UrlID
+	 * @return Url
+	 * @throws SQLException
+	 */
+	public Url doFind(int UrlID) throws SQLException{
+		Url url = dao.doFind(UrlID);
+		return url;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndRealTimePush
+	 * @Description: 发现所有激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException {
 		Map<Integer, String> urlMap = dao.doFindAllEnabledAndRealTimePush();
 		return urlMap;
 	}
 	
 	@Override
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndNotRealTimePush
+	 * @Description: 发现所有不处于激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException{
 		Map<Integer, String> urlMap = dao.doFindAllEnabledAndNotRealTimePush();
 		return urlMap;

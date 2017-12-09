@@ -177,6 +177,14 @@ public class UserDAOProxy implements IUserDAO{
 	}
 
 	@Override
+	/**
+	 * 
+	 * @Title: doFindAllByPushTime
+	 * @Description: Find the user's detailed Message By pushTime
+	 * @param Time
+	 * @return LinkedList<User>
+	 * @throws Exception
+	 */
 	public LinkedList<User> doFindAllByPushTime(Time pushTime) throws Exception {
 		LinkedList<User> UserList = dao.doFindAllByPushTime(pushTime);
 		return UserList;

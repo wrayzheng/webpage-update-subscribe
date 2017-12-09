@@ -167,6 +167,18 @@ public class ContentDAOProxy implements IContentDAO{
 		Content content = dao.doFindAllByUrlID(UrlID);
 		return content;
 	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllChanged
+	 * @Description: ͨ查找所有更新了Delta的Content，返回Content的LinkedList
+	 * @return LinkedList<Content>
+	 * @throws Exception
+	 */
+	public LinkedList<Content> doFindAllChanged() throws Exception{
+		return dao.doFindAllChanged();
+	}
 
 	@Override
 	/**

@@ -312,7 +312,42 @@ public class UrlDAO implements IUrlDAO{
 		rs.close();ps.close();
 		return lst;
 	}
+	
 	@Override
+	/**
+	 * 
+	 * @Title: doFind
+	 * @Description: ͨGet a whole url record by UrlID
+	 * @param UrlID
+	 * @return Url
+	 * @throws SQLException
+	 */
+	public Url doFind(int UrlID) throws SQLException{
+		String query = "select * from Url where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, UrlID);
+		ResultSet rs = ps.executeQuery();
+		Url url = new Url();
+		while(rs.next()){
+			url.setUrlID(UrlID);
+			url.setUserName(rs.getString(2));
+			url.setTitle(rs.getString(3));
+			url.setUrl(rs.getString(4));
+			url.setEnabled(rs.getBoolean(5));
+			url.setRealTimePush(rs.getBoolean(6));
+		}
+		rs.close();ps.close();
+		return url;
+	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndRealTimePush
+	 * @Description: 发现所有激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndRealTimePush() throws SQLException {
 		String query = "select UrlID,UserName from Url where Enabled=true and RealTimePush=true";
 		Statement stat = (Statement) conn.createStatement();
@@ -328,6 +363,13 @@ public class UrlDAO implements IUrlDAO{
 	}
 	
 	@Override
+	/**
+	 * 
+	 * @Title: doFindAllEnabledAndNotRealTimePush
+	 * @Description: 发现所有不处于激活状态同时是实时推送的Url
+	 * @return Map<Integer, String>
+	 * @throws SQLException
+	 */
 	public Map<Integer, String> doFindAllEnabledAndNotRealTimePush() throws SQLException {
 		String query = "select UrlID,UserName from Url where Enabled=true and RealTimePush=false";
 		Statement stat = (Statement) conn.createStatement();
