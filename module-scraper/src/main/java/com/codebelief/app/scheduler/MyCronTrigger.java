@@ -35,7 +35,7 @@ public class MyCronTrigger {
 			    .newTrigger()
 			    .withIdentity("cronTrigger","group")
 			    .withSchedule(
-					    CronScheduleBuilder.cronSchedule("0/50 * * * * ?"))
+					    CronScheduleBuilder.cronSchedule("0 0 0/1 * * ?"))
 			    .build();
         sched.start();
         
