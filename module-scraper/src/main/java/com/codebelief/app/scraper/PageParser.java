@@ -42,10 +42,10 @@ public class PageParser {
     	// 过滤Text 字符小于5的链接，一般为分类链接，非目标链接
     	int linkNum = 0;
 
-    	System.out.println("linkNumBefore: " + links.size());
+    	//System.out.println("linkNumBefore: " + links.size());
     	for (linkNum = 0; linkNum < links.size(); linkNum++) {
     		   	 
-    		 String linkHref = links.get(linkNum).attr("href");
+    		 //String linkHref = links.get(linkNum).attr("href");
     		 String linkText = links.get(linkNum).text();
     		
     		 if(linkText.length() <= 5) {
@@ -54,7 +54,7 @@ public class PageParser {
     			 continue;
     		 }  		 
     	}
-        System.out.println("linkNumAfter = " + links.size());
+        //System.out.println("linkNumAfter = " + links.size());
    
         return links;
     }

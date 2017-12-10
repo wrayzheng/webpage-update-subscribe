@@ -11,6 +11,7 @@ import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
+import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 
 /**
  * @author Surflyan
@@ -62,8 +63,15 @@ public class Controller {
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
         CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
- 
-        //添加待爬取的 URL
+      
+        /*
+         *  为每个爬虫添加初始爬取页面，后面以每个页面发现的链接作为爬取对象
+         *  将数据库中要爬取的url添加到爬取列表中
+         */
+
+        
+        //note: map.values and map.keySet 顺序是否一致（检查）
+        
         for (String url : urlMap.keySet()) {
         	controller.addSeed(url);
         }

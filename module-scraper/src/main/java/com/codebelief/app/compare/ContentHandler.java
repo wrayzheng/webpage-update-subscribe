@@ -3,16 +3,23 @@
  */
 package com.codebelief.app.compare;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Set;
 
 import com.codebelief.app.DAO.IContentDAO;
 import com.codebelief.app.DAOFactory.ContentDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
+<<<<<<< HEAD
 /**
  * @author 何涛
  * @version 1st   on 2017年11月12日
  */
+=======
+
+
 public class ContentHandler {
 	private static IContentDAO contentDAO = null;
 	
@@ -66,6 +73,7 @@ public class ContentHandler {
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		Content content = contentDAO.doFindAllByUrlID(UrlID);
 		
+
 		String newDelta = "";
 		String newHtml = "";
 		if(content != null){
@@ -76,7 +84,8 @@ public class ContentHandler {
 				for(String oldSingleUpdateRecord : oldUrlLinkAndTitles)
 					if(updateRecords.get(i).toString().equals(oldSingleUpdateRecord)){
 						flag = true;
-						break;
+			
+								break;
 					}
 				if(!flag){
 					newDelta += updateRecords.get(i) + "\n\n";
@@ -87,6 +96,7 @@ public class ContentHandler {
 			content.setDelta(newDelta + content.getDelta());
 			UpdateRecord(content);
 		}
+		// 初始记录
 		else{
 			for(int i = 0; i < updateRecords.size(); i++)
 				newDelta += updateRecords.get(i) + "\n\n";
@@ -94,7 +104,8 @@ public class ContentHandler {
 			content = new Content();
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
-			content.setDelta(newDelta);
+			// 设置初始Delta，修改第一次添加可改变系统在初始订阅网站是否推送
+			content.setDelta(" ");
 			InsertRecord(content);
 		}
 	}

@@ -37,13 +37,7 @@ public class MyCronTrigger {
 			    .newTrigger()
 			    .withIdentity("cronTrigger","group")
 			    .withSchedule(
-					    CronScheduleBuilder.cronSchedule("0 0 */1 * * ?")) // 每隔 1 小时执行一次
-			    .build();
-	    CronTrigger trigger2 = TriggerBuilder
-			    .newTrigger()
-			    .withIdentity("cronTrigger2","group")
-			    .withSchedule(
-					    CronScheduleBuilder.cronSchedule("0 0 20 * * ?")) // 每天 20:00 执行一次
+					    CronScheduleBuilder.cronSchedule("0 0 0/1 * * ?"))
 			    .build();
         
         //将Trigger绑定到一个JobDetail中，Trigger触发，JobDetail执行
