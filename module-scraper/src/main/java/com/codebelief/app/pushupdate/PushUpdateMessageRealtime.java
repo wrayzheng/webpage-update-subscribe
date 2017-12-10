@@ -55,7 +55,7 @@ public class PushUpdateMessageRealtime {
 			IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
 			User user = userDAO.doFindAll(username);	
 			userDAO.free();
-			Map<String, Object> parameters = new HashMap<String, Object>();
+			Map<Object, Object> parameters = new HashMap<Object, Object>();
 			LinkedList<Url> urlList = userToUrls.get(username);
 			for(int i = 0;i< urlList.size();i++)
 				for(Content content: changed)
@@ -67,7 +67,10 @@ public class PushUpdateMessageRealtime {
 						parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(),updateList));
 					}
 			String email = user.getEmail();
-			SendMail.sendMail(email, parameters);
+			
+			Map<Object, Object> urlMap = new HashMap<>();
+			urlMap.put("urlMap", parameters);
+			SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 		}
 		ContentDAO = ContentDAOFactory.getContentDAOInstance();
 		for(Content cont:changed){		//将Delta置为空

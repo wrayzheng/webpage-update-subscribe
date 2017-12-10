@@ -211,6 +211,14 @@ table td {
 	background-color: #e75854;
 }
 
+#pushAll {
+	background-color: #939393;
+}
+
+#testRemove {
+	background-color: #939393;
+}
+
 .h_select {
 	min-width: 30px;
 }

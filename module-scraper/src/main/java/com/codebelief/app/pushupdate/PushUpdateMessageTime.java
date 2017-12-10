@@ -39,7 +39,7 @@ public class PushUpdateMessageTime {
 		LinkedList<User> userList = UserDAO.doFindAllByPushTime(pushTime);
 		UserDAO.free();
 		for(User user: userList){
-			Map<String, Object> parameters = new HashMap<String, Object>();
+			Map<Object, Object> parameters = new HashMap<Object, Object>();
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 			LinkedList<Url> urlList = urlDAO.doFindAll(user.getUserName());
 			urlDAO.free();
@@ -52,13 +52,16 @@ public class PushUpdateMessageTime {
 					for(String Delta:Deltas)
 						updateList.add(new SingleUpdateRecord(Delta));
 					parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(), updateList));
+					content.setDelta("");
+					contentDAO.doUpdate(content);
 				}
-				content.setDelta("");
-				contentDAO.doUpdate(content);
 			}
 			if(parameters.size() != 0){
 				String email = user.getEmail();
-				SendMail.sendMail(email, parameters);
+				
+				Map<Object, Object> urlMap = new HashMap<>();
+				urlMap.put("urlMap", parameters);
+				SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 			}
 			contentDAO.free();
 		}

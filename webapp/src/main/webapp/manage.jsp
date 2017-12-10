@@ -18,6 +18,9 @@
 	    		<button id="setRealTimePush">实时推送</button>
 	    		<button id="setIntegratedPush">整合推送</button>
 	    		<button id="deleteUrl">删除订阅</button>
+	    		<button id="pushAll">更新并推送</button>
+	    		<button id="testRemove">测试删除</button>
+	    		<span id="sync" style="display:none"><img src="<s:url value='/image/sync-icon.gif' />"></span>
 	    		<span class="user">当前用户：<s:property value="userName" /></span>
 	    	</div>
 	    	<table class="table-panel">
@@ -181,6 +184,38 @@
 	       						else alert(data["errorMsg"]);
 	       			});
         		});
+        	});
+        	
+        	//推送全部更新
+        	$("#pushAll").click(function(){
+				$("#pushAll").prop("disabled", true);
+				$("#sync").fadeIn(300);
+       			$.post("<s:url namespace='/ajax' action='pushAll' />",
+       						function(data, status){
+       						console.log(data);
+       						if(data["success"]) {
+       							alert("已推送更新至您的邮箱！");
+       						}
+       						else alert(data["errorMsg"]);
+       						$("#pushAll").prop("disabled", false);
+       						$("#sync").fadeOut(300);
+       				});
+        	});
+        	
+        	//测试删除
+        	$("#testRemove").click(function(){
+				$("#testRemove").prop("disabled", true);
+				$("#sync").fadeIn(300);
+       			$.post("<s:url namespace='/ajax' action='testRemove' />",
+       						function(data, status){
+       						console.log(data);
+       						if(data["success"]) {
+       							alert("已删除部分网页内容！");
+       						}
+       						else alert(data["errorMsg"]);
+       						$("#testRemove").prop("disabled", false);
+       						$("#sync").fadeOut(300);
+       				});
         	});
         	
         	//table内部元素绑定事件

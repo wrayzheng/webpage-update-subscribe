@@ -1,5 +1,6 @@
 package com.codebelief.app.scheduler;
 
+import com.codebelief.app.pushupdate.PushUpdateMessageRealtime;
 import com.codebelief.app.scraper.*;
 
 import java.text.SimpleDateFormat;
@@ -21,12 +22,14 @@ public class CrawlJob implements Job {
 		//System.out.println(context.getTrigger().getCalendarName() + "triggered.time is :" + (new Date()));
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-	        System.out.println(sdf.format(new Date()));
+	        System.out.println(sdf.format(new Date()) + " -- start crawl and push");
+	        Controller.execute();
+	        PushUpdateMessageRealtime.PushUpdateRealTime();
+	        System.out.println(sdf.format(new Date()) + " -- finish crawl and push");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 }

@@ -46,6 +46,14 @@
 		<action name="isLogined" class="com.codebelief.app.action.LoginAction" method="isLogined">
 			<interceptor-ref name="defaultStack" />
 		</action>
+		<!-- 测试删除部分网页内容 -->
+		<action name="testRemove" class="com.codebelief.app.action.TestAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
+		<!-- 立即推送所有内容 -->
+		<action name="pushAll" class="com.codebelief.app.action.PushAction">
+			<interceptor-ref name="defaultStack" />
+		</action>
 		
         <!-- 修改订阅记录单个字段 -->
         <action name="addUrl" class="com.codebelief.app.action.UrlOperateAction" method="addUrl" />

@@ -27,7 +27,7 @@ import java.util.LinkedList;
  */
 public class PushMail {
 	public static void PushUpdateMail(String UserName) throws Exception{
-		Map<String, Object> parameters = new HashMap<String, Object>();
+		Map<Object, Object> parameters = new HashMap<Object, Object>();
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 		LinkedList<Url> urlList = urlDAO.doFindAll(UserName);
@@ -47,6 +47,9 @@ public class PushMail {
 		IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
 		String email = userDAO.doFindEmail(UserName);
 		userDAO.free();
-		SendMail.sendMail(email, parameters);
+		
+		Map<Object, Object> urlMap = new HashMap<>();
+		urlMap.put("urlMap", parameters);
+		SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 	}
 }

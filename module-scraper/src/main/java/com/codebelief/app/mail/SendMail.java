@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import com.codebelief.app.DAO.IUrlDAO;
-import com.codebelief.app.DAOFactory.ContentDAOFactory;
-import com.codebelief.app.DAOFactory.UrlDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.VO.Url;
 import com.codebelief.app.compare.SingleUpdateRecord;
+import com.codebelief.app.pushupdate.PushMail;;
 
 /**
  * @author 何涛
@@ -43,10 +40,11 @@ public class SendMail {
 		Thread.sleep(1000);
 	}
 	
-	public static void test(String[] args) {
+	public static void main(String[] args) {
+		MySQLDatabaseConnection.initialDatabaseDeploy();
 		try {
-			PushMail.PushUpdateMail("Wray");
-			System.out.println("mail sent.");
+			PushMail.PushUpdateMail("wray");
+			System.out.println("Email sent.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -57,30 +55,6 @@ public class SendMail {
 		parameter.put("url", "http://app.codebelief.com/webpage-update-subscribe/");
 		try {
 			sendMail("signup", "欢迎注册网页更新订阅系统", "mczon@qq.com", parameter);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static void testUpdateMail(String[] args) {
-		Map<Object, Object> urlMap = new HashMap<>();
-		LinkedList<SingleUpdateRecord> updateList = new LinkedList<>();
-		for(int i = 0; i < 5; i++)
-			updateList.add(new SingleUpdateRecord("http://baidu.com/" + i, "更新" + i));
-		urlMap.put("0", new DeltaObject("今日哈工大", "http://today.hit.edu.cn", updateList));
-		
-		updateList = new LinkedList<>();
-		for(int i = 0; i < 5; i++)
-			updateList.add(new SingleUpdateRecord("http://xxx.com/" + i, "新标题" + i));
-		urlMap.put("1", new DeltaObject("凤凰新闻", "http://ifeng.com", updateList));
-		
-		Map<Object, Object> parameter = new HashMap<>();
-		parameter.put("urlMap", urlMap);
-		
-		try {
-			sendMail("update", "网页更新订阅新内容推送", "850738350@qq.com", parameter);
-			System.out.println("Email sent.");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

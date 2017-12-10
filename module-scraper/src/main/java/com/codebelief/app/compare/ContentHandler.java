@@ -9,44 +9,62 @@ import java.util.Map;
 import java.util.Set;
 
 import com.codebelief.app.DAO.IContentDAO;
+import com.codebelief.app.DAO.IUrlDAO;
 import com.codebelief.app.DAOFactory.ContentDAOFactory;
+import com.codebelief.app.DAOFactory.UrlDAOFactory;
 import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.VO.*;
-<<<<<<< HEAD
+
+
 /**
  * @author 何涛
  * @version 1st   on 2017年11月12日
  */
-=======
-
-
 public class ContentHandler {
 	private static IContentDAO contentDAO = null;
 	
 	public static void updateProcess(int UrlID, LinkedList<SingleUpdateRecord> updateRecords){
 		try {
 			CompareContent(UrlID, updateRecords);
-			//testRemoveSomeRecords(UrlID, 5);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void testRemoveSomeRecords(int UrlID, int numToRemove) throws Exception {
+	public static void main(String[] args) throws Exception {
+		testRemoveSomeRecords("Wray", 5);
+	}
+	
+	/**
+	 * 删除部分网页内容（测试用）
+	 * 对于某个用户订阅的所有 Url，将对应 Content 中的 Html 字段的最后 N 条内容移除
+	 * @author Wray
+	 */
+	public static void testRemoveSomeRecords(String userName, int numToRemove) throws Exception {
+		MySQLDatabaseConnection.initialDatabaseDeploy();
+		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 		contentDAO = ContentDAOFactory.getContentDAOInstance();
-		Content content = contentDAO.doFindAllByUrlID(UrlID);
-		String html = content.getHtml();
 		
-		String[] recordList = html.split("\n\n");
-		String newHtml = "";
-
-		for(int i = 0; i < recordList.length - numToRemove; i++) {
-			newHtml += recordList[i] + "\n\n";
+		LinkedList<Url> urls = urlDAO.doFindAll(userName);
+		
+		for(Url url : urls) {
+			Content content = contentDAO.doFindAllByUrlID(url.getUrlID());
+			if(content == null) continue;
+			
+			String html = content.getHtml();
+			
+			String[] recordList = html.split("\n\n");
+			String newHtml = "";
+	
+			for(int i = 0; i < recordList.length - numToRemove; i++) {
+				newHtml += recordList[i] + "\n\n";
+			}
+			
+			content.setHtml(newHtml);
+			content.setDelta("");
+			contentDAO.doUpdate(content);
 		}
-		
-		content.setHtml(newHtml);
-		content.setDelta("");
-		UpdateRecord(content);
+		contentDAO.free();
 	}
 	
 	public static void UpdateRecord(Content content){
@@ -94,7 +112,8 @@ public class ContentHandler {
 			}
 			content.setHtml(newHtml);
 			content.setDelta(newDelta + content.getDelta());
-			UpdateRecord(content);
+			contentDAO.doUpdate(content);
+			contentDAO.free();
 		}
 		// 初始记录
 		else{
@@ -104,9 +123,9 @@ public class ContentHandler {
 			content = new Content();
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
-			// 设置初始Delta，修改第一次添加可改变系统在初始订阅网站是否推送
-			content.setDelta(" ");
-			InsertRecord(content);
+			content.setDelta(newDelta);
+			contentDAO.doInsert(content.getUrlID(),content.getHtml(),content.getDelta());
+			contentDAO.free();
 		}
 	}
 	
