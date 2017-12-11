@@ -30,26 +30,28 @@ public class PushMail {
 		Map<Object, Object> parameters = new HashMap<Object, Object>();
 		MySQLDatabaseConnection.initialDatabaseDeploy();
 		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-		LinkedList<Url> urlList = urlDAO.doFindAll(UserName);
+		LinkedList<Url> urlList = urlDAO.doFindAllEnabled(UserName);
 		urlDAO.free();
-		IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
-		for(int i = 0; i < urlList.size(); i++){
-			Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
-			LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
-			if(content != null &&!"".equals(content.getDelta())){
-				String[] Deltas = content.getDelta().split("\n\n");
-				for(String Delta:Deltas)
-					updateList.add(new SingleUpdateRecord(Delta));
-				parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(),updateList));
+		if(urlList.size()!=0){
+			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
+			for(int i = 0; i < urlList.size(); i++){
+				Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
+				LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
+				if(content != null &&!"".equals(content.getDelta())){
+					String[] Deltas = content.getDelta().split("\n\n");
+					for(String Delta:Deltas)
+						updateList.add(new SingleUpdateRecord(Delta));
+					parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(),updateList));
+				}
 			}
+			contentDAO.free();
+			IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
+			String email = userDAO.doFindEmail(UserName);
+			userDAO.free();
+			
+			Map<Object, Object> urlMap = new HashMap<>();
+			urlMap.put("urlMap", parameters);
+			SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 		}
-		contentDAO.free();
-		IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();
-		String email = userDAO.doFindEmail(UserName);
-		userDAO.free();
-		
-		Map<Object, Object> urlMap = new HashMap<>();
-		urlMap.put("urlMap", parameters);
-		SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 	}
 }

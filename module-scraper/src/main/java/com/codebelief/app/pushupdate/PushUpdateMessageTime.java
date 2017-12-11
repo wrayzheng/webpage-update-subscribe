@@ -41,24 +41,25 @@ public class PushUpdateMessageTime {
 		for(User user: userList){
 			Map<Object, Object> parameters = new HashMap<Object, Object>();
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			LinkedList<Url> urlList = urlDAO.doFindAll(user.getUserName());
+			LinkedList<Url> urlList = urlDAO.doFindAllEnabled(user.getUserName());
 			urlDAO.free();
 			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
 			for(int i = 0; i<urlList.size(); i++){
-				Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
-				LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
-				if(content != null &&!"".equals(content.getDelta())){
-					String[] Deltas = content.getDelta().split("\n\n");
-					for(String Delta:Deltas)
-						updateList.add(new SingleUpdateRecord(Delta));
-					parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(), updateList));
-					content.setDelta("");
-					contentDAO.doUpdate(content);
+				if(!urlList.get(i).isRealTimePush()){
+					Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
+					LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
+					if(content != null &&!"".equals(content.getDelta())){
+						String[] Deltas = content.getDelta().split("\n\n");
+						for(String Delta:Deltas)
+							updateList.add(new SingleUpdateRecord(Delta));
+						parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(), updateList));
+						content.setDelta("");
+						contentDAO.doUpdate(content);
+					}
 				}
 			}
 			if(parameters.size() != 0){
 				String email = user.getEmail();
-				
 				Map<Object, Object> urlMap = new HashMap<>();
 				urlMap.put("urlMap", parameters);
 				SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);

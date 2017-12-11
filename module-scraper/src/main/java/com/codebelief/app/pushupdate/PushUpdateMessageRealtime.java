@@ -42,14 +42,16 @@ public class PushUpdateMessageRealtime {
 		Map<Integer,Content> urlToContent = new HashMap<Integer,Content>();
 		for(Content cont: changed){
 			int UrlID = cont.getUrlID();
-			urlToContent.put(UrlID, cont);		//记录UrlID与cont的对应
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 			Url url = urlDAO.doFind(UrlID);
-			String userName = urlDAO.doFindUserName(UrlID);	//根据UrlID查找用户姓名
-			urlDAO.free();
-			if(!userToUrls.containsKey(userName))
-				userToUrls.put(userName, new LinkedList<Url>());
-			userToUrls.get(userName).add(url);		//记下用户对应的已更新的url
+			if(url.isEnabled() && url.isRealTimePush()){
+				urlToContent.put(UrlID, cont);		//记录UrlID与cont的对应
+				String userName = urlDAO.doFindUserName(UrlID);	//根据UrlID查找用户姓名
+				urlDAO.free();
+				if(!userToUrls.containsKey(userName))
+					userToUrls.put(userName, new LinkedList<Url>());
+				userToUrls.get(userName).add(url);		//记下用户对应的已更新的url
+			}
 		}
 		for(String username:userToUrls.keySet()){	//针对每个用户，将其所有更新的url的变化聚集起来一起发给用户
 			IUserDAO userDAO = UserDAOFactory.getUserDAOInstance();

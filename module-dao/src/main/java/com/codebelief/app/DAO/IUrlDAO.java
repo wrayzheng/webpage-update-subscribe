@@ -144,12 +144,22 @@ public interface IUrlDAO {
 	/**
 	 * 
 	 * @Title: FindAllByUserName
-	 * @Description: ͨ��UserName��Url������Ҷ�Ӧ��Url����������
+	 * @Description: ͨFind all urls belong to the given Username
 	 * @param UserName
 	 * @return LinkedList<Url>
 	 * @throws SQLException
 	 */
 	public LinkedList<Url> doFindAll(String UserName) throws SQLException;
+	
+	/**
+	 * 
+	 * @Title: doFindAllEnabled
+	 * @Description: ͨFind all enabled urls belong to the given Username
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
+	 */
+	public LinkedList<Url> doFindAllEnabled(String UserName) throws SQLException;
 	
 	/**
 	 * 

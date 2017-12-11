@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
  */
 public class PushUpdateTest {
 	public static void main(String[] args) throws Exception{
-		/*SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
 		java.util.Date d = null;
 		try {  
 	         d = format.parse("20:00:00");  
@@ -19,7 +19,6 @@ public class PushUpdateTest {
 	         e.printStackTrace();  
 	     }  
 	     Time time = new Time(d.getTime()); 
-		PushUpdateMessageTime.PushUpdateTime(time);*/
-		PushMail.PushUpdateMail("Tom");
+	     PushUpdateMessageTime.PushUpdateTime(time);
 	}
 }

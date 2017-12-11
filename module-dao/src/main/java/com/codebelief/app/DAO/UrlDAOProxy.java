@@ -219,6 +219,19 @@ public class UrlDAOProxy implements IUrlDAO{
 	@Override
 	/**
 	 * 
+	 *Title: doFindAllEnabled
+	 * @Description: ͨFind all enabled urls belong to the given Username
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
+	 */
+	public LinkedList<Url> doFindAllEnabled(String UserName) throws SQLException{
+		return dao.doFindAllEnabled(UserName);
+	}
+	
+	@Override
+	/**
+	 * 
 	 * @Title: doFind
 	 * @Description: ͨGet a whole url record by UrlID
 	 * @param UrlID

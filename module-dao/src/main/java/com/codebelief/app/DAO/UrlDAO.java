@@ -316,6 +316,35 @@ public class UrlDAO implements IUrlDAO{
 	@Override
 	/**
 	 * 
+	 *Title: doFindAllEnabled
+	 * @Description: ͨFind all enabled urls belong to the given Username
+	 * @param UserName
+	 * @return LinkedList<Url>
+	 * @throws SQLException
+	 */
+	public LinkedList<Url> doFindAllEnabled(String UserName) throws SQLException{
+		String query = "select * from Url where UserName=? and Enabled=true";
+		ps = conn.prepareStatement(query);
+		ps.setString(1, UserName);
+		ResultSet rs = ps.executeQuery();
+		LinkedList<Url> lst =new LinkedList<Url>();
+		while(rs.next()){
+			Url newUrl = new Url();
+			newUrl.setUrlID(rs.getInt(1));
+			newUrl.setUserName(UserName);
+			newUrl.setTitle(rs.getString(3));
+			newUrl.setUrl(rs.getString(4));
+			newUrl.setEnabled(rs.getBoolean(5));
+			newUrl.setRealTimePush(rs.getBoolean(6));
+			lst.add(newUrl);
+		}
+		rs.close();ps.close();
+		return lst;
+	}
+	
+	@Override
+	/**
+	 * 
 	 * @Title: doFind
 	 * @Description: ͨGet a whole url record by UrlID
 	 * @param UrlID
