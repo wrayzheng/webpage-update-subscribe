@@ -29,7 +29,6 @@ public class Controller {
 	static {
 		try {
 			MySQLDatabaseConnection.initialDatabaseDeploy();
-			urlMap = GetURL.getAllUrl();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -38,6 +37,8 @@ public class Controller {
     public static void main(String[] args) throws Exception { execute(); }
 
 	public static void execute() throws Exception {
+        urlMap = GetURL.getAllUrl();
+
         String crawlStorageFolder = "/data/crawl/root";
 
         //设置并行爬虫个数
