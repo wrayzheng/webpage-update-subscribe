@@ -3,6 +3,10 @@
 
     <display-name>Webpage Update Subscribe</display-name>
 
+	<listener>
+		<listener-class>com.codebelief.app.InitListener</listener-class>	
+	</listener>
+
     <!-- struts2 过滤器，将所有请求都交由 struts2 处理 -->
     <filter>
         <filter-name>struts2</filter-name>
@@ -15,10 +19,10 @@
 
     <!-- 应用的默认页面 -->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- 404错误页面 -->
+    <!-- 404 错误页面 -->
     <error-page>
         <error-code>404</error-code>
         <location>/error404.jsp</location>
