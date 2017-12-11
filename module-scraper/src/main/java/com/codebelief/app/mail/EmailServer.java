@@ -1,5 +1,6 @@
 package com.codebelief.app.mail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,10 +73,10 @@ public class EmailServer {
 	}
 
 	private Message buildEmailMessage(EmailInfo emailInfo)
-			throws AddressException, MessagingException {
+			throws AddressException, MessagingException, UnsupportedEncodingException {
 		MimeMessage message = new MimeMessage(this.session);
-		message.setFrom(convertString2InternetAddress(emailInfo.getFrom()));
-		message.setRecipient(Message.RecipientType.TO, convertString2InternetAddress(emailInfo.getTo()));
+		message.setFrom(new InternetAddress(emailInfo.getFrom(), "网页更新订阅系统", "UTF-8"));
+		message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailInfo.getTo()));
 
 		Multipart multipart = new MimeMultipart();
 		BodyPart messageBodyPart = new MimeBodyPart();
@@ -85,10 +86,5 @@ public class EmailServer {
 		message.setSubject(emailInfo.getTitle());
 		message.saveChanges();
 		return message;
-	}
-
-	private InternetAddress convertString2InternetAddress(String address)
-			throws AddressException {
-		return new InternetAddress(address);
 	}
 }
