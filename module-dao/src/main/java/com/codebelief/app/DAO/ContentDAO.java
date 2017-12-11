@@ -55,9 +55,29 @@ public class ContentDAO implements IContentDAO{
 	 * @throws Exception
 	 */
 	public boolean doDelete(int ContentID) throws Exception {
-		String query = "delete from Content where COntentID=?";
+		String query = "delete from Content where ContentID=?";
 		ps = conn.prepareStatement(query);
 		ps.setInt(1, ContentID);
+		if(ps.executeUpdate() == 0){
+			ps.close();
+			return false;
+		}
+		ps.close();
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @Title: doDeleteByUrlID
+	 * @Description: Delete a piece of Content Info by UrlID
+	 * @param UrlID
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean doDeleteByUrlID(int UrlID) throws Exception{
+		String query = "delete from Content where UrlID=?";
+		ps = conn.prepareStatement(query);
+		ps.setInt(1, UrlID);
 		if(ps.executeUpdate() == 0){
 			ps.close();
 			return false;

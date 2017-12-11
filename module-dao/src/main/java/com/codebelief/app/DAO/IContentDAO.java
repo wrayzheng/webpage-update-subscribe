@@ -31,6 +31,16 @@ public interface IContentDAO {
 	
 	/**
 	 * 
+	 * @Title: doDeleteByUrlID
+	 * @Description: Delete a piece of Content Info by UrlID
+	 * @param UrlID
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean doDeleteByUrlID(int UrlID) throws Exception;
+	
+	/**
+	 * 
 	 * @Title: doUpdateHtmlAndDelta
 	 * @Description: Update Html and Delta of a content
 	 * @param ContentID

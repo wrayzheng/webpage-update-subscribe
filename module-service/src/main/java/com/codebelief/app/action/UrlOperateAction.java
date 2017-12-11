@@ -147,6 +147,9 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String deleteUrl() {
 		try{
+			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
+			contentDAO.doDeleteByUrlID(urlID);
+			contentDAO.free();
 			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
 			if(!urlDAO.doDelete(urlID)){
 				success = false;

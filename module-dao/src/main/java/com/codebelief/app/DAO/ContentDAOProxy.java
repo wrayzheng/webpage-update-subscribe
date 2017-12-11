@@ -51,6 +51,20 @@ public class ContentDAOProxy implements IContentDAO{
 		//dbc.free();
 		return success;
 	}
+	
+	@Override
+	/**
+	 * 
+	 * @Title: doDeleteByUrlID
+	 * @Description: Delete a piece of Content Info by UrlID
+	 * @param UrlID
+	 * @return boolean
+	 * @throws Exception
+	 */
+	public boolean doDeleteByUrlID(int UrlID) throws Exception{
+		boolean success = dao.doDeleteByUrlID(UrlID);
+		return success;
+	}
 
 	@Override
 	/**
