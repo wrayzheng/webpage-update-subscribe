@@ -55,6 +55,7 @@ public class UrlOperateAction extends ActionSupport {
             }
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -70,8 +71,8 @@ public class UrlOperateAction extends ActionSupport {
             }
 			urlDAO.free();
 		} catch (Exception e) {
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -87,8 +88,8 @@ public class UrlOperateAction extends ActionSupport {
             }
 			urlDAO.free();
 		} catch (Exception e) {
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -104,8 +105,8 @@ public class UrlOperateAction extends ActionSupport {
             }
 			urlDAO.free();
 		} catch (Exception e) {
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -121,10 +122,8 @@ public class UrlOperateAction extends ActionSupport {
             }
 			urlDAO.free();
 		} catch (Exception e) {
-			System.out.println(e);
-			System.out.println("urlID:" + urlID + " url:" + url);
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -140,8 +139,8 @@ public class UrlOperateAction extends ActionSupport {
             }
 			urlDAO.free();
 		} catch (Exception e) {
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}
@@ -157,8 +156,8 @@ public class UrlOperateAction extends ActionSupport {
                 return SUCCESS;
             }
 		}catch(Exception e){
-			success = false;
 			errorMsg = "数据库访问出错！";
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}

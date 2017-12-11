@@ -29,6 +29,7 @@ public class UrlManageAction extends ActionSupport {
 			return SUCCESS;
 		} catch (Exception e) {
 			setErrorMsg("访问数据库出错！");
+    		e.printStackTrace();
 		}
 		return ERROR;
 	}

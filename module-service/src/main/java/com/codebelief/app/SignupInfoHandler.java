@@ -37,7 +37,7 @@ public class SignupInfoHandler {
 		// 发送验证邮件
 		Map<Object, Object> parameter = new HashMap<>();
 		parameter.put("url", url);
-		SendMail.sendMail("signup", "欢迎注册网页更新订阅系统", "mczon@qq.com", parameter);
+		SendMail.sendMail("signup", "欢迎注册网页更新订阅系统", email, parameter);
 
 	}
 	

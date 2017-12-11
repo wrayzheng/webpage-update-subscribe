@@ -40,7 +40,7 @@ public class MyCrawler extends WebCrawler {
      @Override
      public void visit(Page page) {
          String url = page.getWebURL().getURL();
-         //System.out.println("URL: " + url); 
+         System.out.println("URL: " + url); 
          
  
          if (page.getParseData() instanceof HtmlParseData) {
@@ -48,7 +48,7 @@ public class MyCrawler extends WebCrawler {
              String html = htmlParseData.getHtml();
              String title = htmlParseData.getTitle();
              
-             //System.out.println("Title: "+ title);           
+             System.out.println("Title: "+ title);           
              String baseUri = url;
              Elements validLinks = PageParser.getLinks(html, baseUri);
              
