@@ -7,8 +7,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 /**
  * @author 何涛
@@ -48,27 +50,14 @@ public class SysConfig {
 		}
 		file.createNewFile();
 		
-		FileWriter fw = new FileWriter(file);
-		BufferedWriter write = new BufferedWriter(fw);
-		write.write("mail.transport.protocol=");
-		write.newLine();
-		write.write("mail.smtp.port=");
-		write.newLine();
-		write.write("mail.smtp.host=");
-		write.newLine();
-		write.write("mail.smtp.username=");
-		write.newLine();
-		write.write("mail.smtp.password=");
-		write.newLine();
-		write.write("mail.smtp.connectiontimeout=");
-		write.newLine();
-		write.write("mail.smtp.timeout=");
-		write.newLine();
-		write.write("mail.smtp.auth=");
-		write.flush();
-		
-		write.close();
-		fw.close();
+		FileOutputStream fout = new FileOutputStream(file);
+		InputStream in = SysConfig.class.getResourceAsStream("/email.properties");
+		int ch;
+		while ((ch = in.read()) != -1) {
+			fout.write(ch);
+		}
+		in.close();
+		fout.close();
 	}
 	
 	private SysConfig(){}

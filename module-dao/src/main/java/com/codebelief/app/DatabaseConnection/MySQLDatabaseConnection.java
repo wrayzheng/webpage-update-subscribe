@@ -24,10 +24,10 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	private String url = null;
 	
 	public MySQLDatabaseConnection() throws SQLException, ClassNotFoundException {
-		url="jdbc:mysql://"+host+":"+port+"/"+database+"?characterEncoding=utf-8";
+		url = "jdbc:mysql://" + host + ":" + port + "/" + database + "?characterEncoding=utf-8";
 		
 		Class.forName("com.mysql.jdbc.Driver");
-		conn = DriverManager.getConnection(url,userName,password);
+		conn = DriverManager.getConnection(url, userName, password);
 	}
 	
 	@Override
@@ -71,16 +71,16 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 		File file = new File(path);
 		if(!file.exists()){
 			try {
-				createDefaultDbProperties(path,"root","mysql","localhost","3306","mysql");
+				createDefaultDbProperties(path);
 			} catch (IOException e) {
-				System.out.println("鍒涘缓閰嶇疆鏂囦欢鍑洪敊锛�");
+				System.out.println("创建数据库默认配置文件失败！");
 				e.printStackTrace();
 			}
 		}
 		try {
 			readDbProperties(path);
 		} catch (IOException e) {
-			System.out.println("璇诲彇閰嶇疆鏂囦欢澶辫触锛�");
+			System.out.println("读取数据库配置文件失败！");
 			e.printStackTrace();
 		}
 	}
@@ -97,29 +97,20 @@ public class MySQLDatabaseConnection implements DatabaseConnection{
 	 * @param database
 	 * @throws IOException
 	 */
-	private static void createDefaultDbProperties(String path, 
-			String username, String password, String host, String port, String database) throws IOException{
+	private static void createDefaultDbProperties(String path) throws IOException{
 		File file = new File(path);
 		if(!file.getParentFile().exists()){
 			file.getParentFile().mkdirs();
 		}
 		file.createNewFile();
-		
-		FileWriter fw = new FileWriter(file);
-		BufferedWriter write = new BufferedWriter(fw);
-		write.write("username=" + username);
-		write.newLine();
-		write.write("password=" + password);
-		write.newLine();
-		write.write("host=" + host);
-		write.newLine();
-		write.write("database=" + database);
-		write.newLine();
-		write.write("port=" + port);
-		write.flush();
-		
-		write.close();
-		fw.close();
+		FileOutputStream fout = new FileOutputStream(file);
+		InputStream in = MySQLDatabaseConnection.class.getResourceAsStream("/db.properties");
+		int ch;
+		while ((ch = in.read()) != -1) {
+			fout.write(ch);
+		}
+		in.close();
+		fout.close();
 	}
 	
 	/**
