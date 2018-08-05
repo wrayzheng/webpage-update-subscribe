@@ -6,26 +6,32 @@ package com.codebelief.app.pushupdate;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
-import com.codebelief.app.DAO.IContentDAO;
-import com.codebelief.app.DAO.IUrlDAO;
-import com.codebelief.app.DAO.IUserDAO;
-import com.codebelief.app.DAOFactory.ContentDAOFactory;
-import com.codebelief.app.DAOFactory.UrlDAOFactory;
-import com.codebelief.app.DAOFactory.UserDAOFactory;
-import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.VO.Content;
-import com.codebelief.app.VO.Url;
-import com.codebelief.app.VO.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.codebelief.app.bean.Content;
+import com.codebelief.app.bean.Url;
+import com.codebelief.app.bean.User;
 import com.codebelief.app.compare.SingleUpdateRecord;
+import com.codebelief.app.dao.ContentDao;
+import com.codebelief.app.dao.UrlDao;
+import com.codebelief.app.dao.UserDao;
 import com.codebelief.app.mail.DeltaObject;
 import com.codebelief.app.mail.SendMail;
 /**
  * @author 何涛
  * @version 1st   on 2017年11月13日
  */
+@Component
 public class PushUpdateMessageTime {
+	
+	private static UserDao userDao;
+	private static UrlDao urlDao;
+	private static ContentDao contentDao;
+	
 	/**
 	 * 
 	 * @Title: PushUpdateTime
@@ -34,19 +40,13 @@ public class PushUpdateMessageTime {
 	 * @throws Exception
 	 */
 	public static void PushUpdateTime(Time pushTime) throws Exception{
-		MySQLDatabaseConnection.initialDatabaseDeploy();
-		IUserDAO UserDAO = UserDAOFactory.getUserDAOInstance();
-		LinkedList<User> userList = UserDAO.doFindAllByPushTime(pushTime);
-		UserDAO.free();
+		List<User> userList = userDao.doFindAllByPushTime(pushTime);
 		for(User user: userList){
 			Map<Object, Object> parameters = new HashMap<Object, Object>();
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			LinkedList<Url> urlList = urlDAO.doFindAllEnabled(user.getUserName());
-			urlDAO.free();
-			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
+			List<Url> urlList = urlDao.doFindAllEnabled(user.getUserName());
 			for(int i = 0; i<urlList.size(); i++){
 				if(!urlList.get(i).isRealTimePush()){
-					Content content = contentDAO.doFindAllByUrlID(urlList.get(i).getUrlID());
+					Content content = contentDao.doFindAllByUrlID(urlList.get(i).getUrlID());
 					LinkedList<SingleUpdateRecord> updateList = new LinkedList<SingleUpdateRecord>();
 					if(content != null &&!"".equals(content.getDelta())){
 						String[] Deltas = content.getDelta().split("\n\n");
@@ -54,7 +54,7 @@ public class PushUpdateMessageTime {
 							updateList.add(new SingleUpdateRecord(Delta));
 						parameters.put("" + i, new DeltaObject(urlList.get(i).getTitle(),urlList.get(i).getUrl(), updateList));
 						content.setDelta("");
-						contentDAO.doUpdate(content);
+						contentDao.doUpdate(content);
 					}
 				}
 			}
@@ -64,7 +64,21 @@ public class PushUpdateMessageTime {
 				urlMap.put("urlMap", parameters);
 				SendMail.sendMail("update", "网页更新订阅新内容推送", email, urlMap);
 			}
-			contentDAO.free();
 		}
+	}
+	
+	@Autowired
+	public void setUrlDao(UrlDao urlDao) {
+		PushUpdateMessageTime.urlDao = urlDao;
+	}
+	
+	@Autowired
+	public void setContentDao(ContentDao contentDao) {
+		PushUpdateMessageTime.contentDao = contentDao;
+	}
+	
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		PushUpdateMessageTime.userDao = userDao;
 	}
 }

@@ -2,10 +2,9 @@ package com.codebelief.app.action;
 
 import java.util.Map;
 
-import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.codebelief.app.DAO.IUserDAO;
-import com.codebelief.app.DAOFactory.UserDAOFactory;
+import com.codebelief.app.dao.UserDao;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -23,6 +22,7 @@ public class LoginAction extends ActionSupport {
 	private boolean success;
 	private String errorMsg;
 	private Map<String, Object> session = ActionContext.getContext().getSession();
+	private UserDao userDao;
 	
 	public String execute() throws Exception {
 		if(verify()) {
@@ -48,15 +48,13 @@ public class LoginAction extends ActionSupport {
 	}
 	
 	public boolean verify() {
-		IUserDAO userDAO;
 		
 		try {
-			userDAO = UserDAOFactory.getUserDAOInstance();
-			String pw = userDAO.doFindPassword(userName);
-			userDAO.free();
+			String pw = userDao.doFindPassword(userName);
 			success = pw.equals(this.password);
 			if(!success) { errorMsg = "密码错误！"; }
 		} catch (Exception e) {
+			e.printStackTrace(System.err);
 			success = false;
 			errorMsg = "请检查用户名！";
 		}
@@ -94,6 +92,15 @@ public class LoginAction extends ActionSupport {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public UserDao getUserDAO() {
+		return userDao;
+	}
+
+	@Autowired
+	public void setUserDAO(UserDao userDAO) {
+		this.userDao = userDAO;
 	}
 
 }

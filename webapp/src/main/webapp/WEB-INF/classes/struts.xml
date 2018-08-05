@@ -7,6 +7,7 @@
     <constant name="struts.configuration.xml.reload" value="true" />
 	<constant name="struts.action.extension" value="do" />
 	<constant name="struts.ui.theme" value="simple" />
+	<!-- <constant name="struts.objectFactory.spring.autoWire" value="byType" /> -->
 
     <!-- AJAX调用接口 -->
 	<package name="ajax-modify" namespace="/ajax" extends="json-default">

@@ -5,11 +5,11 @@ import java.sql.Time;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.codebelief.app.SignupInfoHandler;
-import com.codebelief.app.DAO.IUserDAO;
-import com.codebelief.app.DAOFactory.UserDAOFactory;
-import com.codebelief.app.VO.User;
+import com.codebelief.app.bean.User;
+import com.codebelief.app.dao.UserDao;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -25,6 +25,7 @@ public class EmailConfirmation extends ActionSupport {
 	private String password;
 	private String msg;
 	private String info;
+	private UserDao userDao;
 
 	public String execute() throws Exception {
 		String paramEncoded = info;
@@ -41,10 +42,8 @@ public class EmailConfirmation extends ActionSupport {
 		
 		// 注册用户
 		User user = new User(userName, password, email, Time.valueOf("20:00:00"));
-		IUserDAO userDAO;
 		try {
-			userDAO = UserDAOFactory.getUserDAOInstance();
-			userDAO.doInsert(user);
+			userDao.doInsert(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 			setMsg("激活用户失败，请尝试重新注册！");
@@ -93,6 +92,15 @@ public class EmailConfirmation extends ActionSupport {
 
 	public void setInfo(String info) {
 		this.info = info;
+	}
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 	
 }

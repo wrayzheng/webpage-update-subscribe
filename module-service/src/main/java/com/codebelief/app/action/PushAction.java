@@ -27,6 +27,7 @@ public class PushAction extends ActionSupport {
 			Controller.execute();
 			PushMail.PushUpdateMail(userName);
 		} catch(Exception e) {
+			e.printStackTrace(System.err);
 			errorMsg = "推送失败！";
 			return ERROR;
 		}

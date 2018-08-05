@@ -1,11 +1,9 @@
 package com.codebelief.app.action;
 
-import java.sql.Time;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.codebelief.app.DAO.IUserDAO;
-import com.codebelief.app.DAOFactory.UserDAOFactory;
-import com.codebelief.app.VO.User;
 import com.codebelief.app.SignupInfoHandler;
+import com.codebelief.app.dao.UserDao;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
@@ -22,18 +20,18 @@ public class SignupAction extends ActionSupport {
 	private String password;
 	private boolean success = false;
 	private String errorMsg;
+	private UserDao userDao;
 
 	@Override
 	public String execute() throws Exception {
-		IUserDAO userDAO;
 		
 		try{
-			userDAO = UserDAOFactory.getUserDAOInstance();
-			if(userDAO.isExist(userName)) {
+			if(userDao.isExist(userName)) {
 				errorMsg = "用户已存在！";
 				return ERROR;
 			}
 		} catch(Exception e) {
+			e.printStackTrace(System.err);
 			errorMsg = "访问数据库出错！";
 			return ERROR;
 		}
@@ -87,6 +85,15 @@ public class SignupAction extends ActionSupport {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	@Autowired
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 }

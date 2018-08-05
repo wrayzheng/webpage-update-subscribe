@@ -1,9 +1,11 @@
 package com.codebelief.app;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.struts2.StrutsStatics;
-import com.codebelief.app.DAO.IUrlDAO;
-import com.codebelief.app.DAOFactory.UrlDAOFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.codebelief.app.dao.UrlDao;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
@@ -19,6 +21,7 @@ public class AccessInterceptor extends AbstractInterceptor {
 	private String userName;
 	private int urlID = -1;
 	private ActionInvocation invocation;
+	private UrlDao urlDao;
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
@@ -49,8 +52,7 @@ public class AccessInterceptor extends AbstractInterceptor {
 		
 		//判断UrlID是否属于当前用户
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(userName.toLowerCase().equals(urlDAO.doFindUserName(urlID).toLowerCase())) {
+			if(userName.toLowerCase().equals(getUrlDao().doFindUserName(urlID).toLowerCase())) {
 				return invocation.invoke();
 			} else {
 				setErrorMsg("没有操作权限！");
@@ -64,6 +66,15 @@ public class AccessInterceptor extends AbstractInterceptor {
 	
 	private void setErrorMsg(String errorMsg) {
 		invocation.getInvocationContext().put("errorMsg", errorMsg);
+	}
+
+	public UrlDao getUrlDao() {
+		return urlDao;
+	}
+
+	@Autowired
+	public void setUrlDao(UrlDao urlDao) {
+		this.urlDao = urlDao;
 	}
 
 }

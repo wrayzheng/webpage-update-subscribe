@@ -5,7 +5,6 @@ import javax.servlet.ServletContextListener;
 
 import org.quartz.SchedulerException;
 
-import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
 import com.codebelief.app.scheduler.MyCronTrigger;
 
 /**
@@ -27,7 +26,6 @@ public class InitListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("Webpage Update Subscribe started");
-		MySQLDatabaseConnection.initialDatabaseDeploy();
 		try {
 			MyCronTrigger.start();
 		} catch (Exception e) {

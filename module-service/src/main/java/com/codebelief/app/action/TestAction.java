@@ -25,6 +25,7 @@ public class TestAction extends ActionSupport {
 		try {
 			ContentHandler.testRemoveSomeRecords(userName, 5);
 		} catch (Exception e) {
+			e.printStackTrace(System.err);
 			errorMsg = "测试删除部分数据失败！";
 			return ERROR;
 		}

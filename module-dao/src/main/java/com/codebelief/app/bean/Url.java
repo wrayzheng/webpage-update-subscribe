@@ -1,11 +1,11 @@
-package com.codebelief.app.VO;
+package com.codebelief.app.bean;
 
 /**
  * 
  * @ClassName: Url
  * @Description: Define Url Type
- * @author ºÎÌÎ
- * @date 2017Äê10ÔÂ13ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @date 2017-10-13
  *
  */
 public class Url {
@@ -19,17 +19,21 @@ public class Url {
 	
 	public Url(){}
 	
-	public Url(int UrlID){
-		this.urlID = UrlID;
+	public Url(int urlID){
+		this.urlID = urlID;
 	}
 	
-	public Url(int UrlID, String UserName, String title, String Url, boolean enabled, boolean realTimePush){
-		this.urlID = UrlID;
-		this.userName = UserName;
+	public Url(String userName, String title, String url, boolean enabled, boolean realTimePush){
+		this.userName = userName;
 		this.title = title;
-		this.url = Url;
+		this.url = url;
 		this.enabled = enabled;
 		this.realTimePush = realTimePush;
+	}
+	
+	public Url(int urlID, String userName, String title, String url, boolean enabled, boolean realTimePush) {
+		this(userName, title, url, enabled, realTimePush);
+		this.urlID = urlID;
 	}
 	
 	/**

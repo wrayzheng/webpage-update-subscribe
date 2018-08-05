@@ -3,25 +3,25 @@
  */
 package com.codebelief.app.compare;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
-import com.codebelief.app.DAO.IContentDAO;
-import com.codebelief.app.DAO.IUrlDAO;
-import com.codebelief.app.DAOFactory.ContentDAOFactory;
-import com.codebelief.app.DAOFactory.UrlDAOFactory;
-import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.VO.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.codebelief.app.bean.Content;
+import com.codebelief.app.bean.Url;
+import com.codebelief.app.dao.ContentDao;
+import com.codebelief.app.dao.UrlDao;
 
 /**
- * @author ºÎÌÎ
- * @version 1st   on 2017Äê11ÔÂ12ÈÕ
+ * @author ï¿½ï¿½ï¿½ï¿½
+ * @version 1st   on 2017ï¿½ï¿½11ï¿½ï¿½12ï¿½ï¿½
  */
+@Component
 public class ContentHandler {
-	private static IContentDAO contentDAO = null;
+	private static UrlDao urlDao;
+	private static ContentDao contentDao;
 	
 	public static void updateProcess(int UrlID, LinkedList<SingleUpdateRecord> updateRecords){
 		try {
@@ -36,19 +36,16 @@ public class ContentHandler {
 	}
 	
 	/**
-	 * É¾³ý²¿·ÖÍøÒ³ÄÚÈÝ£¨²âÊÔÓÃ£©
-	 * ¶ÔÓÚÄ³¸öÓÃ»§¶©ÔÄµÄËùÓÐ Url£¬½«¶ÔÓ¦ Content ÖÐµÄ Html ×Ö¶ÎµÄ×îºó N ÌõÄÚÈÝÒÆ³ý
+	 * É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½
+	 * ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ Urlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ Content ï¿½Ðµï¿½ Html ï¿½Ö¶Îµï¿½ï¿½ï¿½ï¿½ N ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½
 	 * @author Wray
 	 */
 	public static void testRemoveSomeRecords(String userName, int numToRemove) throws Exception {
-		MySQLDatabaseConnection.initialDatabaseDeploy();
-		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-		contentDAO = ContentDAOFactory.getContentDAOInstance();
 		
-		LinkedList<Url> urls = urlDAO.doFindAll(userName);
+		List<Url> urls = urlDao.doFindAll(userName);
 		
 		for(Url url : urls) {
-			Content content = contentDAO.doFindAllByUrlID(url.getUrlID());
+			Content content = contentDao.doFindAllByUrlID(url.getUrlID());
 			if(content == null) continue;
 			
 			String html = content.getHtml();
@@ -62,16 +59,14 @@ public class ContentHandler {
 			
 			content.setHtml(newHtml);
 			content.setDelta("");
-			contentDAO.doUpdate(content);
+			contentDao.doUpdate(content);
 		}
-		contentDAO.free();
 	}
 	
 	public static void UpdateRecord(Content content){
 		try {
-			contentDAO.doUpdate(content);
+			contentDao.doUpdate(content);
 			
-			contentDAO.free();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,18 +75,15 @@ public class ContentHandler {
 	
 	public static void InsertRecord(Content content){
 		try {
-			contentDAO.doInsert(content.getUrlID(),content.getHtml(),content.getDelta());
-			contentDAO.free();
+			contentDao.doInsert(content);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public static void CompareContent(int UrlID, LinkedList<SingleUpdateRecord> updateRecords) throws Exception{
-		contentDAO = ContentDAOFactory.getContentDAOInstance();
-		Content content = contentDAO.doFindAllByUrlID(UrlID);
+		Content content = contentDao.doFindAllByUrlID(UrlID);
 		
-
 		String newDelta = "";
 		String newHtml = "";
 		if(content != null){
@@ -112,10 +104,9 @@ public class ContentHandler {
 			}
 			content.setHtml(newHtml);
 			content.setDelta(newDelta + content.getDelta());
-			contentDAO.doUpdate(content);
-			contentDAO.free();
+			contentDao.doUpdate(content);
 		}
-		// ³õÊ¼¼ÇÂ¼
+		// ï¿½ï¿½Ê¼ï¿½ï¿½Â¼
 		else{
 			for(int i = 0; i < updateRecords.size(); i++)
 				newDelta += updateRecords.get(i) + "\n\n";
@@ -124,10 +115,17 @@ public class ContentHandler {
 			content.setUrlID(UrlID);
 			content.setHtml(newHtml);
 			content.setDelta(newDelta);
-			contentDAO.doInsert(content.getUrlID(),content.getHtml(),content.getDelta());
-			contentDAO.free();
+			contentDao.doInsert(content);
 		}
 	}
 	
+	@Autowired
+	public void setUrlDao(UrlDao urlDao) {
+		ContentHandler.urlDao = urlDao;
+	}
 	
+	@Autowired
+	public void setContentDao(ContentDao contentDao) {
+		ContentHandler.contentDao = contentDao;
+	}
 }

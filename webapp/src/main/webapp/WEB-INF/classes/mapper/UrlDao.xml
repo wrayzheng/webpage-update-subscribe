@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.codebelief.app.dao.UrlDao">
+
+	<resultMap id="urlMap" type="String">
+		<result column="url" />
+	</resultMap>
+
+	<!-- useGeneratedKeys 表示使用自增字段并赋值到 keyProperty 属性中 -->
+	<!-- 在 mybatis-config.xml 中已经配置，因此这里无需再次配置 -->
+	<insert id="doInsert" keyProperty="urlID">
+		INSERT INTO
+			Url(userName, title, url, enabled, realTimePush)
+		VALUES
+			(#{userName}, #{title}, #{url}, #{enabled}, #{realTimePush})
+	</insert>
+	
+	<delete id="doDelete">
+		DELETE FROM Url
+		WHERE urlID = #{urlID}
+	</delete>
+	
+	<update id="doUpdateTitle">
+		UPDATE Url SET title = #{title}
+		WHERE urlID = #{urlID}
+	</update>
+	
+	<update id="doUpdateUrl">
+		UPDATE Url SET title = #{url}
+		WHERE urlID = #{urlID}
+	</update>
+	
+	<update id="doUpdateEnabled">
+		UPDATE Url SET title = #{enabled}
+		WHERE urlID = #{urlID}
+	</update>
+	
+	<update id="doUpdateRealTimePush">
+		UPDATE Url SET title = #{realTimePush}
+		WHERE urlID = #{urlID}
+	</update>
+	
+	<select id="doFindUserName" resultType="String">
+		SELECT userName FROM Url
+		WHERE urlID = #{urlID}
+	</select>
+	
+	<select id="doFindAll" resultType="Url">
+		SELECT * FROM Url
+		WHERE userName = #{userName}
+	</select>
+	
+	<select id="doFindAllEnabled" resultType="Url">
+		SELECT * FROM Url
+		WHERE userName = #{userName}
+			AND enabled = true
+	</select>
+	
+	<select id="doFind" resultType="Url">
+		SELECT * FROM Url
+		WHERE urlID = #{urlID}
+	</select>
+
+	<select id="getAllUrl" resultType="java.util.HashMap">
+		SELECT urlID, url
+		FROM Url
+		WHERE enabled=true
+	</select>
+
+</mapper>

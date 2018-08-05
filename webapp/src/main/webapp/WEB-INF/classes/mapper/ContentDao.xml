@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.codebelief.app.dao.ContentDao">
+    <insert id="doInsert">
+		insert into
+			Content(urlID,html,delta)
+		values
+			(#{urlID}, #{html}, #{delta})
+    </insert>
+ 
+    <update id="doUpdate">
+        update Content
+       	set Html=#{html}, Delta=#{delta}
+       	where urlID=#{urlID}
+    </update>
+ 
+ 	<!-- 由于创建 SqlSessionFactoryBean 的时候指定了扫描包的别名，因此无需指定完整包名 -->
+    <select id="doFindAllByUrlID" resultType="Content">
+        select *
+       	from Content
+       	where urlID=#{urlID}
+    </select>
+ 
+    <select id="doFindAllChanged" resultType="Content">
+        select *
+       	from Content
+       	where delta!=""
+    </select>
+    
+    <delete id="doDeleteByUrlID">
+		delete from Content
+		where urlID=#{urlID}    	
+    </delete>
+    
+    <update id="createTable">
+	    CREATE TABLE `Content` (
+		  `urlID` int(11) NOT NULL,
+		  `html` text NOT NULL,
+		  `delta` text NOT NULL,
+		  PRIMARY KEY (`urlID`),
+		  KEY `UrlID` (`urlID`),
+		  CONSTRAINT `content_ibfk_1` FOREIGN KEY (`urlID`) REFERENCES `Url` (`urlID`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+    </update>
+    
+    <update id="dropTable">
+    	DROP TABLE IF EXISTS `Content`
+    </update>
+</mapper>

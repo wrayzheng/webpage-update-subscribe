@@ -4,11 +4,8 @@
 package com.codebelief.app.mail;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
-import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.compare.SingleUpdateRecord;
 import com.codebelief.app.pushupdate.PushMail;;
 
 /**
@@ -41,7 +38,6 @@ public class SendMail {
 	}
 	
 	public static void main(String[] args) {
-		MySQLDatabaseConnection.initialDatabaseDeploy();
 		try {
 			PushMail.PushUpdateMail("wray");
 			System.out.println("Email sent.");

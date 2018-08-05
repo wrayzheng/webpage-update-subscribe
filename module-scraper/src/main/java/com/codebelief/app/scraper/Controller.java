@@ -3,8 +3,6 @@ package com.codebelief.app.scraper;
 import java.util.LinkedList;
 import java.util.Map;
 
-import com.codebelief.app.DatabaseConnection.MySQLDatabaseConnection;
-import com.codebelief.app.pushupdate.PushUpdateMessageRealtime;
 import com.codebelief.app.rwDatabase.GetURL;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
@@ -12,7 +10,6 @@ import edu.uci.ics.crawler4j.crawler.CrawlController;
 import edu.uci.ics.crawler4j.fetcher.PageFetcher;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
 import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
-import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 
 /**
  * @author Surflyan
@@ -21,18 +18,10 @@ import edu.uci.ics.crawler4j.url.URLCanonicalizer;
 public class Controller {
 
 
-	//´æ´¢´ÓÊı¾İ¿âurl ±í»ñÈ¡µÄ´ıÅÀÈ¡url map£¬addSeedÊ¹ÓÃ
-    //Í¬Ê±ÔÚMyCrawler Í¨¹ıµ÷ÓÃ get ·½·¨»ñÈ¡£¬±£Ö¤¶ÁÈ¡ºÍĞ´ÈëÊ±Êı¾İ¿âÖĞµÄÊı¾İÊÇÒ»ÖÂµÄ£¬±ÜÃâÔÚÅÀÈ¡Ê±£¬ÓĞĞÂÔö¼Óurl
+	//ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½url ï¿½ï¿½ï¿½È¡ï¿½Ä´ï¿½ï¿½ï¿½È¡url mapï¿½ï¿½addSeedÊ¹ï¿½ï¿½
+    //Í¬Ê±ï¿½ï¿½MyCrawler Í¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ get ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½È¡ï¿½ï¿½Ğ´ï¿½ï¿½Ê±ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ÂµÄ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½url
 
 	public static Map<String, LinkedList<Integer>> urlMap;
-
-	static {
-		try {
-			MySQLDatabaseConnection.initialDatabaseDeploy();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
 
     public static void main(String[] args) throws Exception { execute(); }
 
@@ -41,38 +30,38 @@ public class Controller {
 
         String crawlStorageFolder = "/data/crawl/root";
 
-        //ÉèÖÃ²¢ĞĞÅÀ³æ¸öÊı
+        //ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int numberOfCrawlers = 2;
 
         CrawlConfig config = new CrawlConfig();
-        //ÉèÖÃ´æ·ÅÅÀ³æÖĞ¼äĞÅÏ¢µÄÎÄ¼şÄ¿Â¼
+        //ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¼ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ä¼ï¿½Ä¿Â¼
         config.setCrawlStorageFolder(crawlStorageFolder);
 
-        //ÉèÖÃÅÀÈ¡Éî¶È
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½
         config.setMaxDepthOfCrawling(0);
 
-        //ÉèÖÃÊÇ·ñÅÀÈ¡¶ş½øÖÆÊı¾İµÄÒ³Ãæ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İµï¿½Ò³ï¿½ï¿½
         config.setIncludeBinaryContentInCrawling(false);
 
-        //±ÜÃâ¼«¿ì·ÃÎÊ·şÎñÆ÷£¬´øÀ´¸ººÉ£¬×è¶ÏÇëÇó£¬ÉèÖÃÇëÇóÇ°µÈ´ı200ºÁÃë£¨Ä¬ÈÏ£©
+        //ï¿½ï¿½ï¿½â¼«ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½È´ï¿½200ï¿½ï¿½ï¿½ë£¨Ä¬ï¿½Ï£ï¿½
         config.setPolitenessDelay(200);
 
-        //ÖØĞÂ¿ªÆôÅÀ³æ
+        //ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //config.setResumableCrawling(true);
 
-        //³õÊ¼»¯ÅÀ³æÅäÖÃĞÅÏ¢
+        //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
         PageFetcher pageFetcher = new PageFetcher(config);
         RobotstxtConfig robotstxtConfig = new RobotstxtConfig();
         RobotstxtServer robotstxtServer = new RobotstxtServer(robotstxtConfig, pageFetcher);
         CrawlController controller = new CrawlController(config, pageFetcher, robotstxtServer);
 
         /*
-         *  ÎªÃ¿¸öÅÀ³æÌí¼Ó³õÊ¼ÅÀÈ¡Ò³Ãæ£¬ºóÃæÒÔÃ¿¸öÒ³Ãæ·¢ÏÖµÄÁ´½Ó×÷ÎªÅÀÈ¡¶ÔÏó
-         *  ½«Êı¾İ¿âÖĞÒªÅÀÈ¡µÄurlÌí¼Óµ½ÅÀÈ¡ÁĞ±íÖĞ
+         *  ÎªÃ¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ê¼ï¿½ï¿½È¡Ò³ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Ò³ï¿½æ·¢ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½
+         *  ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½Òªï¿½ï¿½È¡ï¿½ï¿½urlï¿½ï¿½Óµï¿½ï¿½ï¿½È¡ï¿½Ğ±ï¿½ï¿½ï¿½
          */
 
 
-        //note: map.values and map.keySet Ë³ĞòÊÇ·ñÒ»ÖÂ£¨¼ì²é£©
+        //note: map.values and map.keySet Ë³ï¿½ï¿½ï¿½Ç·ï¿½Ò»ï¿½Â£ï¿½ï¿½ï¿½é£©
 
         for (String url : urlMap.keySet()) {
         	controller.addSeed(url);
@@ -84,7 +73,7 @@ public class Controller {
          */
         controller.startNonBlocking(MyCrawler.class, numberOfCrawlers);
 
-        //µÈ´ı 1 ÃëÖÓ£¬·ÀÖ¹¹ı¿ìÅÀÈ¡¶ø±»ÍøÕ¾½ûÖ¹
+        //ï¿½È´ï¿½ 1 ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¾ï¿½ï¿½Ö¹
         Thread.sleep(1000);
 
         controller.waitUntilFinish();

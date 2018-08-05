@@ -1,11 +1,12 @@
 package com.codebelief.app.action;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.codebelief.app.bean.Url;
+import com.codebelief.app.dao.ContentDao;
+import com.codebelief.app.dao.UrlDao;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.codebelief.app.DAOFactory.*;
-import com.codebelief.app.VO.Url;
-
-import com.codebelief.app.DAO.*;
 /**
  * @author: Wray Zheng
  * @date: 2017-10-17
@@ -21,6 +22,9 @@ public class UrlOperateAction extends ActionSupport {
 	private boolean realTimePush;
 	private boolean success = false;
 	private String errorMsg;
+	
+	private UrlDao urlDao;
+	private ContentDao contentDao;
 
     public String noPermission() {
         return ERROR;
@@ -29,12 +33,13 @@ public class UrlOperateAction extends ActionSupport {
     public String addUrl() {
     	String userName = (String)ActionContext.getContext().getSession().get("userName");
     	try {
-    		IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-    		urlID = urlDAO.doInsert(userName, title, url, true, realTimePush);
-    		if(-1 == urlID) {
+    		Url tempUrl = new Url(userName, title, url, true, realTimePush);
+    		if(!urlDao.doInsert(tempUrl)) {
     			errorMsg = "添加记录失败！";
+    			urlID = -1;
     		} else {
     			success = true;
+    			urlID = tempUrl.getUrlID();
     			return SUCCESS;
     		}
     	} catch (Exception e) {
@@ -46,8 +51,7 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String enable() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateEnabled(urlID, true)){
+			if(!urlDao.doUpdateEnabled(urlID, true)){
 				errorMsg = "请检查UrlID！";
 			} else {
                 success = true;
@@ -62,14 +66,12 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String disable() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateEnabled(urlID, false)){
+			if(!urlDao.doUpdateEnabled(urlID, false)){
 				errorMsg = "请检查UrlID！";
 			} else  {
 				success = true;
                 return SUCCESS;
             }
-			urlDAO.free();
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
     		e.printStackTrace();
@@ -79,14 +81,12 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String setRealTimePush() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateRealTimePush(urlID, true)){
+			if(!urlDao.doUpdateRealTimePush(urlID, true)){
 				errorMsg = "请检查UrlID！";
 			} else  {
                 success = true;
                 return SUCCESS;
             }
-			urlDAO.free();
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
     		e.printStackTrace();
@@ -96,14 +96,12 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String setIntegratedPush() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateRealTimePush(urlID, false)){
+			if(!urlDao.doUpdateRealTimePush(urlID, false)){
 				errorMsg = "请检查UrlID！";
 			} else {
 				success = true;
                 return SUCCESS;
             }
-			urlDAO.free();
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
     		e.printStackTrace();
@@ -113,14 +111,12 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String updateUrl() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateUrl(urlID, url)){
+			if(!urlDao.doUpdateUrl(urlID, url)){
 				errorMsg = "更新URL失败！";
 			} else {
                 success = true;
                 return SUCCESS;
             }
-			urlDAO.free();
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
     		e.printStackTrace();
@@ -130,14 +126,12 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String updateUrlTitle() {
 		try {
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doUpdateTitle(urlID, title)){
+			if(!urlDao.doUpdateTitle(urlID, title)){
 				errorMsg = "更新标题失败！";
 			} else  {
                 success = true;
                 return SUCCESS;
             }
-			urlDAO.free();
 		} catch (Exception e) {
 			errorMsg = "数据库访问出错！";
     		e.printStackTrace();
@@ -147,11 +141,9 @@ public class UrlOperateAction extends ActionSupport {
 
 	public String deleteUrl() {
 		try{
-			IContentDAO contentDAO = ContentDAOFactory.getContentDAOInstance();
-			contentDAO.doDeleteByUrlID(urlID);
-			contentDAO.free();
-			IUrlDAO urlDAO = UrlDAOFactory.getUrlDAOInstance();
-			if(!urlDAO.doDelete(urlID)){
+			contentDao.doDeleteByUrlID(urlID);
+
+			if(!urlDao.doDelete(urlID)){
 				success = false;
 				errorMsg = "请检查urlID！";
 			} else {
@@ -211,5 +203,23 @@ public class UrlOperateAction extends ActionSupport {
 
 	public void setErrorMsg(String errorMsg) {
 		this.errorMsg = errorMsg;
+	}
+
+	public UrlDao getUrlDao() {
+		return urlDao;
+	}
+
+	@Autowired
+	public void setUrlDao(UrlDao urlDao) {
+		this.urlDao = urlDao;
+	}
+
+	public ContentDao getContentDao() {
+		return contentDao;
+	}
+
+	@Autowired
+	public void setContentDao(ContentDao contentDao) {
+		this.contentDao = contentDao;
 	}
 }

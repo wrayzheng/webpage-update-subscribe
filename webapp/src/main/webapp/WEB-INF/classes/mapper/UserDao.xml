@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.codebelief.app.dao.UserDao">
+	
+	<insert id="doInsert">
+		INSERT INTO User
+		VALUES
+			(#{userName}, #{password}, #{email}, #{pushTime})
+	</insert>
+	
+	<select id="doFindEmail" resultType="String">
+		SELECT email
+		FROM User
+		WHERE userName = #{userName}
+	</select>
+	
+	<select id="doFindPassword" resultType="String">
+		SELECT password
+		FROM User
+		WHERE userName = #{userName}
+	</select>
+	
+	<select id="doFindAll" resultType="User">
+		SELECT *
+		FROM User
+		WHERE userName = #{userName}
+	</select>
+	
+	<select id="doFindAllByPushTime" resultType="User">
+		SELECT *
+		FROM User
+		WHERE pushTime = #{pushTime}
+	</select>
+	
+	<select id="isExist" resultType="boolean">
+		SELECT COUNT(userName)
+		FROM User
+		WHERE userName = #{userName}
+	</select>
+	
+</mapper>
